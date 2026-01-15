@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>HomePage</class>
+ <widget class="QWidget" name="HomePage">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>654</width>
+    <height>461</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(37, 37, 29);</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="contextMenuPolicy">
+      <enum>Qt::ContextMenuPolicy::DefaultContextMenu</enum>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QTabBar::tab:!selected:hover
+{
+	color: #aaaaaa;
+}
+QTabBar::tab
+{
+	padding-right: 10px;
+}
+QTabBar::tab:!selected
+{
+    font-size: 16px;
+    font-family: 'Inter';
+    color: #777777;
+	padding-top: 12px;
+	padding-bottom: 0px;
+}
+QTabBar::tab:selected
+{
+    font: 600 9pt &quot;Inter&quot;;
+    font-size: 32px;
+    color: #FFFF00;
+}
+QTabWidget::pane, QTabBar::tab
+{
+    background-color: rgb(37, 37, 29);
+    border: none;
+}</string>
+     </property>
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <property name="elideMode">
+      <enum>Qt::TextElideMode::ElideNone</enum>
+     </property>
+     <property name="documentMode">
+      <bool>false</bool>
+     </property>
+     <property name="movable">
+      <bool>false</bool>
+     </property>
+     <property name="tabBarAutoHide">
+      <bool>false</bool>
+     </property>
+     <widget class="QWidget" name="homeTab">
+      <attribute name="title">
+       <string>Home</string>
+      </attribute>
+      <widget class="QFrame" name="frame">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>10</y>
+         <width>181</width>
+         <height>161</height>
+        </rect>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::Shape::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Shadow::Raised</enum>
+       </property>
+       <widget class="QProgressBar" name="progressBar_5">
+        <property name="geometry">
+         <rect>
+          <x>120</x>
+          <y>30</y>
+          <width>16</width>
+          <height>91</height>
+         </rect>
+        </property>
+        <property name="value">
+         <number>24</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Orientation::Vertical</enum>
+        </property>
+        <property name="invertedAppearance">
+         <bool>false</bool>
+        </property>
+        <property name="textDirection">
+         <enum>QProgressBar::Direction::TopToBottom</enum>
+        </property>
+       </widget>
+       <widget class="QProgressBar" name="progressBar">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>30</y>
+          <width>16</width>
+          <height>91</height>
+         </rect>
+        </property>
+        <property name="value">
+         <number>24</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Orientation::Vertical</enum>
+        </property>
+        <property name="invertedAppearance">
+         <bool>false</bool>
+        </property>
+        <property name="textDirection">
+         <enum>QProgressBar::Direction::TopToBottom</enum>
+        </property>
+       </widget>
+       <widget class="QProgressBar" name="progressBar_4">
+        <property name="geometry">
+         <rect>
+          <x>90</x>
+          <y>30</y>
+          <width>16</width>
+          <height>91</height>
+         </rect>
+        </property>
+        <property name="value">
+         <number>24</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Orientation::Vertical</enum>
+        </property>
+        <property name="invertedAppearance">
+         <bool>false</bool>
+        </property>
+        <property name="textDirection">
+         <enum>QProgressBar::Direction::TopToBottom</enum>
+        </property>
+       </widget>
+       <widget class="QProgressBar" name="progressBar_3">
+        <property name="geometry">
+         <rect>
+          <x>60</x>
+          <y>30</y>
+          <width>16</width>
+          <height>91</height>
+         </rect>
+        </property>
+        <property name="value">
+         <number>24</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Orientation::Vertical</enum>
+        </property>
+        <property name="invertedAppearance">
+         <bool>false</bool>
+        </property>
+        <property name="textDirection">
+         <enum>QProgressBar::Direction::TopToBottom</enum>
+        </property>
+       </widget>
+       <widget class="QProgressBar" name="progressBar_2">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>30</y>
+          <width>16</width>
+          <height>91</height>
+         </rect>
+        </property>
+        <property name="value">
+         <number>24</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Orientation::Vertical</enum>
+        </property>
+        <property name="invertedAppearance">
+         <bool>false</bool>
+        </property>
+        <property name="textDirection">
+         <enum>QProgressBar::Direction::TopToBottom</enum>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QFrame" name="frame_2">
+       <property name="geometry">
+        <rect>
+         <x>330</x>
+         <y>10</y>
+         <width>261</width>
+         <height>161</height>
+        </rect>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::Shape::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Shadow::Raised</enum>
+       </property>
+      </widget>
+      <widget class="QFrame" name="frame_3">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>180</y>
+         <width>581</width>
+         <height>161</height>
+        </rect>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::Shape::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Shadow::Raised</enum>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="tab_2">
+      <attribute name="title">
+       <string>Routine</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="tab_5">
+      <attribute name="title">
+       <string>Syllabus</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="tab_6">
+      <attribute name="title">
+       <string>Overview</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="tab_7">
+      <attribute name="title">
+       <string>Study Session</string>
+      </attribute>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

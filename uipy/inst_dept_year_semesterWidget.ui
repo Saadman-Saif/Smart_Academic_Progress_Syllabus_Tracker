@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>instDeptYearSemSelection</class>
+ <widget class="QWidget" name="instDeptYearSemSelection">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1128</width>
+    <height>627</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(37, 37, 29);</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QLabel" name="myLabel_2">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>1</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="font">
+      <font>
+       <family>Inter</family>
+       <pointsize>22</pointsize>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>App Name</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignmentFlag::AlignBottom|Qt::AlignmentFlag::AlignHCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item alignment="Qt::AlignmentFlag::AlignVCenter">
+    <widget class="QFrame" name="frame">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>3</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QFrame
+{
+	border: none;
+}</string>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::Shape::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Shadow::Raised</enum>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item alignment="Qt::AlignmentFlag::AlignHCenter">
+       <widget class="QLabel" name="label">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="font">
+         <font>
+          <family>Inter</family>
+          <pointsize>12</pointsize>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>Choose your institution, department, year and semester</string>
+        </property>
+       </widget>
+      </item>
+      <item alignment="Qt::AlignmentFlag::AlignHCenter">
+       <widget class="QLabel" name="label_2">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="font">
+         <font>
+          <family>Inter</family>
+         </font>
+        </property>
+        <property name="text">
+         <string>Select your university, department, current year and semester</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QGridLayout" name="gridLayout_3">
+        <property name="sizeConstraint">
+         <enum>QLayout::SizeConstraint::SetNoConstraint</enum>
+        </property>
+        <property name="horizontalSpacing">
+         <number>0</number>
+        </property>
+        <property name="verticalSpacing">
+         <number>4</number>
+        </property>
+        <item row="2" column="0" alignment="Qt::AlignmentFlag::AlignRight">
+         <widget class="QComboBox" name="yearComboBox">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>80</width>
+            <height>26</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>80</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="placeholderText">
+           <string>Year</string>
+          </property>
+          <item>
+           <property name="text">
+            <string>1</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>2</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>3</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>4</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item row="1" column="0" colspan="2" alignment="Qt::AlignmentFlag::AlignHCenter">
+         <widget class="QComboBox" name="departmentComboBox">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>160</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>160</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="currentIndex">
+           <number>-1</number>
+          </property>
+          <property name="placeholderText">
+           <string>Department</string>
+          </property>
+          <item>
+           <property name="text">
+            <string>CSE</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>EEE</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>CE</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>ME</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item row="0" column="0" colspan="2" alignment="Qt::AlignmentFlag::AlignHCenter">
+         <widget class="QComboBox" name="universityComboBox">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>160</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>160</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="editable">
+           <bool>false</bool>
+          </property>
+          <property name="currentText">
+           <string/>
+          </property>
+          <property name="currentIndex">
+           <number>-1</number>
+          </property>
+          <property name="placeholderText">
+           <string>University</string>
+          </property>
+          <item>
+           <property name="text">
+            <string>RUET</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>CUET</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>KUET</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>BUET</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item row="2" column="1" alignment="Qt::AlignmentFlag::AlignLeft">
+         <widget class="QComboBox" name="semesterComboBox">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>80</width>
+            <height>26</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>80</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="placeholderText">
+           <string>Semester</string>
+          </property>
+          <item>
+           <property name="text">
+            <string>Odd</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Even</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item alignment="Qt::AlignmentFlag::AlignHCenter">
+       <widget class="QPushButton" name="nextBtn">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Next</string>
+        </property>
+       </widget>
+      </item>
+      <item alignment="Qt::AlignmentFlag::AlignHCenter">
+       <widget class="QPushButton" name="backBtn">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Back</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QFrame" name="frame_2">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>1</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QFrame
+{
+	border: none;
+}</string>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::Shape::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Shadow::Raised</enum>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
