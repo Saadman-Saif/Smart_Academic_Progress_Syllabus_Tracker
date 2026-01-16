@@ -9,7 +9,7 @@ from auth.forget_pass import password_bp
 
 
 app = Flask(__name__)
-
+#thats a check
 
 
 app.register_blueprint(signup_bp)
