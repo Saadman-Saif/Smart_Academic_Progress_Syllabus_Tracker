@@ -62,9 +62,7 @@ class InstDeptYearSemPageWrap(QWidget):
         super().__init__()
         self.ui = Ui_instDeptYearSemSelection()
         self.ui.setupUi(self)
-        self.ui.nextBtn.clicked.connect(self.form_submission)
-
-    def form_submission(self):
+        # self.ui.nextBtn.clicked.connect(self.form_submission)
         
 
 class SyllabusPreviewPageWrap(QWidget):
@@ -112,17 +110,17 @@ class MySoftware(QMainWindow):
         self.page_selection.ui.backBtn.clicked.connect(self.go_to_login)
 
     def go_to_login(self):
-        # self.uiOnboardingStackPage.stackedWidget.setCurrentIndex(0)
-        self.uiOnboardingStackPage.stackedWidget.slideInIdx(0)
+        self.uiOnboardingStackPage.stackedWidget.setCurrentIndex(0)
+        # self.uiOnboardingStackPage.stackedWidget.slideInIdx(0)
     def go_to_selection(self):
-        # self.uiOnboardingStackPage.stackedWidget.setCurrentIndex(1)
-        self.uiOnboardingStackPage.stackedWidget.slideInIdx(1)
+        self.uiOnboardingStackPage.stackedWidget.setCurrentIndex(1)
+        # self.uiOnboardingStackPage.stackedWidget.slideInIdx(1)
     def go_to_preview(self):
-        # self.uiOnboardingStackPage.stackedWidget.setCurrentIndex(2)
-        self.uiOnboardingStackPage.stackedWidget.slideInIdx(2)
+        self.uiOnboardingStackPage.stackedWidget.setCurrentIndex(2)
+        # self.uiOnboardingStackPage.stackedWidget.slideInIdx(2)
     def go_to_home(self):
-        # self.uiOnboardingStackPage.stackedWidget.setCurrentIndex(3)
-        self.uiOnboardingStackPage.stackedWidget.slideInIdx(3)
+        self.uiOnboardingStackPage.stackedWidget.setCurrentIndex(3)
+        # self.uiOnboardingStackPage.stackedWidget.slideInIdx(3)
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

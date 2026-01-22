@@ -3,7 +3,7 @@ import requests
 class BackendClient:
     def __init__(self):
         # REPLACE THIS WITH THE CHANGING IP
-        self.base_url = "http://192.168.0.102:5000/" 
+        self.base_url = "http://10.149.30.219:5000/" 
 
     def login(self, username, password):
         """
@@ -30,6 +30,6 @@ class BackendClient:
                 return False, f"Server Error: {response.status_code}"
 
         except requests.exceptions.ConnectionError:
-            return False, "Could not connect to friend's laptop. Check Wi-Fi/Firewall."
+            return False, "Could not connect to server."
         except Exception as e:
             return False, f"An error occurred: {str(e)}"

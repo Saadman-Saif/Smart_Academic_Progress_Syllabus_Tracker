@@ -25,6 +25,7 @@ class Ui_AppName(object):
         if not AppName.objectName():
             AppName.setObjectName(u"AppName")
         AppName.resize(800, 600)
+        AppName.setStyleSheet(u"background-color: rgb(37, 37, 29);")
         self.centralwidget = QWidget(AppName)
         self.centralwidget.setObjectName(u"centralwidget")
         self.verticalLayout = QVBoxLayout(self.centralwidget)
@@ -58,6 +59,6 @@ class Ui_AppName(object):
     # setupUi
 
     def retranslateUi(self, AppName):
-        AppName.setWindowTitle(QCoreApplication.translate("AppName", u"MainWindow", None))
+        AppName.setWindowTitle(QCoreApplication.translate("AppName", u"App Name", None))
     # retranslateUi
 
