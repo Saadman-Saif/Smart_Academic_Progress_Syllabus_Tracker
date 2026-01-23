@@ -41,7 +41,7 @@
     </widget>
    </item>
    <item alignment="Qt::AlignmentFlag::AlignVCenter">
-    <widget class="QFrame" name="frame_7">
+    <widget class="QFrame" name="bodyFrame">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
        <horstretch>0</horstretch>
@@ -104,7 +104,7 @@ You can edit these later.</string>
         </property>
         <layout class="QGridLayout" name="gridLayout">
          <item row="1" column="1">
-          <widget class="QFrame" name="CSE2101">
+          <widget class="QFrame" name="cardFrame">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -153,7 +153,7 @@ You can edit these later.</string>
              </widget>
             </item>
             <item>
-             <widget class="QFrame" name="frame">
+             <widget class="QFrame" name="body">
               <property name="enabled">
                <bool>true</bool>
               </property>

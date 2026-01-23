@@ -71,6 +71,16 @@ class SyllabusPreviewPageWrap(QWidget):
         self.ui = Ui_SyllabusPreview()
         self.ui.setupUi(self)
 
+        courseCode = "CSE 2201"
+
+        # Dynamic card preview
+        self.client = BackendClient()
+        success, response = self.client.fetchCourseInfo(courseCode)
+        if success:
+            print(response)
+        else:
+            print(response)
+
 class HomePageWrap(QWidget):
     def __init__(self):
         super().__init__()
