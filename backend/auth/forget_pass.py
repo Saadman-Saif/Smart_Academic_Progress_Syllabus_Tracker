@@ -15,7 +15,7 @@ password_bp = Blueprint("password_bp", __name__)
 SMTP_SERVER = "smtp.gmail.com"
 SMTP_PORT = 587
 SENDER_EMAIL = "tarimsunny@gmail.com"       # 🔴 change
-SENDER_PASSWORD = " "       # 🔴 change
+SENDER_PASSWORD = "fvbooiejlldfupsq"       # 🔴 change
 
 # ================= FORGOT PASSWORD =================
 @password_bp.route("/forgot-password", methods=["POST"])
