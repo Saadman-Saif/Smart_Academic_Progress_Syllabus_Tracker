@@ -154,7 +154,17 @@ def get_syllabus():
     # 4️⃣ Merge
     final_syllabus = merge_syllabus(master_syllabus, overrides)
 
-    return jsonify(final_syllabus)
+    return jsonify({
+    "meta": {
+        "university": context["university"],
+        "department": context["department"],
+        "year": context["year"],
+        "semester": context["semester"],
+        "syllabus_version": 1
+    },
+    "syllabus": final_syllabus
+})
+
 
 
 @syllabus_bp.route("/edit-topic", methods=["POST"])
