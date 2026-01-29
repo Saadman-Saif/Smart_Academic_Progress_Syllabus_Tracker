@@ -6,7 +6,6 @@ from db import (
     get_master_db,
     get_user_syllabus_db
 )
-
 syllabus_bp = Blueprint("syllabus", __name__)
 
 # ============================================================
