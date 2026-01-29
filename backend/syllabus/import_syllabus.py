@@ -1,54 +1,77 @@
 import json
 import sqlite3
+import os
 
-conn = sqlite3.connect("syllabus.db")
+# ---------------- CONFIG (CHANGE ONLY THESE) ----------------
+UNIVERSITY = "RUET"
+YEAR = 2
+SEMESTER = 2
+JSON_FILE = "2-2_CSE_RUET_syllabus_mainCopy.json"
+# ------------------------------------------------------------
+
+# Absolute paths (SAFE)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DB_PATH = os.path.join(BASE_DIR, "..", "syllabus_main.db")
+JSON_PATH = os.path.join(BASE_DIR, JSON_FILE)
+
+# Connect to MASTER syllabus DB
+conn = sqlite3.connect(DB_PATH)
 c = conn.cursor()
 
-# Create tables
+# ---------------- CREATE TABLES (MASTER ONLY) ----------------
+
 c.execute("""
 CREATE TABLE IF NOT EXISTS courses (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    course_code TEXT,
-    course_name TEXT,
+    course_code TEXT NOT NULL,
+    course_name TEXT NOT NULL,
     credit_hour REAL,
-    year INTEGER,
-    semester INTEGER,
-    university TEXT
+    year INTEGER NOT NULL,
+    semester INTEGER NOT NULL,
+    university TEXT NOT NULL
 )
 """)
 
 c.execute("""
 CREATE TABLE IF NOT EXISTS modules (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    course_id INTEGER,
-    title TEXT
+    course_id INTEGER NOT NULL,
+    title TEXT NOT NULL,
+    FOREIGN KEY (course_id) REFERENCES courses(id)
 )
 """)
 
 c.execute("""
 CREATE TABLE IF NOT EXISTS topics (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    module_id INTEGER,
-    topic TEXT
+    module_id INTEGER NOT NULL,
+    topic TEXT NOT NULL,
+    FOREIGN KEY (module_id) REFERENCES modules(id)
 )
 """)
 
-# Load JSON
-with open("syllabus/2-2syllabus_mainCopy.json", "r", encoding="utf-8") as f:
+# ---------------- LOAD JSON ----------------
+
+if not os.path.exists(JSON_PATH):
+    raise FileNotFoundError(f"JSON file not found: {JSON_PATH}")
+
+with open(JSON_PATH, "r", encoding="utf-8") as f:
     data = json.load(f)
+
+# ---------------- INSERT DATA ----------------
 
 for course in data:
     c.execute("""
-        INSERT INTO courses 
+        INSERT INTO courses
         (course_code, course_name, credit_hour, year, semester, university)
         VALUES (?, ?, ?, ?, ?, ?)
     """, (
         course["course_code"],
         course["course_name"],
-        course["credit_hour"],
-        2,
-        2,
-        "RUET"
+        course.get("credit_hour"),
+        YEAR,
+        SEMESTER,
+        UNIVERSITY
     ))
 
     course_id = c.lastrowid
@@ -70,4 +93,7 @@ for course in data:
 conn.commit()
 conn.close()
 
-print("✅ Syllabus imported successfully")
+print("MASTER syllabus imported successfully")
+print(f"   University : {UNIVERSITY}")
+print(f"   Year       : {YEAR}")
+print(f"   Semester   : {SEMESTER}")

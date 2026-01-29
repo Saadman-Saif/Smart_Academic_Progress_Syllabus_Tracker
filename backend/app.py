@@ -18,6 +18,11 @@ app.register_blueprint(password_bp)
 # Register syllabus blueprint
 app.register_blueprint(syllabus_bp)
 
+# Register context blueprint
+from auth.context import context_bp
+app.register_blueprint(context_bp)
+
+
 if __name__ == "__main__":
     app.run(
         debug=True,
