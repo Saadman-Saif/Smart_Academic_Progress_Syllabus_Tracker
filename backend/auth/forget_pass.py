@@ -5,8 +5,8 @@ import random
 import smtplib
 import time
 from email.message import EmailMessage
+from db import get_auth_db
 
-from db import get_db_connection
 
 # 🔵 Blueprint MUST be named password_bp
 password_bp = Blueprint("password_bp", __name__)
@@ -26,7 +26,7 @@ def forgot_password():
     if not email:
         return jsonify({"message": "Email required"}), 400
 
-    conn = get_db_connection()
+    conn = get_auth_db()
     cursor = conn.cursor()
 
     cursor.execute("SELECT id FROM users WHERE email = ?", (email,))
@@ -64,7 +64,7 @@ def reset_password():
     if not all([email, code, new_password]):
         return jsonify({"message": "All fields required"}), 400
 
-    conn = get_db_connection()
+    conn = get_auth_db()
     cursor = conn.cursor()
 
     # Check for latest reset code

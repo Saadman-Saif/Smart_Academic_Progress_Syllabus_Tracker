@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from werkzeug.security import check_password_hash
-from db import get_db_connection
+from db import get_auth_db
 
 # 1. Define the Blueprint (This is what main.py is looking for)
 login_bp = Blueprint("login_bp", __name__)
@@ -18,7 +18,7 @@ def login():
     if not email or not password:
         return jsonify({"message": "Email and password required"}), 400
 
-    conn = get_db_connection()
+    conn = get_auth_db()
     try:
         cursor = conn.cursor()
         # 3. Query the DB using email
