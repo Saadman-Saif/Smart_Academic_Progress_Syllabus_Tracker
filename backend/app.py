@@ -7,6 +7,8 @@ from auth.forget_pass import password_bp
 
 # Syllabus blueprint
 from syllabus.routes import syllabus_bp
+#timer blueprint
+from session_tracker.services.timer_routes import study_timer_bp
 
 app = Flask(__name__)
 
@@ -21,6 +23,13 @@ app.register_blueprint(syllabus_bp)
 # Register context blueprint
 from auth.context import context_bp
 app.register_blueprint(context_bp)
+
+#Register timer blueprint
+app.register_blueprint(study_timer_bp)
+
+from session_tracker.services.study_timer_service import StudyTimerService
+
+StudyTimerService().check_running_session()
 
 
 if __name__ == "__main__":
