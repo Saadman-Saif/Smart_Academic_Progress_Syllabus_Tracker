@@ -3,14 +3,31 @@ import requests
 class BackendClient:
     def __init__(self):
         # REPLACE THIS WITH THE CHANGING IP
-        self.base_url = "http://192.168.0.102:5000/" 
+        self.base_url = "http://192.168.0.105:5000/" 
+
+    def signup(self, username, email, password):
+        url = f"{self.base_url}signup"
+
+        payload = {
+            "username": username,
+            "email": email,
+            "password": password
+        }
+
+        response = requests.post(url, json=payload, timeout=5)
+
+        if response.status_code == 201:
+            return True, "Account Created Successfully"
+        else:
+            return False, f"Failed somewhere, error code: {response.status_code}"
+
 
     def login(self, username, password):
         """
         Sends username and password to server laptop.
         Returns: (Success_Boolean, Message_String)
         """
-        url = f"{self.base_url}/login"
+        url = f"{self.base_url}login"
         
         payload = {
             "email": username,
@@ -34,25 +51,34 @@ class BackendClient:
         except Exception as e:
             return False, f"An error occurred: {str(e)}"
     
-    def fetchCourseInfo(self, courseCode):
-        url = f"{self.base_url}/syllabus/2-2syllabus_mainCopy"
-        parameters = {
-            "course_code": courseCode
-        }
-        print(f"DEBUG: Attempting to connect to: {url}") # <--- Check this line in your terminal
-        print(f"DEBUG: With params: {parameters}")
+    def get_syllabus(self, email):
+        """
+        Backend expects only email. It looks up the Uni/Year/Sem 
+        from the database automatically.
+        """
+        url = f"{self.base_url}/get-syllabus"
+        payload = {"email": email} 
+        
         try:
-            response = requests.get(url, params=parameters)
-
+            response = requests.post(url, json=payload, timeout=5)
             if response.status_code == 200:
-                data = response.json()
-                return True, data
-            elif response.status_code == 404:
-                return False, "Course not found"
+                return True, response.json()
             else:
-                return False, f"Server Error: {response.status_code}"
-
-        except requests.exceptions.ConnectionError:
-            return False, "Connection failed. Is the server running?"
+                return False, response.text
         except Exception as e:
             return False, str(e)
+        
+    def set_academic_context(self, email, uni, dept, year, sem):
+        url = f"{self.base_url}/set-academic-context"
+        payload = {
+            "email": email,
+            "university": uni,
+            "department": dept,
+            "year": int(year),
+            "semester": int(sem) # Logic to convert "Odd"/"Even" to 1/2 handled in UI
+        }
+        try:
+            requests.post(url, json=payload)
+            return True
+        except:
+            return False
