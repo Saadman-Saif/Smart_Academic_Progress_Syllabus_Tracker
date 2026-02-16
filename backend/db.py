@@ -89,5 +89,47 @@ def init_user_syllabus_db():
     conn.commit()
     conn.close()
 
+# STUDY DATABASE (study.db)
+
+STUDY_DB = os.path.join(BASE_DIR, "study.db")
+
+def get_study_db():
+    conn = sqlite3.connect(STUDY_DB, timeout=10)
+    conn.row_factory = sqlite3.Row
+    return conn
+def init_study_db():
+    conn = get_study_db()
+    cursor = conn.cursor()
+
+    # Stores completed / interrupted sessions
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS study_session (
+            session_id TEXT PRIMARY KEY,
+            date TEXT NOT NULL,
+            start_ts INTEGER NOT NULL,
+            end_ts INTEGER,
+            planned_duration INTEGER NOT NULL,
+            actual_duration INTEGER,
+            status TEXT NOT NULL
+        )
+    """)
+
+    # Stores currently running session (max ONE row)
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS running_session (
+            session_id TEXT PRIMARY KEY,
+            start_ts INTEGER NOT NULL,
+            planned_duration INTEGER NOT NULL,
+            total_paused INTEGER DEFAULT 0,
+            last_pause_ts INTEGER,
+            status TEXT NOT NULL
+        )
+    """)
+
+    conn.commit()
+    conn.close()
+
+
 init_auth_db()
 init_user_syllabus_db()
+init_study_db()
