@@ -82,79 +82,66 @@ class Ui_SyllabusPreview(object):
         self.gridFrame.setSizePolicy(sizePolicy2)
         self.gridLayout = QGridLayout(self.gridFrame)
         self.gridLayout.setObjectName(u"gridLayout")
-        self.cardFrame = QFrame(self.gridFrame)
-        self.cardFrame.setObjectName(u"cardFrame")
-        sizePolicy3 = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
-        sizePolicy3.setHorizontalStretch(0)
-        sizePolicy3.setVerticalStretch(0)
-        sizePolicy3.setHeightForWidth(self.cardFrame.sizePolicy().hasHeightForWidth())
-        self.cardFrame.setSizePolicy(sizePolicy3)
-        self.cardFrame.setMinimumSize(QSize(188, 359))
-        self.cardFrame.setStyleSheet(u"background-color: rgb(50, 50, 50);")
-        self.cardFrame.setFrameShape(QFrame.Shape.StyledPanel)
-        self.cardFrame.setFrameShadow(QFrame.Shadow.Raised)
-        self.verticalLayout = QVBoxLayout(self.cardFrame)
-        self.verticalLayout.setObjectName(u"verticalLayout")
-        self.header = QFrame(self.cardFrame)
-        self.header.setObjectName(u"header")
-        self.header.setMinimumSize(QSize(203, 51))
-        self.header.setMaximumSize(QSize(203, 51))
-        self.header.setStyleSheet(u"background-color: rgb(75, 75, 75)")
-        self.header.setFrameShape(QFrame.Shape.StyledPanel)
-        self.header.setFrameShadow(QFrame.Shadow.Raised)
-
-        self.verticalLayout.addWidget(self.header)
-
-        self.body = QFrame(self.cardFrame)
-        self.body.setObjectName(u"body")
-        self.body.setEnabled(True)
-        sizePolicy4 = QSizePolicy(QSizePolicy.Policy.MinimumExpanding, QSizePolicy.Policy.MinimumExpanding)
-        sizePolicy4.setHorizontalStretch(0)
-        sizePolicy4.setVerticalStretch(1)
-        sizePolicy4.setHeightForWidth(self.body.sizePolicy().hasHeightForWidth())
-        self.body.setSizePolicy(sizePolicy4)
-        self.body.setStyleSheet(u"background-color: rgb(60, 60, 60)")
-        self.body.setFrameShape(QFrame.Shape.StyledPanel)
-        self.body.setFrameShadow(QFrame.Shadow.Raised)
-
-        self.verticalLayout.addWidget(self.body)
-
-
-        self.gridLayout.addWidget(self.cardFrame, 1, 1, 1, 1)
-
 
         self.verticalLayout_3.addWidget(self.gridFrame)
-
-        self.nextBtn = QPushButton(self.bodyFrame)
-        self.nextBtn.setObjectName(u"nextBtn")
-        sizePolicy5 = QSizePolicy(QSizePolicy.Policy.Maximum, QSizePolicy.Policy.Fixed)
-        sizePolicy5.setHorizontalStretch(0)
-        sizePolicy5.setVerticalStretch(0)
-        sizePolicy5.setHeightForWidth(self.nextBtn.sizePolicy().hasHeightForWidth())
-        self.nextBtn.setSizePolicy(sizePolicy5)
-
-        self.verticalLayout_3.addWidget(self.nextBtn, 0, Qt.AlignmentFlag.AlignHCenter)
-
-        self.backBtn = QPushButton(self.bodyFrame)
-        self.backBtn.setObjectName(u"backBtn")
-        sizePolicy5.setHeightForWidth(self.backBtn.sizePolicy().hasHeightForWidth())
-        self.backBtn.setSizePolicy(sizePolicy5)
-
-        self.verticalLayout_3.addWidget(self.backBtn, 0, Qt.AlignmentFlag.AlignHCenter)
 
 
         self.verticalLayout_2.addWidget(self.bodyFrame, 0, Qt.AlignmentFlag.AlignVCenter)
 
         self.frame_6 = QFrame(SyllabusPreview)
         self.frame_6.setObjectName(u"frame_6")
-        sizePolicy.setHeightForWidth(self.frame_6.sizePolicy().hasHeightForWidth())
-        self.frame_6.setSizePolicy(sizePolicy)
+        sizePolicy3 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Minimum)
+        sizePolicy3.setHorizontalStretch(0)
+        sizePolicy3.setVerticalStretch(1)
+        sizePolicy3.setHeightForWidth(self.frame_6.sizePolicy().hasHeightForWidth())
+        self.frame_6.setSizePolicy(sizePolicy3)
+        self.frame_6.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
         self.frame_6.setStyleSheet(u"QFrame\n"
 "{\n"
 "	border: none;\n"
 "}")
         self.frame_6.setFrameShape(QFrame.Shape.StyledPanel)
         self.frame_6.setFrameShadow(QFrame.Shadow.Raised)
+        self.verticalLayout = QVBoxLayout(self.frame_6)
+        self.verticalLayout.setObjectName(u"verticalLayout")
+        self.verticalLayout.setContentsMargins(-1, 0, -1, -1)
+        self.frame = QFrame(self.frame_6)
+        self.frame.setObjectName(u"frame")
+        sizePolicy4 = QSizePolicy(QSizePolicy.Policy.Maximum, QSizePolicy.Policy.Maximum)
+        sizePolicy4.setHorizontalStretch(0)
+        sizePolicy4.setVerticalStretch(0)
+        sizePolicy4.setHeightForWidth(self.frame.sizePolicy().hasHeightForWidth())
+        self.frame.setSizePolicy(sizePolicy4)
+        self.frame.setFrameShape(QFrame.Shape.StyledPanel)
+        self.frame.setFrameShadow(QFrame.Shadow.Raised)
+        self.verticalLayout_8 = QVBoxLayout(self.frame)
+        self.verticalLayout_8.setSpacing(6)
+        self.verticalLayout_8.setObjectName(u"verticalLayout_8")
+        self.verticalLayout_8.setContentsMargins(0, 0, 0, 0)
+        self.nextBtn = QPushButton(self.frame)
+        self.nextBtn.setObjectName(u"nextBtn")
+        sizePolicy5 = QSizePolicy(QSizePolicy.Policy.Maximum, QSizePolicy.Policy.Fixed)
+        sizePolicy5.setHorizontalStretch(0)
+        sizePolicy5.setVerticalStretch(0)
+        sizePolicy5.setHeightForWidth(self.nextBtn.sizePolicy().hasHeightForWidth())
+        self.nextBtn.setSizePolicy(sizePolicy5)
+        self.nextBtn.setMinimumSize(QSize(81, 26))
+        self.nextBtn.setMaximumSize(QSize(81, 26))
+
+        self.verticalLayout_8.addWidget(self.nextBtn)
+
+        self.backBtn = QPushButton(self.frame)
+        self.backBtn.setObjectName(u"backBtn")
+        sizePolicy5.setHeightForWidth(self.backBtn.sizePolicy().hasHeightForWidth())
+        self.backBtn.setSizePolicy(sizePolicy5)
+        self.backBtn.setMinimumSize(QSize(81, 26))
+        self.backBtn.setMaximumSize(QSize(81, 26))
+
+        self.verticalLayout_8.addWidget(self.backBtn)
+
+
+        self.verticalLayout.addWidget(self.frame, 0, Qt.AlignmentFlag.AlignHCenter|Qt.AlignmentFlag.AlignTop)
+
 
         self.verticalLayout_2.addWidget(self.frame_6)
 
