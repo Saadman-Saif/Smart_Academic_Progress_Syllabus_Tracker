@@ -1,15 +1,12 @@
 import sqlite3
 import os
 
-# ============================================================
 # Base directory (path-safe for all OS)
-# ============================================================
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
-# ============================================================
+
 # AUTH DATABASE (users.db)
-# ============================================================
 AUTH_DB = os.path.join(BASE_DIR, "users.db")
 
 def get_auth_db():
@@ -27,6 +24,7 @@ def init_auth_db():
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             email TEXT UNIQUE NOT NULL,
             password TEXT NOT NULL,
+            username TEXT UNIQUE NOT NULL,
             university TEXT,
             department TEXT,
             year INTEGER,

@@ -13,6 +13,7 @@ def signup():
         return jsonify({"message": "Request must be JSON"}), 400
 
     data = request.get_json()
+    username = data.get("username")
     email = data.get("email")
     password = data.get("password")
 
@@ -31,8 +32,8 @@ def signup():
         
         # 4. Insert the new user
         cursor.execute(
-            "INSERT INTO users (email, password) VALUES (?, ?)",
-            (email, hashed_password)
+            "INSERT INTO users (username, email, password) VALUES (?, ?, ?)",
+            (username,email, hashed_password)
         )
         conn.commit()
         return jsonify({"message": "User registered successfully"}), 201
