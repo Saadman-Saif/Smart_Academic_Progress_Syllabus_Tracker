@@ -6,18 +6,19 @@ import smtplib
 import time
 from email.message import EmailMessage
 from db import get_auth_db
+from datetime import datetime, timedelta
+import os
 
-
-# 🔵 Blueprint MUST be named password_bp
+# Blueprint MUST be named password_bp
 password_bp = Blueprint("password_bp", __name__)
 
-# ================= EMAIL CONFIG =================
+#  EMAIL CONFIG 
 SMTP_SERVER = "smtp.gmail.com"
 SMTP_PORT = 587
-SENDER_EMAIL = "tarimsunny@gmail.com"       # 🔴 change
-SENDER_PASSWORD = "fvbooiejlldfupsq"       # 🔴 change
+SENDER_EMAIL = "academicprogresstracker0@gmail.com"       #  change
+SENDER_PASSWORD = "ufjagddzwuyfdwqr"     #  change
 
-# ================= FORGOT PASSWORD =================
+#  FORGOT PASSWORD 
 @password_bp.route("/forgot-password", methods=["POST"])
 def forgot_password():
     data = request.json
@@ -85,7 +86,9 @@ def reset_password():
         conn.close()
         return jsonify({"message": "Invalid reset code"}), 401
 
-    if time.time() - time.mktime(time.strptime(reset_request["created_at"], "%Y-%m-%d %H:%M:%S")) > 600:
+    created_at = datetime.strptime(reset_request["created_at"], "%Y-%m-%d %H:%M:%S")
+
+    if datetime.utcnow() > created_at + timedelta(minutes=10):
         conn.close()
         return jsonify({"message": "Reset code expired"}), 401
 
