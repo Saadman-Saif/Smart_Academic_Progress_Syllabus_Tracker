@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, session
 from werkzeug.security import check_password_hash
 from db import get_auth_db
 
@@ -30,7 +30,8 @@ def login():
         
         # 4. Verify password hash
         if user and check_password_hash(user["password"], password):
-            return jsonify({"message": "Login successful"}), 200
+           session["user_email"] = email #storing email in session
+           return jsonify({"message": "Login successful"}), 200
         else:
             return jsonify({"message": "Invalid email or password"}), 401
             
@@ -38,5 +39,3 @@ def login():
         return jsonify({"message": f"Server error: {str(e)}"}), 500
     finally:
         conn.close()
-
-# IMPORTANT: Remove the app.run() and Flask(__name__) lines from this file

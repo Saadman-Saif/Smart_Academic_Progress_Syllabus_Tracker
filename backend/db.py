@@ -45,10 +45,7 @@ def init_auth_db():
     conn.commit()
     conn.close()
 
-
-# ============================================================
 # MASTER SYLLABUS DATABASE (syllabus_main.db) – READ ONLY
-# ============================================================
 MASTER_DB = os.path.join(BASE_DIR, "syllabus_main.db")
 
 def get_master_db():
@@ -56,10 +53,7 @@ def get_master_db():
     conn.row_factory = sqlite3.Row
     return conn
 
-
-# ============================================================
 # USER SYLLABUS DATABASE (syllabus_user.db) – OVERRIDES ONLY
-# ============================================================
 USER_SYLLABUS_DB = os.path.join(BASE_DIR, "syllabus_user.db")
 
 def get_user_syllabus_db():
@@ -123,7 +117,19 @@ def init_study_db():
             status TEXT NOT NULL
         )
     """)
-
+    #stores CT table
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS ct_marks (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_email TEXT NOT NULL,
+            course_code TEXT NOT NULL,
+            ct1 INTEGER,
+            ct2 INTEGER,
+            ct3 INTEGER,
+            ct4 INTEGER,
+            UNIQUE(user_email, course_code)
+    )
+""")
     conn.commit()
     conn.close()
 
