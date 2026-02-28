@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from db import get_auth_db
+from db import get_db
 
 context_bp = Blueprint("context", __name__)
 
@@ -7,17 +7,17 @@ context_bp = Blueprint("context", __name__)
 def set_academic_context():
     data = request.json
 
-    conn = get_auth_db()
+    conn = get_db()
     conn.execute("""
         UPDATE users
         SET university = ?, department = ?, year = ?, semester = ?
-        WHERE email = ?
+        WHERE id = ?
     """, (
         data["university"],
         data["department"],
         data["year"],
         data["semester"],
-        data["email"]
+        data["user_id"]
     ))
     conn.commit()
     conn.close()

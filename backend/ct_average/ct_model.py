@@ -1,7 +1,7 @@
-from db import get_study_db
+from db import get_db
 
 def create_ct_if_not_exists(user_email, course_code):
-    conn = get_study_db()
+    conn = get_db()
     cursor = conn.cursor()
 
     cursor.execute("""
@@ -13,7 +13,7 @@ def create_ct_if_not_exists(user_email, course_code):
     conn.close()
 
 def update_ct_mark(user_email, course_code, ct_number, mark):
-    conn = get_study_db()
+    conn = get_db()
     cursor = conn.cursor()
 
     query = f"""
@@ -28,7 +28,7 @@ def update_ct_mark(user_email, course_code, ct_number, mark):
 
 
 def get_ct_marks(user_email, course_code):
-    conn = get_study_db()
+    conn = get_db()
     cursor = conn.cursor()
 
     cursor.execute("""

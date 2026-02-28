@@ -1,278 +1,93 @@
 from flask import Blueprint, request, jsonify
+from db import get_db
 
-# DB helpers
-from db import (
-    get_auth_db,
-    get_master_db,
-    get_user_syllabus_db
-)
 syllabus_bp = Blueprint("syllabus", __name__)
 
-# ============================================================
-# HELPERS (READ-ONLY / PROCESSING ONLY)
-# ============================================================
-
-def get_user_context(email):
-    """
-    Fetch user's academic context from users.db
-    """
-    conn = get_auth_db()
-    user = conn.execute("""
-        SELECT university, department, year, semester
-        FROM users
-        WHERE email = ?
-    """, (email,)).fetchone()
+# Get all subjects
+@syllabus_bp.route("/subjects", methods=["GET"])
+def get_subjects():
+    conn = get_db()
+    subjects = conn.execute("SELECT * FROM subjects").fetchall()
     conn.close()
-    return user
+
+    return jsonify([dict(row) for row in subjects])
 
 
-def load_master_syllabus(university, year, semester):
-    """
-    Load full syllabus from syllabus_main.db
-    """
-    conn = get_master_db()
+# Get subject with progress
+@syllabus_bp.route("/subject/<int:subject_id>/<int:user_id>", methods=["GET"])
+def get_subject_progress(subject_id, user_id):
 
-    courses = conn.execute("""
-        SELECT * FROM courses
-        WHERE university = ? AND year = ? AND semester = ?
-    """, (university, year, semester)).fetchall()
+    conn = get_db()
+    cursor = conn.cursor()
 
-    syllabus = []
+    topics = cursor.execute("""
+        SELECT id, name FROM topics
+        WHERE subject_id = ?
+    """, (subject_id,)).fetchall()
 
-    for course in courses:
-        modules = conn.execute("""
-            SELECT * FROM modules
-            WHERE course_id = ?
-        """, (course["id"],)).fetchall()
+    total_topics = len(topics)
+    completed_count = 0
+    topic_list = []
 
-        module_list = []
-        for module in modules:
-            topics = conn.execute("""
-                SELECT topic FROM topics
-                WHERE module_id = ?
-            """, (module["id"],)).fetchall()
+    for topic in topics:
+        row = cursor.execute("""
+            SELECT completed FROM completions
+            WHERE user_id = ? AND topic_id = ?
+        """, (user_id, topic["id"])).fetchone()
 
-            module_list.append({
-                "title": module["title"],
-                "topics": [t["topic"] for t in topics]
-            })
+        is_completed = row["completed"] if row else 0
 
-        syllabus.append({
-            "course_code": course["course_code"],
-            "course_name": course["course_name"],
-            "credit_hour": course["credit_hour"],
-            "modules": module_list
+        if is_completed:
+            completed_count += 1
+
+        topic_list.append({
+            "id": topic["id"],
+            "name": topic["name"],
+            "completed": bool(is_completed)
         })
 
+    percentage = (completed_count / total_topics * 100) if total_topics > 0 else 0
+
     conn.close()
-    return syllabus
-
-
-def load_user_overrides(email):
-    """
-    Load topic overrides from syllabus_user.db
-    """
-    conn = get_user_syllabus_db()
-    rows = conn.execute("""
-        SELECT course_code, module_title, original_topic, modified_topic
-        FROM topic_overrides
-        WHERE user_email = ?
-    """, (email,)).fetchall()
-    conn.close()
-
-    overrides = {}
-    for row in rows:
-        key = (
-            row["course_code"],
-            row["module_title"],
-            row["original_topic"]
-        )
-        overrides[key] = row["modified_topic"]
-
-    return overrides
-
-
-def merge_syllabus(master_syllabus, overrides):
-    """
-    Merge master syllabus with user overrides
-    """
-    for course in master_syllabus:
-        for module in course["modules"]:
-            merged_topics = []
-
-            for topic in module["topics"]:
-                key = (
-                    course["course_code"],
-                    module["title"],
-                    topic
-                )
-
-                if key in overrides:
-                    merged_topics.append({
-                        "name": overrides[key],
-                        "is_custom": True
-                    })
-                else:
-                    merged_topics.append({
-                        "name": topic,
-                        "is_custom": False
-                    })
-
-            module["topics"] = merged_topics
-
-    return master_syllabus
-
-# ============================================================
-# ROUTES
-# ============================================================
-
-@syllabus_bp.route("/get-syllabus", methods=["POST"])
-def get_syllabus():
-    """
-    Return FULL syllabus (master + user overrides merged)
-    """
-    email = request.json.get("email")
-
-    if not email:
-        return jsonify({"error": "Email required"}), 400
-
-    # 1️⃣ Get academic context
-    context = get_user_context(email)
-    if not context or not context["university"]:
-        return jsonify({"error": "Academic context not set"}), 400
-
-    # 2️⃣ Load master syllabus
-    master_syllabus = load_master_syllabus(
-        context["university"],
-        context["year"],
-        context["semester"]
-    )
-
-    # 3️⃣ Load user overrides
-    overrides = load_user_overrides(email)
-
-    # 4️⃣ Merge
-    final_syllabus = merge_syllabus(master_syllabus, overrides)
 
     return jsonify({
-    "meta": {
-        "university": context["university"],
-        "department": context["department"],
-        "year": context["year"],
-        "semester": context["semester"],
-        "syllabus_version": 1
-    },
-    "syllabus": final_syllabus
-})
+        "total_topics": total_topics,
+        "completed": completed_count,
+        "percentage": round(percentage, 2),
+        "topics": topic_list
+    })
 
 
+# Update completion
+@syllabus_bp.route("/update-completion", methods=["POST"])
+def update_completion():
 
-@syllabus_bp.route("/edit-topic", methods=["POST"])
-def edit_topic():
-    """
-    Save/replace a topic override in syllabus_user.db
-    """
     data = request.json
+    user_id = data["user_id"]
+    topic_id = data["topic_id"]
+    completed = 1 if data["completed"] else 0
 
-    required_fields = [
-        "email",
-        "course_code",
-        "module_title",
-        "original_topic",
-        "modified_topic"
-    ]
+    conn = get_db()
+    cursor = conn.cursor()
 
-    if not all(field in data for field in required_fields):
-        return jsonify({"error": "Missing fields"}), 400
+    existing = cursor.execute("""
+        SELECT id FROM completions
+        WHERE user_id = ? AND topic_id = ?
+    """, (user_id, topic_id)).fetchone()
 
-    conn = get_user_syllabus_db()
-
-    # Remove existing override if any
-    conn.execute("""
-        DELETE FROM topic_overrides
-        WHERE user_email = ?
-          AND course_code = ?
-          AND module_title = ?
-          AND original_topic = ?
-    """, (
-        data["email"],
-        data["course_code"],
-        data["module_title"],
-        data["original_topic"]
-    ))
-
-    # Insert new override
-    conn.execute("""
-        INSERT INTO topic_overrides
-        (user_email, course_code, module_title, original_topic, modified_topic)
-        VALUES (?, ?, ?, ?, ?)
-    """, (
-        data["email"],
-        data["course_code"],
-        data["module_title"],
-        data["original_topic"],
-        data["modified_topic"]
-    ))
+    if existing:
+        cursor.execute("""
+            UPDATE completions
+            SET completed = ?
+            WHERE user_id = ? AND topic_id = ?
+        """, (completed, user_id, topic_id))
+    else:
+        cursor.execute("""
+            INSERT INTO completions (user_id, topic_id, completed)
+            VALUES (?, ?, ?)
+        """, (user_id, topic_id, completed))
 
     conn.commit()
     conn.close()
 
-    return jsonify({"status": "saved"})
-
-
-@syllabus_bp.route("/reset-topic", methods=["POST"])
-def reset_topic():
-    """
-    Reset a topic back to master syllabus
-    """
-    data = request.json
-
-    required_fields = [
-        "email",
-        "course_code",
-        "module_title",
-        "original_topic"
-    ]
-
-    if not all(field in data for field in required_fields):
-        return jsonify({"error": "Missing fields"}), 400
-
-    conn = get_user_syllabus_db()
-    conn.execute("""
-        DELETE FROM topic_overrides
-        WHERE user_email = ?
-          AND course_code = ?
-          AND module_title = ?
-          AND original_topic = ?
-    """, (
-        data["email"],
-        data["course_code"],
-        data["module_title"],
-        data["original_topic"]
-    ))
-
-    conn.commit()
-    conn.close()
-
-    return jsonify({"status": "reset"})
-
-
-@syllabus_bp.route("/my-changes", methods=["POST"])
-def my_changes():
-    """
-    Return ONLY user changes (optional menu feature)
-    """
-    email = request.json.get("email")
-
-    if not email:
-        return jsonify({"error": "Email required"}), 400
-
-    conn = get_user_syllabus_db()
-    rows = conn.execute("""
-        SELECT course_code, module_title, original_topic, modified_topic, created_at
-        FROM topic_overrides
-        WHERE user_email = ?
-    """, (email,)).fetchall()
-    conn.close()
-
-    return jsonify([dict(row) for row in rows])
+    return jsonify({"status": "updated"})

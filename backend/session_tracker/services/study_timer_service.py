@@ -1,6 +1,6 @@
 import time
 import uuid
-from db import get_study_db
+from db import get_db
 
 
 class StudyTimerService:
@@ -11,7 +11,7 @@ class StudyTimerService:
         planned_duration: duration in SECONDS
         """
 
-        conn = get_study_db()
+        conn = get_db()
         cursor = conn.cursor()
 
         # Safety: do not allow multiple running sessions
@@ -62,7 +62,7 @@ class StudyTimerService:
         Pauses the currently running study session.
         """
 
-        conn = get_study_db()
+        conn = get_db()
         cursor = conn.cursor()
 
         # Get running session
@@ -101,7 +101,7 @@ class StudyTimerService:
         Resumes a paused study session.
         """
 
-        conn = get_study_db()
+        conn = get_db()
         cursor = conn.cursor()
 
         # Get paused session
@@ -144,7 +144,7 @@ class StudyTimerService:
         interrupted=True means user stopped early.
         """
 
-        conn = get_study_db()
+        conn = get_db()
         cursor = conn.cursor()
 
         # Get running session
@@ -193,7 +193,7 @@ class StudyTimerService:
         Should be called on app start.
         """
 
-        conn = get_study_db()
+        conn = get_db()
         cursor = conn.cursor()
 
         cursor.execute("""
@@ -222,7 +222,7 @@ class StudyTimerService:
         Returns total study time and session count for today.
         """
 
-        conn = get_study_db()
+        conn = get_db()
         cursor = conn.cursor()
 
         today = time.strftime("%Y-%m-%d")

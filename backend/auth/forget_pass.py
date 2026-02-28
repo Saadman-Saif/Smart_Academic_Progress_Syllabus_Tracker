@@ -5,7 +5,7 @@ import random
 import smtplib
 import time
 from email.message import EmailMessage
-from db import get_auth_db
+from db import get_db
 from datetime import datetime, timedelta
 import os
 
@@ -27,7 +27,7 @@ def forgot_password():
     if not email:
         return jsonify({"message": "Email required"}), 400
 
-    conn = get_auth_db()
+    conn = get_db()
     cursor = conn.cursor()
 
     cursor.execute("SELECT id FROM users WHERE email = ?", (email,))
@@ -65,7 +65,7 @@ def reset_password():
     if not all([email, code, new_password]):
         return jsonify({"message": "All fields required"}), 400
 
-    conn = get_auth_db()
+    conn = get_db()
     cursor = conn.cursor()
 
     # Check for latest reset code

@@ -3,19 +3,16 @@ import os
 
 # Base directory (path-safe for all OS)
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DATABASE = os.path.join(BASE_DIR, "study.db")
 
-
-
-# AUTH DATABASE (users.db)
-AUTH_DB = os.path.join(BASE_DIR, "users.db")
-
-def get_auth_db():
-    conn = sqlite3.connect(AUTH_DB, timeout=10)
+def get_db():
+    conn = sqlite3.connect(DATABASE, timeout=10)
     conn.row_factory = sqlite3.Row
+    conn.execute("PRAGMA foreign_keys = ON")
     return conn
 
-def init_auth_db():
-    conn = get_auth_db()
+def init_db():
+    conn = get_db()
     cursor = conn.cursor()
 
     # Users table
@@ -28,7 +25,8 @@ def init_auth_db():
             university TEXT,
             department TEXT,
             year INTEGER,
-            semester INTEGER
+            semester INTEGER,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP
         )
     """)
 
@@ -36,73 +34,69 @@ def init_auth_db():
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS password_resets (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            email TEXT NOT NULL,
+            user_id INTEGER NOT NULL,
             code TEXT NOT NULL,
-            created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
         )
     """)
-
-    conn.commit()
-    conn.close()
-
-# MASTER SYLLABUS DATABASE (syllabus_main.db) – READ ONLY
-MASTER_DB = os.path.join(BASE_DIR, "syllabus_main.db")
-
-def get_master_db():
-    conn = sqlite3.connect(MASTER_DB)
-    conn.row_factory = sqlite3.Row
-    return conn
-
-# USER SYLLABUS DATABASE (syllabus_user.db) – OVERRIDES ONLY
-USER_SYLLABUS_DB = os.path.join(BASE_DIR, "syllabus_user.db")
-
-def get_user_syllabus_db():
-    conn = sqlite3.connect(USER_SYLLABUS_DB)
-    conn.row_factory = sqlite3.Row
-    return conn
-
-def init_user_syllabus_db():
-    conn = get_user_syllabus_db()
-    cursor = conn.cursor()
-
-    # ONLY store user modifications (diffs)
+    #Subjects
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS subjects (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            university TEXT NOT NULL,
+            department TEXT NOT NULL,
+            year INTEGER NOT NULL,
+            semester INTEGER NOT NULL
+        )
+    """)
+    #Topics
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS topics (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            subject_id INTEGER NOT NULL,
+            name TEXT NOT NULL,
+            FOREIGN KEY(subject_id) REFERENCES subjects(id) ON DELETE CASCADE
+        )
+    """)
+#Completion(User progress)
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS completions (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER NOT NULL,
+            topic_id INTEGER NOT NULL,
+            completed INTEGER DEFAULT 0,
+            UNIQUE(user_id, topic_id),
+            FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE,
+            FOREIGN KEY(topic_id) REFERENCES topics(id) ON DELETE CASCADE
+        )
+    """)
+    # ONLY store user modifications
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS topic_overrides (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            user_email TEXT NOT NULL,
-            course_code TEXT NOT NULL,
-            module_title TEXT NOT NULL,
-            original_topic TEXT NOT NULL,
-            modified_topic TEXT NOT NULL,
-            created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+            user_id INTEGER NOT NULL,
+            topic_id INTEGER NOT NULL,
+            modified_name TEXT NOT NULL,
+            previous_name TEXT NOT NULL,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE,
+            FOREIGN KEY(topic_id) REFERENCES topics(id) ON DELETE CASCADE
         )
     """)
-
-    conn.commit()
-    conn.close()
-
-# STUDY DATABASE (study.db)
-
-STUDY_DB = os.path.join(BASE_DIR, "study.db")
-
-def get_study_db():
-    conn = sqlite3.connect(STUDY_DB, timeout=10)
-    conn.row_factory = sqlite3.Row
-    return conn
-def init_study_db():
-    conn = get_study_db()
-    cursor = conn.cursor()
-
     # Stores completed / interrupted sessions
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS study_session (
             session_id TEXT PRIMARY KEY,
+            user_id INTEGER NOT NULL,
             date TEXT NOT NULL,
             start_ts INTEGER NOT NULL,
             end_ts INTEGER,
             planned_duration INTEGER NOT NULL,
             actual_duration INTEGER,
-            status TEXT NOT NULL
+            status TEXT NOT NULL,
+            FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE   
         )
     """)
 
@@ -110,30 +104,33 @@ def init_study_db():
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS running_session (
             session_id TEXT PRIMARY KEY,
+            user_id INTEGER NOT NULL UNIQUE,
             start_ts INTEGER NOT NULL,
             planned_duration INTEGER NOT NULL,
             total_paused INTEGER DEFAULT 0,
             last_pause_ts INTEGER,
-            status TEXT NOT NULL
+            status TEXT NOT NULL,
+            FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
         )
     """)
     #stores CT table
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS ct_marks (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            user_email TEXT NOT NULL,
+            user_id INTEGER NOT NULL,
             course_code TEXT NOT NULL,
             ct1 INTEGER,
             ct2 INTEGER,
             ct3 INTEGER,
             ct4 INTEGER,
-            UNIQUE(user_email, course_code)
+            UNIQUE(user_id, course_code),
+            FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
     )
 """)
     conn.commit()
     conn.close()
-
-
-init_auth_db()
-init_user_syllabus_db()
-init_study_db()
+def ensure_syllabus_imported():
+    from syllabus.import_syllabus import import_syllabus
+    import_syllabus()
+init_db()
+ensure_syllabus_imported()

@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from werkzeug.security import generate_password_hash
-from db import get_auth_db
+from db import get_db
 import sqlite3
 
 # Define the blueprint to be imported in main.py
@@ -26,7 +26,7 @@ def signup():
 
     conn = None
     try:
-        conn =get_auth_db()
+        conn =get_db()
 
         cursor = conn.cursor()
         
