@@ -1,0 +1,342 @@
+[
+  {
+    "course_code": "CSE 2201",
+    "course_name": "Algorithm Analysis and Design",
+    "contact_hours_per_week": "3 Hours",
+    "credit_hour": 3.00,
+    "modules": [
+      {
+        "title": "Methods of Complexity Analysis",
+        "topics": [
+          "Substitution method",
+          "Iteration Method",
+          "Master Method",
+          "Amortized Analysis"
+        ]
+      },
+      {
+        "title": "Linear Time Sorting",
+        "topics": [
+          "Radix Sort",
+          "Bucket Sort",
+          "Counting Sort",
+          "Proof of Correctness of Sorting algorithms",
+          "Lower bound on sorting"
+        ]
+      },
+      {
+        "title": "Divide and Conquer approach",
+        "topics": [
+          "Minimum and Maximum Elements Finding",
+          "Median Finding",
+          "Kartasuba multiplication: Integer Multiplication",
+          "Strassens Matrix Multiplication",
+          "Quick Hull",
+          "Divide and Conquer Based Sorting Algorithms Review"
+        ]
+      },
+      {
+        "title": "Greedy Algorithms",
+        "topics": [
+          "Greedy Algorithm Properties",
+          "Job Sequencing Problem",
+          "Huffman Codes",
+          "Fractional Knapsack Problem",
+          "Minimum Spanning Tree: Kruskal and Prims Algorithm",
+          "Single Source Shortest Path: Dijkstra’s Algorithm",
+          "Proof of correctness"
+        ]
+      },
+      {
+        "title": "Dynamic Programming",
+        "topics": [
+          "Dynamic Algorithm Properties",
+          "Longest Common Subsequence (LCS)",
+          "0-1 Knapsack",
+          "Knapsack with duplicate items",
+          "Max Sum without Adjacent",
+          "Matrix Chain Multiplication (MCM)",
+          "Single Source Shortest Path: Bellman-Ford Algorithm",
+          "All pair of shortest path: Floyd Warshall Algorithm",
+          "Bitmasking with DP: Traveling Salesperson Problem"
+        ]
+      },
+      {
+        "title": "Backtracking",
+        "topics": [
+          "Backtracking",
+          "State Space Tree",
+          "N-Queen Problem",
+          "M-Coloring",
+          "Rat in a Maze",
+          "Solving Sudoku / Puzzle"
+        ]
+      },
+      {
+        "title": "Branch and Bounds",
+        "topics": [
+          "Branch and Bounds in State Space Tree",
+          "LC Branch and Bound",
+          "FIFO Branch and Bound"
+        ]
+      },
+      {
+        "title": "Flow Networks",
+        "topics": [
+          "Maximum Flow",
+          "Minimum Cut problem",
+          "Ford-Fulkerson Algorithm"
+        ]
+      },
+      {
+        "title": "P and NP Problems",
+        "topics": [
+          "Introduction to Optimization and Decision Problems",
+          "Tractable and Intractable Problems",
+          "Deterministic and Nondeterministic Algorithms",
+          "P and NP Set of problems",
+          "NP-hardness and NP-completeness",
+          "Proof of NP-completeness for algorithms",
+          "Cook’s Theorem"
+        ]
+      },
+      {
+        "title": "Reducibility between Problems and Approximation Algorithms",
+        "topics": [
+          "Discussion of different NP-complete problems like Satisfiability, Clique, Vertex Cover, Independent Set, Hamiltonian Cycle, TSP and Knapsack",
+          "Reduction between problems",
+          "Approximation algorithm design for sample problems and corresponding performance bound analysis"
+        ]
+      }
+    ]
+  },
+  {
+    "course_code": "CSE 2203",
+    "course_name": "Numerical Methods",
+    "contact_hours_per_week": "3 Hours",
+    "credit_hour": 3.00,
+    "modules": [
+      {
+        "title": "Modeling, Computers and Error Analysis",
+        "topics": [
+          "Mathematical Modeling and Engineering Problem Solving",
+          "Programming and Software",
+          "Approximations and Round-Off Errors",
+          "Truncation Errors and the Taylor Series"
+        ]
+      },
+      {
+        "title": "Roots of Equations",
+        "topics": [
+          "Bracketing Methods",
+          "Open Methods",
+          "Roots of Polynomials"
+        ]
+      },
+      {
+        "title": "Linear Algebraic Equations",
+        "topics": [
+          "Gauss Elimination",
+          "LU Decomposition and Matrix Inversion",
+          "Gauss-Seidel"
+        ]
+      },
+      {
+        "title": "Optimization",
+        "topics": [
+          "One-Dimensional Unconstrained Optimization"
+        ]
+      },
+      {
+        "title": "Curve Fitting",
+        "topics": [
+          "Least-Square Regression"
+        ]
+      },
+      {
+        "title": "Interpolation",
+        "topics": [
+          "Interpolation with one and two Independent Variables",
+          "Formation of Different Difference Table",
+          "Newton’s Forward and Backward Difference",
+          "Langrange’s Interpolation"
+        ]
+      },
+      {
+        "title": "Numerical Differentiation and Integration",
+        "topics": [
+          "Newton-Cotes Integration Formulas",
+          "Integration of Equations",
+          "Numerical Differentiation"
+        ]
+      },
+      {
+        "title": "Ordinary Differential Equations",
+        "topics": [
+          "Runge-Kutta Methods",
+          "Boundary-Value and Eigenvalue Problems",
+          "Numerical Solution of Partial Differential Equations"
+        ]
+      }
+    ]
+  },
+  {
+    "course_code": "CSE 2205",
+    "course_name": "Microprocessors, Microcontrollers and Assembly Language",
+    "contact_hours_per_week": "3 Hours",
+    "credit_hour": 3.00,
+    "modules": [
+      {
+        "title": "Microprocessor",
+        "topics": [
+          "Introduction to Different Types of Microprocessors and its Applications",
+          "Organization of Intel x86 Architecture",
+          "Overview of Different Generations of Intel Processors",
+          "Component of Microcomputer System",
+          "Interrupt Structures",
+          "I/O Interfacing",
+          "DMA",
+          "Co-processors",
+          "Memory Module",
+          "Overview of Advanced Intel Instructions: AVX, MMX, SSE & SIMD"
+        ]
+      },
+      {
+        "title": "Microprocessor Assembly",
+        "topics": [
+          "Introduction to x86 and x86-64 Assembly",
+          "Assembly Program Structure and Its Components",
+          "Basic Instructions",
+          "Input/Output Instructions",
+          "Flag Register",
+          "Flow Control Instructions",
+          "Logic",
+          "Shift and Rotate Instruction",
+          "Arithmetic Instructions",
+          "Arrays and Related Addressing Modes",
+          "Basic Stack Operations",
+          "Procedures Declaration",
+          "Calling a Procedure",
+          "String Instructions",
+          "Macros",
+          "Floating-Point Instructions"
+        ]
+      },
+      {
+        "title": "Microcontroller",
+        "topics": [
+          "Microcontroller History and Features",
+          "Microcontroller Architecture",
+          "General Purpose Registers in Microcontroller",
+          "Microcontroller Data Memory",
+          "Microcontroller Status Register",
+          "Microcontroller Data Format and Directives"
+        ]
+      },
+      {
+        "title": "Microcontroller Assembly",
+        "topics": [
+          "Microcontroller Assembly Programming",
+          "Program Counter and Program ROM Space in Microcontroller",
+          "Branch Instructions and Looping",
+          "Call Instructions and Stack",
+          "Time Delay",
+          "Arithmetic Instructions",
+          "Logic and Compare Instructions",
+          "Rotate and Shift Instructions"
+        ]
+      }
+    ]
+  },
+  {
+    "course_code": "Math 2213",
+    "course_name": "Complex Variable, Partial Differential Equation and Harmonic Analysis",
+    "contact_hours_per_week": "3 Hours",
+    "credit_hour": 3.00,
+    "modules": [
+      {
+        "title": "Complex Variable",
+        "topics": [
+          "Complex Number Systems",
+          "General Functions of a Complex Variable",
+          "Limits and Continuity of a Function of Complex Variable and Related Theorems",
+          "Complex Differentiation and the Cauchy-Riemenn Equations",
+          "Infinite Series",
+          "Convergence",
+          "Line Integral",
+          "Cauchy Integral Theorem",
+          "Cauchy Integral Formula",
+          "Liouville's Theorem",
+          "Taylor's and Laurent's Theorems",
+          "Singular Points",
+          "Residue",
+          "Cauchy's Residue Theorem",
+          "Contour Integration"
+        ]
+      },
+      {
+        "title": "Partial Differential Equation",
+        "topics": [
+          "Partial Differential Equations",
+          "Solution of First Order Partial Differential Equation by Lagrange and Charpit Methods",
+          "Solution of Laplace Equation and Wave Equation"
+        ]
+      },
+      {
+        "title": "Harmonic Analysis and Laplace Transform",
+        "topics": [
+          "Fourier Series and Fourier Transformations and its Applications to Solve Boundary Value Problems",
+          "Laplace Transforms",
+          "Inverse Laplace Transforms",
+          "Solution of Differential Equation by Laplace Transforms"
+        ]
+      }
+    ]
+  },
+  {
+    "course_code": "Hum 2213",
+    "course_name": "Industrial Management and Accountancy",
+    "contact_hours_per_week": "3 Hours",
+    "credit_hour": 3.00,
+    "modules": [
+      {
+        "title": "Industrial Management",
+        "topics": [
+          "Principles of Management",
+          "Management Functions",
+          "Management Skills",
+          "Authority and Responsibility",
+          "Span of Control",
+          "Management by Objective",
+          "Consultative Management",
+          "Participative Management",
+          "Decision Making",
+          "Manpower Motivation",
+          "Human Resources Management: Manpower Planning, Recruitment and Selection, Employee Training and Development, Performance Appraisal, Wages and Salary administration",
+          "Production Management: Plant Layout: Definition, Basic Layout Types, Problem Solving, Linear Programming, EOQ, Lead Time, Safety Stock, Re-order Point"
+        ]
+      },
+      {
+        "title": "Accounting",
+        "topics": [
+          "Basic Accounting Principles",
+          "Objectives of Accounting",
+          "Transaction",
+          "Double Entry Systems",
+          "Accounts and its Classification",
+          "Journals",
+          "Cash Book",
+          "Ledger",
+          "Trial Balance",
+          "Financial Statement",
+          "Cost Accounts and its Objectives",
+          "Cost Classification",
+          "Preparation of cost sheet",
+          "Cost Volume Profit analysis",
+          "Standard Costing",
+          "Process Costing"
+        ]
+      }
+    ]
+  }
+]
