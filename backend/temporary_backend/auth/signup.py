@@ -36,7 +36,11 @@ def signup():
             (username,email, hashed_password)
         )
         conn.commit()
-        return jsonify({"message": "User registered successfully"}), 201
+        user_id = cursor.lastrowid
+        return jsonify({""
+            "message": "User registered successfully",
+            "user_id": user_id
+        }), 201
 
     except sqlite3.IntegrityError:
         # This triggers if the email already exists (UNIQUE constraint)
@@ -49,4 +53,5 @@ def signup():
     finally:
         # 5. Ensure the connection is closed even if an error occurs
         if conn:
+
             conn.close()
