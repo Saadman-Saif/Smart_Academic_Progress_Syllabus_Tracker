@@ -36,7 +36,6 @@ def login():
                 "user_id": user["id"]
             }), 200
         else:
-        else:
             return jsonify({"message": "Invalid email or password"}), 401
             
     except Exception as e:
@@ -44,4 +43,5 @@ def login():
     finally:
 
         conn.close()
+
 
