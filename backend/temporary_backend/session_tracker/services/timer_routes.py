@@ -12,14 +12,8 @@ def start_study():
         user_id = session.get("user_id")
         if not user_id:
             return jsonify({"error": "Not logged in"}), 401
-        
-        data = request.get_json()
-        duration = data.get("duration")
 
-        if not duration:
-            return jsonify({"error": "duration is required"}), 400
-
-        session_id = service.start_session(user_id,duration)
+        session_id = service.start_session(user_id)
         return jsonify({"session_id": session_id}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 400

@@ -4,10 +4,9 @@ from db import get_db
 
 class StudyTimerService:
 #start of a session
-    def start_session(self, user_id, planned_duration):
+    def start_session(self, user_id):
         """
         Starts a new study session.
-        planned_duration: duration in SECONDS
         """
 
         conn = get_db()
@@ -30,15 +29,13 @@ class StudyTimerService:
         # Insert into study_session table
         cursor.execute("""
             INSERT INTO study_session (
-                session_id,user_id, date, start_ts,
-                planned_duration, status
-            ) VALUES (?, ?, ?, ?, ?, ?)
+                session_id,user_id, date, start_ts,status
+            ) VALUES (?, ?, ?, ?, ?)
         """, (
             session_id,
             user_id,
             today,
             now,
-            planned_duration,
             "RUNNING"
         ))
 
@@ -46,13 +43,12 @@ class StudyTimerService:
         cursor.execute("""
             INSERT INTO running_session (
                 session_id,user_id, start_ts,
-                planned_duration, total_paused, status
-            ) VALUES (?, ?, ?, ?, ?, ?)
+                total_paused, status
+            ) VALUES (?, ?, ?, ?, ?)
         """, (
             session_id,
             user_id,
             now,
-            planned_duration,
             0,
             "RUNNING"
         ))
@@ -71,7 +67,7 @@ class StudyTimerService:
 
         # Get running session
         cursor.execute("""
-            SELECT session_id, status
+            SELECT status
             FROM running_session
             WHERE user_id = ?
         """, (user_id,))
@@ -155,7 +151,7 @@ class StudyTimerService:
 
         # Get running session
         cursor.execute("""
-            SELECT session_id, start_ts, total_paused, status
+            SELECT session_id, start_ts, total_paused, status, last_pause_ts
             FROM running_session
             WHERE user_id = ?
         """, (user_id,))
@@ -167,6 +163,10 @@ class StudyTimerService:
 
         now = int(time.time())
 
+        if row["status"] == "PAUSED":
+            paused_duration = now - row["last_pause_ts"]
+            row["total_paused"] += paused_duration
+            
         actual_duration = (now - row["start_ts"]) - row["total_paused"]
         if actual_duration < 0:
             actual_duration = 0
@@ -193,32 +193,6 @@ class StudyTimerService:
 
         conn.commit()
         conn.close()
-# checking running
-    def check_running_session(self, user_id):
-        """
-        Auto-completes session if planned duration is exceeded.
-        Should be called on app start.
-        """
-        conn = get_db()
-        cursor = conn.cursor()
-        cursor.execute("""
-            SELECT start_ts, planned_duration, total_paused
-            FROM running_session
-            WHERE user_id = ?
-        """, (user_id,))
-        row = cursor.fetchone()
-
-        if not row:
-            conn.close()
-            return  # No running session
-
-        now = int(time.time())
-
-        elapsed = (now - row["start_ts"]) - row["total_paused"]
-        conn.close()
-        if elapsed >= row["planned_duration"]:
-            # Auto-stop as completed
-            self.stop_session(user_id=user_id, interrupted=False)
 
     def get_today_summary(self,user_id):
         """

@@ -31,7 +31,9 @@ def login():
         # 4. Verify password hash
         if user and check_password_hash(user["password"], password):
            session["user_id"] = user["id"] #storing user_id in session
-           return jsonify({"message": "Login successful"}), 200
+           return jsonify({
+               "message": "Login successful"
+            }), 200
         else:
             return jsonify({"message": "Invalid email or password"}), 401
             
