@@ -1,13 +1,10 @@
 from flask import Blueprint, request, jsonify 
 from werkzeug.security import generate_password_hash
-import sqlite3
 import random
 import smtplib
-import time
 from email.message import EmailMessage
 from db import get_db
 from datetime import datetime, timedelta
-import os
 
 # Blueprint MUST be named password_bp
 password_bp = Blueprint("password_bp", __name__)
@@ -36,15 +33,15 @@ def forgot_password():
     if not user:
         conn.close()
         return jsonify({"message": "User not found"}), 404
-
+    user_id = user["id"]
     # Generate reset code
     reset_code = str(random.randint(100000, 999999))
 
     # Insert reset request into password_resets table
     cursor.execute("""
-        INSERT INTO password_resets (email, code)
+        INSERT INTO password_resets (user_id, code)
         VALUES (?, ?)
-    """, (email, reset_code))
+    """, (user_id, reset_code))
 
     conn.commit()
     conn.close()
@@ -54,7 +51,7 @@ def forgot_password():
     return jsonify({"message": "Reset code sent to email"}), 200
 
 
-# ================= RESET PASSWORD =================
+#RESET PASSWORD 
 @password_bp.route("/reset-password", methods=["POST"])
 def reset_password():
     data = request.json
@@ -68,13 +65,21 @@ def reset_password():
     conn = get_db()
     cursor = conn.cursor()
 
+    cursor.execute("SELECT id FROM users WHERE email = ?", (email,))
+    user = cursor.fetchone()
+
+    if not user:
+        conn.close()
+        return jsonify({"message": "User not found"}), 404
+
+    user_id = user["id"]
     # Check for latest reset code
     cursor.execute("""
         SELECT code, created_at FROM password_resets
-        WHERE email = ?
+        WHERE user_id = ?
         ORDER BY created_at DESC
         LIMIT 1
-    """, (email,))
+    """, (user_id,))
     reset_request = cursor.fetchone()
 
     if not reset_request:
@@ -97,14 +102,14 @@ def reset_password():
     cursor.execute("""
         UPDATE users
         SET password = ?
-        WHERE email = ?
-    """, (hashed_password, email))
+        WHERE id = ?
+    """, (hashed_password, user_id))
 
     # Optional: delete used reset codes
     cursor.execute("""
         DELETE FROM password_resets
-        WHERE email = ?
-    """, (email,))
+        WHERE user_id = ?
+    """, (user_id,))
 
     conn.commit()
     conn.close()
@@ -118,7 +123,7 @@ def send_email(to_email, code):
     msg["Subject"] = "Password Reset Code"
     msg["From"] = SENDER_EMAIL
     msg["To"] = to_email
-    msg.set_content(f"YOu asked for resetting of your password for app.\
+    msg.set_content(f"You asked for resetting of your password for app.\
                     Here is your password reset code for it: {code}.\n \
                      If you didn't ask for it, please ignore this email.")
 

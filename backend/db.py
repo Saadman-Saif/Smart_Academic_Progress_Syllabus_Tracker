@@ -42,22 +42,32 @@ def init_db():
     """)
     #Subjects
     cursor.execute("""
-        CREATE TABLE IF NOT EXISTS subjects (
+        CREATE TABLE IF NOT EXISTS courses (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT NOT NULL,
-            university TEXT NOT NULL,
+            course_code TEXT NOT NULL,
+            course_name TEXT NOT NULL,          
             department TEXT NOT NULL,
             year INTEGER NOT NULL,
-            semester INTEGER NOT NULL
+            semester INTEGER NOT NULL,
+            university TEXT NOT NULL
         )
     """)
+    #modules
+    cursor.execute("""
+CREATE TABLE IF NOT EXISTS modules (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    course_id INTEGER NOT NULL,
+    title TEXT NOT NULL,
+    FOREIGN KEY (course_id) REFERENCES courses(id) ON DELETE CASCADE
+)
+""")
     #Topics
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS topics (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            subject_id INTEGER NOT NULL,
+            module_id INTEGER NOT NULL,
             name TEXT NOT NULL,
-            FOREIGN KEY(subject_id) REFERENCES subjects(id) ON DELETE CASCADE
+            FOREIGN KEY(module_id) REFERENCES modules(id) ON DELETE CASCADE
         )
     """)
 #Completion(User progress)
@@ -106,7 +116,6 @@ def init_db():
             session_id TEXT PRIMARY KEY,
             user_id INTEGER NOT NULL UNIQUE,
             start_ts INTEGER NOT NULL,
-            planned_duration INTEGER NOT NULL,
             total_paused INTEGER DEFAULT 0,
             last_pause_ts INTEGER,
             status TEXT NOT NULL,
@@ -129,8 +138,5 @@ def init_db():
 """)
     conn.commit()
     conn.close()
-def ensure_syllabus_imported():
-    from syllabus.import_syllabus import import_syllabus
-    import_syllabus()
-init_db()
-ensure_syllabus_imported()
+if __name__ == "__main__":
+    init_db()

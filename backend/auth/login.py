@@ -2,12 +2,12 @@ from flask import Blueprint, request, jsonify, session
 from werkzeug.security import check_password_hash
 from db import get_db
 
-# 1. Define the Blueprint (This is what main.py is looking for)
+# 1. Define the Blueprint
 login_bp = Blueprint("login_bp", __name__)
 
 @login_bp.route("/login", methods=["POST"])
 def login():
-    # 2. Check if request is JSON
+   
     if not request.is_json:
         return jsonify({"message": "Request must be JSON"}), 400
 
@@ -23,15 +23,17 @@ def login():
         cursor = conn.cursor()
         # 3. Query the DB using email
         cursor.execute(
-            "SELECT password FROM users WHERE email = ?", 
+            "SELECT id,password FROM users WHERE email = ?", 
             (email,)
         )
         user = cursor.fetchone()
         
         # 4. Verify password hash
         if user and check_password_hash(user["password"], password):
-           session["user_email"] = email #storing email in session
-           return jsonify({"message": "Login successful"}), 200
+           session["user_id"] = user["id"] #storing user_id in session
+           return jsonify({
+               "message": "Login successful"
+            }), 200
         else:
             return jsonify({"message": "Invalid email or password"}), 401
             

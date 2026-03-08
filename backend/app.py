@@ -1,8 +1,10 @@
 import os
 from flask import Flask
 from dotenv import load_dotenv
+from db import init_db
 load_dotenv()
 app = Flask(__name__)
+init_db()
 app.secret_key = os.getenv("FLASK_SECRET_KEY") or "secret_for_team_project"
 # Auth blueprints
 from auth.signup import signup_bp
@@ -23,9 +25,6 @@ from auth.context import context_bp
 app.register_blueprint(context_bp)
 #Register timer blueprint
 app.register_blueprint(study_timer_bp)
-
-from session_tracker.services.study_timer_service import StudyTimerService
-StudyTimerService().check_running_session()
 #Register ct avg blueprint
 from ct_average.ct_routes import ct_bp
 app.register_blueprint(ct_bp)

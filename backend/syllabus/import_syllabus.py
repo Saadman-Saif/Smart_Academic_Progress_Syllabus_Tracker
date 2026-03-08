@@ -3,15 +3,18 @@ import os
 from db import get_db   
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-JSON_PATH = os.path.join(BASE_DIR, "2-2_CSE_RUET_syllabus_mainCopy.json")
+# JSON_PATH = os.path.join(BASE_DIR, "2-2_CSE_RUET_syllabus_mainCopy.json")
 
-def import_syllabus():
-
+def import_syllabus(json_filename, department, year, semester, university):
+    JSON_PATH = os.path.join(BASE_DIR, json_filename)
     conn = get_db()
     cursor = conn.cursor()
 
     # Prevent duplicate import
-    cursor.execute("SELECT COUNT(*) FROM subjects")
+    cursor.execute("""
+            SELECT COUNT(*) FROM courses
+            WHERE department = ? AND year = ? AND semester = ? AND university = ?
+                   """, (department, year, semester, university))
     if cursor.fetchone()[0] > 0:
         print("Syllabus already imported.")
         conn.close()
@@ -21,22 +24,32 @@ def import_syllabus():
         data = json.load(f)
 
     for course in data:
-        # Insert course as subject
+        # Insert course 
         cursor.execute("""
-            INSERT INTO subjects (name,university, department, year, semester)
-            VALUES (?, ?, ?, ?, ?)
-        """, (f"{course['course_code']} - {course['course_name']}","RUET", "CSE", 2, 2))
+            INSERT INTO courses (course_code, course_name, department, year, semester, university)
+            VALUES (?, ?, ?, ?, ?, ?)
+        """, (
+            course["course_code"],
+            course["course_name"],
+              department, 
+              year, 
+              semester, 
+              university))
 
-        subject_id = cursor.lastrowid
+        course_id = cursor.lastrowid
 
         for module in course["modules"]:
-            for topic in module["topics"]:
-                full_topic_name = f"{module['title']} - {topic}"
+            cursor.execute("""
+            INSERT INTO modules (course_id, title)
+            VALUES (?, ?)
+        """, (course_id, module["title"]))
+            module_id = cursor.lastrowid
 
+            for topic in module["topics"]:
                 cursor.execute("""
-                    INSERT INTO topics (subject_id, name)
+                    INSERT INTO topics (module_id, name)
                     VALUES (?, ?)
-                """, (subject_id, full_topic_name))
+                """, (module_id, topic))
 
     conn.commit()
     conn.close()

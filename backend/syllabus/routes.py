@@ -1,29 +1,69 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, session
 from db import get_db
 
 syllabus_bp = Blueprint("syllabus", __name__)
 
-# Get all subjects
-@syllabus_bp.route("/subjects", methods=["GET"])
-def get_subjects():
+# Get all courses
+@syllabus_bp.route("/courses", methods=["GET"])
+def get_courses():
+
+    user_id = session.get("user_id")
+    if not user_id:
+        return jsonify({"error": "Not logged in"}), 401
+
     conn = get_db()
-    subjects = conn.execute("SELECT * FROM subjects").fetchall()
+
+    user = conn.execute("""
+        SELECT university, department, year, semester
+        FROM users
+        WHERE id = ?
+    """, (user_id,)).fetchone()
+
+    if not user:
+        conn.close()
+        return jsonify({"error": "User not found"}), 404
+
+    courses = conn.execute("""
+        SELECT *
+        FROM courses
+        WHERE university = ?
+        AND department = ?
+        AND year = ?
+        AND semester = ?
+    """, (
+        user["university"],
+        user["department"],
+        user["year"],
+        user["semester"]
+    )).fetchall()
+
     conn.close()
 
-    return jsonify([dict(row) for row in subjects])
+    return jsonify([
+        {
+            "id": row["id"],
+            "course_code": row["course_code"],
+            "course_name": row["course_name"],
+            "year": row["year"],
+            "semester": row["semester"]
+        }
+        for row in courses
+    ])
 
-
-# Get subject with progress
-@syllabus_bp.route("/subject/<int:subject_id>/<int:user_id>", methods=["GET"])
-def get_subject_progress(subject_id, user_id):
-
+# Get course with progress
+@syllabus_bp.route("/course/<int:course_id>", methods=["GET"])
+def get_course_progress(course_id):
+    user_id = session.get("user_id")
+    if not user_id:
+        return jsonify({"error": "Not logged in"}), 401
     conn = get_db()
     cursor = conn.cursor()
 
     topics = cursor.execute("""
-        SELECT id, name FROM topics
-        WHERE subject_id = ?
-    """, (subject_id,)).fetchall()
+        SELECT topics.id, topics.name FROM topics
+        JOIN modules ON topics.module_id = modules.id
+        WHERE modules.course_id = ?
+    """, (course_id,)).fetchall()
 
     total_topics = len(topics)
     completed_count = 0
@@ -63,7 +103,9 @@ def get_subject_progress(subject_id, user_id):
 def update_completion():
 
     data = request.json
-    user_id = data["user_id"]
+    user_id = session.get("user_id")
+    if not user_id:
+        return jsonify({"error": "Not logged in"}), 401
     topic_id = data["topic_id"]
     completed = 1 if data["completed"] else 0
 

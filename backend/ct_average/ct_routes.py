@@ -12,6 +12,10 @@ ct_bp = Blueprint("ct_bp", __name__)
 
 @ct_bp.route("/ct/update", methods=["POST"])
 def update_ct():
+    user_id = session.get("user_id")
+    if not user_id:
+        return jsonify({"error": "Not logged in"}), 401
+    
     data = request.json
 
     course_code = data.get("course_code")
@@ -27,14 +31,10 @@ def update_ct():
     if mark is None or mark < 0 or mark > 20:
         return jsonify({"error": "Invalid mark"}), 400
 
-    email = session.get("user_email")
-    if not email:
-        return jsonify({"error": "Not logged in"}), 401
+    create_ct_if_not_exists(user_id, course_code)
+    update_ct_mark(user_id, course_code, ct_number, mark)
 
-    create_ct_if_not_exists(email, course_code)
-    update_ct_mark(email, course_code, ct_number, mark)
-
-    marks_row = get_ct_marks(email, course_code)
+    marks_row = get_ct_marks(user_id, course_code)
     marks = list(marks_row) if marks_row else [None, None, None, None]
 
     avg, count = calculate_best_three(marks)
@@ -47,13 +47,13 @@ def update_ct():
 
 @ct_bp.route("/ct/<course_code>", methods=["GET"])
 def get_ct(course_code):
-    email = session.get("user_email")
-    if not email:
+    user_id = session.get("user_id")
+    if not user_id:
         return jsonify({"error": "Not logged in"}), 401
 
-    create_ct_if_not_exists(email, course_code)
+    create_ct_if_not_exists(user_id, course_code)
 
-    marks_row = get_ct_marks(email, course_code)
+    marks_row = get_ct_marks(user_id, course_code)
     marks = list(marks_row) if marks_row else [None, None, None, None]
 
     avg, count = calculate_best_three(marks)

@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, session
 from werkzeug.security import generate_password_hash
 from db import get_db
 import sqlite3
@@ -27,7 +27,6 @@ def signup():
     conn = None
     try:
         conn =get_db()
-
         cursor = conn.cursor()
         
         # 4. Insert the new user
@@ -36,7 +35,15 @@ def signup():
             (username,email, hashed_password)
         )
         conn.commit()
-        return jsonify({"message": "User registered successfully"}), 201
+
+        user_id = cursor.lastrowid
+        session["user_id"] = user_id  # Store user_id in session after successful signup
+        
+        return jsonify({"message": "User registered successfully",
+                        "user_id": user_id,
+                        "username": username,
+                        "email": email
+                        }), 201
 
     except sqlite3.IntegrityError:
         # This triggers if the email already exists (UNIQUE constraint)

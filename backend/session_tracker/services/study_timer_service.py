@@ -2,20 +2,22 @@ import time
 import uuid
 from db import get_db
 
-
 class StudyTimerService:
 #start of a session
-    def start_session(self, planned_duration):
+    def start_session(self, user_id):
         """
         Starts a new study session.
-        planned_duration: duration in SECONDS
         """
 
         conn = get_db()
         cursor = conn.cursor()
 
         # Safety: do not allow multiple running sessions
-        cursor.execute("SELECT session_id FROM running_session")
+        cursor.execute("""
+            SELECT session_id 
+            FROM running_session 
+            WHERE user_id = ?
+        """, (user_id,))
         if cursor.fetchone():
             conn.close()
             raise Exception("A study session is already running")
@@ -27,27 +29,26 @@ class StudyTimerService:
         # Insert into study_session table
         cursor.execute("""
             INSERT INTO study_session (
-                session_id, date, start_ts,
-                planned_duration, status
+                session_id,user_id, date, start_ts,status
             ) VALUES (?, ?, ?, ?, ?)
         """, (
             session_id,
+            user_id,
             today,
             now,
-            planned_duration,
             "RUNNING"
         ))
 
         # Insert into running_session table
         cursor.execute("""
             INSERT INTO running_session (
-                session_id, start_ts,
-                planned_duration, total_paused, status
+                session_id,user_id, start_ts,
+                total_paused, status
             ) VALUES (?, ?, ?, ?, ?)
         """, (
             session_id,
+            user_id,
             now,
-            planned_duration,
             0,
             "RUNNING"
         ))
@@ -57,19 +58,19 @@ class StudyTimerService:
 
         return session_id
 # pausing 
-    def pause_session(self):
+    def pause_session(self, user_id):
         """
         Pauses the currently running study session.
         """
-
         conn = get_db()
         cursor = conn.cursor()
 
         # Get running session
         cursor.execute("""
-            SELECT session_id, status
+            SELECT status
             FROM running_session
-        """)
+            WHERE user_id = ?
+        """, (user_id,))
         row = cursor.fetchone()
 
         if not row:
@@ -86,17 +87,17 @@ class StudyTimerService:
         cursor.execute("""
             UPDATE running_session
             SET last_pause_ts = ?, status = ?
-            WHERE session_id = ?
+            WHERE user_id = ?
         """, (
             now,
             "PAUSED",
-            row["session_id"]
+            user_id
         ))
 
         conn.commit()
         conn.close()
 # resuming
-    def resume_session(self):
+    def resume_session(self, user_id):
         """
         Resumes a paused study session.
         """
@@ -106,9 +107,10 @@ class StudyTimerService:
 
         # Get paused session
         cursor.execute("""
-            SELECT session_id, last_pause_ts, total_paused, status
+            SELECT  last_pause_ts, total_paused, status
             FROM running_session
-        """)
+            WHERE user_id = ?
+        """, (user_id,))
         row = cursor.fetchone()
 
         if not row:
@@ -128,17 +130,17 @@ class StudyTimerService:
         cursor.execute("""
             UPDATE running_session
             SET total_paused = ?, last_pause_ts = NULL, status = ?
-            WHERE session_id = ?
+            WHERE user_id = ?
         """, (
             new_total_paused,
             "RUNNING",
-            row["session_id"]
+            user_id
         ))
 
         conn.commit()
         conn.close()
 # stopping
-    def stop_session(self, interrupted=False):
+    def stop_session(self, user_id, interrupted=False):
         """
         Stops the current study session.
         interrupted=True means user stopped early.
@@ -149,9 +151,10 @@ class StudyTimerService:
 
         # Get running session
         cursor.execute("""
-            SELECT session_id, start_ts, total_paused, status
+            SELECT session_id, start_ts, total_paused, status, last_pause_ts
             FROM running_session
-        """)
+            WHERE user_id = ?
+        """, (user_id,))
         row = cursor.fetchone()
 
         if not row:
@@ -160,6 +163,10 @@ class StudyTimerService:
 
         now = int(time.time())
 
+        if row["status"] == "PAUSED":
+            paused_duration = now - row["last_pause_ts"]
+            row["total_paused"] += paused_duration
+            
         actual_duration = (now - row["start_ts"]) - row["total_paused"]
         if actual_duration < 0:
             actual_duration = 0
@@ -181,43 +188,13 @@ class StudyTimerService:
         # Remove running session
         cursor.execute("""
             DELETE FROM running_session
-            WHERE session_id = ?
-        """, (row["session_id"],))
+            WHERE user_id = ?
+        """, (user_id,))
 
         conn.commit()
         conn.close()
-# checking running
-    def check_running_session(self):
-        """
-        Auto-completes session if planned duration is exceeded.
-        Should be called on app start.
-        """
 
-        conn = get_db()
-        cursor = conn.cursor()
-
-        cursor.execute("""
-            SELECT session_id, start_ts, planned_duration, total_paused
-            FROM running_session
-        """)
-        row = cursor.fetchone()
-
-        if not row:
-            conn.close()
-            return  # No running session
-
-        now = int(time.time())
-
-        elapsed = (now - row["start_ts"]) - row["total_paused"]
-
-        if elapsed >= row["planned_duration"]:
-            conn.close()
-            # Auto-stop as completed
-            self.stop_session(interrupted=False)
-        else:
-            conn.close()
-
-    def get_today_summary(self):
+    def get_today_summary(self,user_id):
         """
         Returns total study time and session count for today.
         """
@@ -231,8 +208,8 @@ class StudyTimerService:
             SELECT COUNT(*) as session_count,
                 COALESCE(SUM(actual_duration), 0) as total_seconds
             FROM study_session
-            WHERE date = ?
-        """, (today,))
+            WHERE date = ? AND user_id = ?
+        """, (today, user_id))
 
         row = cursor.fetchone()
 
@@ -243,4 +220,3 @@ class StudyTimerService:
             "total_seconds": row["total_seconds"],
             "session_count": row["session_count"]
         }
-
