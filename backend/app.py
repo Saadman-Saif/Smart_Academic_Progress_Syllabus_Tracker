@@ -2,8 +2,11 @@ import os
 from flask import Flask
 from dotenv import load_dotenv
 from db import init_db
+from syllabus_initializer import initialize_syllabus
+
 load_dotenv()
 app = Flask(__name__)
+initialize_syllabus()
 init_db()
 app.secret_key = os.getenv("FLASK_SECRET_KEY") or "secret_for_team_project"
 # Auth blueprints
