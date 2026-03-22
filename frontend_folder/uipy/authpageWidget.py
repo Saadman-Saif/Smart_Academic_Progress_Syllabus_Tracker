@@ -109,7 +109,7 @@ class Ui_LoginScreen(object):
         sizePolicy3.setHeightForWidth(self.forgot_password_label.sizePolicy().hasHeightForWidth())
         self.forgot_password_label.setSizePolicy(sizePolicy3)
         self.forgot_password_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.forgot_password_label.setOpenExternalLinks(True)
+        self.forgot_password_label.setOpenExternalLinks(False)
 
         self.verticalLayout_2.addWidget(self.forgot_password_label, 0, Qt.AlignmentFlag.AlignHCenter)
 
