@@ -23,17 +23,21 @@ def login():
         cursor = conn.cursor()
         # 3. Query the DB using email
         cursor.execute(
-            "SELECT id,password FROM users WHERE email = ?", 
-            (email,)
+            "SELECT id, username, email, password FROM users WHERE email = ?",
+            (email,),
         )
         user = cursor.fetchone()
-        
-        # 4. Verify password hash
+
         if user and check_password_hash(user["password"], password):
-           session["user_id"] = user["id"] #storing user_id in session
-           return jsonify({
-               "message": "Login successful"
-            }), 200
+            session["user_id"] = user["id"]
+            return jsonify(
+                {
+                    "message": "Login successful",
+                    "user_id": user["id"],
+                    "username": user["username"],
+                    "email": user["email"],
+                }
+            ), 200
         else:
             return jsonify({"message": "Invalid email or password"}), 401
             

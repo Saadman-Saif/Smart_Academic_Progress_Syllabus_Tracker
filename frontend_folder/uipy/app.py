@@ -16,10 +16,9 @@ from backend_client import BackendClient
 # --- WRAPPERS ---
 
 class LoginPageWrap(QWidget):
-    loginSuccess = Signal(int)
+    loginSuccess = Signal(int, str)
     forgotPassword = Signal()
-    signupSuccess = Signal(int)
-    usernameSignal = Signal(str)
+    signupSuccess = Signal(int, str)
 
     def __init__(self):
         super().__init__()
@@ -36,20 +35,18 @@ class LoginPageWrap(QWidget):
         user_text = self.ui.login_email_lineedit.text()
         pass_text = self.ui.login_password_lineedit.text()
 
-        self.usernameSignal.emit(user_text)
-
         self.ui.login_btn.setText("Connecting...")
         self.ui.login_btn.setEnabled(False)
         QApplication.processEvents()
 
-        success, message, user_id = self.client.login(user_text, pass_text)
+        success, message, user_id, username = self.client.login(user_text, pass_text)
 
         self.ui.login_btn.setText("Login")
         self.ui.login_btn.setEnabled(True)
 
         if success:
             print("Login worked!")
-            self.loginSuccess.emit(user_id)
+            self.loginSuccess.emit(user_id, username or "")
         else:
             QMessageBox.warning(self, "Login Failed", message)
 
@@ -61,11 +58,11 @@ class LoginPageWrap(QWidget):
         email = self.ui.signup_email_lineedit.text()
         password = self.ui.signup_password_lineedit.text()
 
-        success, response, user_id = self.client.signup(username, email, password)
+        success, response, user_id, uname = self.client.signup(username, email, password)
 
         if success:
             print("Signup worked!")
-            self.signupSuccess.emit(user_id)
+            self.signupSuccess.emit(user_id, uname or username)
         else:
             QMessageBox.warning(self, "Signup Failed", response)
 
@@ -114,12 +111,13 @@ class SyllabusPreviewPageWrap(QWidget):
     def handle_backBtn_click(self):
         self.goBack.emit()
 
-    def load_data(self, user_id):
-        print(f"Fetching syllabus for user id {user_id}...")
-        success, data = self.client.get_syllabus(user_id)
+    def load_data(self):
+        print("Fetching syllabus for current session...")
+        success, data = self.client.get_syllabus()
         print(data)
-        if success and data.get('syllabus'):
-            syllabus_list = data['syllabus']
+        # Backend GET /syllabus returns a JSON array of courses (not {"syllabus": [...]})
+        if success and isinstance(data, list):
+            syllabus_list = data
             print("Syllabus loaded:", len(syllabus_list)) 
 
             for col_idx, course in enumerate(syllabus_list):
@@ -477,7 +475,6 @@ class MySoftware(QMainWindow):
         self.page_login.forgotPassword.connect(self.go_to_email)
         self.page_login.signupSuccess.connect(self.go_to_selection)
         self.current_username = None
-        self.page_login.usernameSignal.connect(self._catch_username)
         self.page_enter_email.sendValidEmailToParent.connect(self.go_to_code)
         self.page_enter_email.goBack.connect(self.go_to_login)
         self.page_enter_code.codeValid.connect(self.go_to_home)
@@ -498,12 +495,10 @@ class MySoftware(QMainWindow):
         self.uiOnboardingStackPage.stackedWidget.addWidget(self.page_syllabus)   # Index 4
         self.go_to_login()
 
-    def _catch_username(self, username):
+    def handle_login_success(self, user_id, username):
+        self.current_user_id = user_id
         self.current_username = username
-
-    def handle_login_success(self, id):
-        self.current_user_id = id
-        print(f"Logged in with id: {self.current_user_id}")
+        print(f"Logged in with id: {self.current_user_id}, username: {self.current_username}")
         self.go_to_home()
 
     def go_to_login(self):
@@ -518,10 +513,10 @@ class MySoftware(QMainWindow):
         self.page_enter_code.set_recovery_email(self.recovery_email)
         self.uiOnboardingStackPage.stackedWidget.setCurrentIndex(self.ENTER_CODE_NEW_PASS_IND)
 
-    def go_to_selection(self, id):
-        self.current_user_id = id
-        print(self.current_user_id)
-        print(f"Logged in as id: {self.current_user_id}")
+    def go_to_selection(self, user_id, username):
+        self.current_user_id = user_id
+        self.current_username = username
+        print(f"Logged in as id: {self.current_user_id}, username: {self.current_username}")
         self.uiOnboardingStackPage.stackedWidget.setCurrentIndex(self.SELECTION_PAGE_IND)
 
     def go_to_preview(self):
@@ -537,7 +532,7 @@ class MySoftware(QMainWindow):
             sem_val
         )
 
-        syllabus_found = self.page_syllabus.load_data(self.current_user_id)
+        syllabus_found = self.page_syllabus.load_data()
         
         if syllabus_found:
             self.uiOnboardingStackPage.stackedWidget.setCurrentIndex(self.PREVIEW_PAGE_IND)
@@ -547,7 +542,8 @@ class MySoftware(QMainWindow):
     def go_to_home(self):
         self.main_app = HomePageWrap()
         self.setCentralWidget(self.main_app)
-        self.main_app.ui.welcomeUserLabel.setText(f"Welcome, {self.current_username}!")
+        welcome = self.current_username or "User"
+        self.main_app.ui.welcomeUserLabel.setText(f"Welcome, {welcome}!")
         # Clean up memory by destroying the onboarding views
         self.onboarding_widget.deleteLater()
         self.onboarding_widget = None
