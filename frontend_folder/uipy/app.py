@@ -1,5 +1,5 @@
 import sys
-from PySide6.QtWidgets import (QApplication, QMainWindow, QWidget, QMessageBox, QSizePolicy, QFrame, QVBoxLayout, QLabel, QScrollArea)
+from PySide6.QtWidgets import (QApplication, QMainWindow, QWidget, QDialog, QLineEdit, QHBoxLayout, QPushButton, QMessageBox, QSizePolicy, QFrame, QVBoxLayout, QLabel, QScrollArea)
 from PySide6.QtCore import (QSize, QCoreApplication, Qt, Signal, QTimer)
 from PySide6.QtGui import QFont
 
@@ -111,12 +111,10 @@ class SyllabusPreviewPageWrap(QWidget):
     def handle_backBtn_click(self):
         self.goBack.emit()
 
-    def load_data(self):
-        print("Fetching syllabus for current session...")
-        success, data = self.client.get_syllabus()
-        print(data)
+    # A sort of setter function for the syllabus data
+    def build_and_place_cards(self, data):
         # Backend GET /syllabus returns a JSON array of courses (not {"syllabus": [...]})
-        if success and isinstance(data, list):
+        if isinstance(data, list):
             syllabus_list = data
             print("Syllabus loaded:", len(syllabus_list)) 
 
@@ -178,7 +176,6 @@ class SyllabusPreviewPageWrap(QWidget):
         body_scroll.setWidget(scroll_content)
         scroll_layout = QVBoxLayout(scroll_content)
 
-        # Generate the HTML List of Modules
         module_html = "<ul style='font-size: 14px;'>" 
         for module in course.get('modules', []):
             module_html += f"<li>{module.get('title', '')}</li>"
@@ -191,84 +188,176 @@ class SyllabusPreviewPageWrap(QWidget):
 
         card_layout.addWidget(body_scroll)
 
-        # Add the finished card to the main GridLayout (Row 1, Column col_idx)
         self.ui.gridLayout.addWidget(card_frame, 1, col_idx, 1, 1)
 
 
 class HomePageWrap(QWidget):
+    sendUpdatedMarks = Signal(str, list)
+    loadCTMarks = Signal(str)
     def __init__(self):
         super().__init__()
         self.ui = Ui_HomePage()
         self.ui.setupUi(self)
-        self.CTavgScreenInstance = CTAverageCard(parent=self)
+        # self.build_dynamic_cards()
+        self.avgMark = 0
+        self.allMarks = []
         self.timerScreenInstance = StudyTimerScreen(parent=self)
 
-class CTAverageCard(QWidget):
-    def __init__(self, parent):
-        super().__init__()
-        avgMarks = {"CSE 2201": 16, 
-                    "CSE 2203": 15, 
-                    "CSE 2205": 19, 
-                    "HUM 2213": 13,
-                    "Math 2213": 17}
-        allMarks = {"CSE 2201": [16, 15, 17], 
-                    "CSE 2203": [15, 15, 15, 15], 
-                    "CSE 2205": [20, 18], 
-                    "HUM 2213": [10, 13, 16],
-                    "Math 2213": [16, 18, 17]}
-        self.parentInstance = parent
-        for cardNo, course in enumerate(avgMarks):
-            self.parentInstance.ui.cardFrame = QFrame(self.parentInstance.ui.cardsFrame)
-            self.parentInstance.ui.cardFrame.setObjectName(u"cardFrame")
-            self.parentInstance.ui.cardFrame.setFrameShape(QFrame.Shape.StyledPanel)
-            self.parentInstance.ui.cardFrame.setFrameShadow(QFrame.Shadow.Raised)
-            self.parentInstance.ui.verticalLayout_5 = QVBoxLayout(self.parentInstance.ui.cardFrame)
-            self.parentInstance.ui.verticalLayout_5.setObjectName(u"verticalLayout_5")
-            self.parentInstance.ui.courseCodeLabel = QLabel(self.parentInstance.ui.cardFrame)
-            self.parentInstance.ui.courseCodeLabel.setObjectName(u"courseCodeLabel")
-            sizePolicy3 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Maximum)
-            sizePolicy3.setHorizontalStretch(0)
-            sizePolicy3.setVerticalStretch(0)
-            sizePolicy3.setHeightForWidth(self.parentInstance.ui.courseCodeLabel.sizePolicy().hasHeightForWidth())
-            self.parentInstance.ui.courseCodeLabel.setSizePolicy(sizePolicy3)
-            font2 = QFont()
-            font2.setFamilies([u"Inter"])
-            font2.setPointSize(12)
-            font2.setBold(True)
-            self.parentInstance.ui.courseCodeLabel.setFont(font2)
-            self.parentInstance.ui.courseCodeLabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
+    def build_dynamic_cards(self, course, avgMarks, allMarks):
+        # avgMarks = {"CSE 2201": 16, 
+        #             "CSE 2203": 15, 
+        #             "CSE 2205": 19, 
+        #             "HUM 2213": 13,
+        #             "Math 2213": 17}
+        # allMarks = {"CSE 2201": [16, 15, 17], 
+        #             "CSE 2203": [15, 15, 15, 15], 
+        #             "CSE 2205": [20, 18], 
+        #             "HUM 2213": [10, 13, 16],
+        #             "Math 2213": [16, 18, 17]}
 
-            self.parentInstance.ui.verticalLayout_5.addWidget(self.parentInstance.ui.courseCodeLabel)
+        # GET MARKS FROM BACKEND, CONNECT THEM QUICKLYYYYYYY
+        # for course in avgMarks:
+        custom_card = CTAverageCard(
+            course_name=course, 
+            avg_mark=avgMarks, 
+            ct_marks=allMarks
+        )
+        
+        custom_card.cardClicked.connect(self.handle_card_clicked)
+        
+        self.ui.horizontalLayout_4.addWidget(custom_card)
 
-            self.parentInstance.ui.markLabel = QLabel(self.parentInstance.ui.cardFrame)
-            self.parentInstance.ui.markLabel.setObjectName(u"markLabel")
-            font3 = QFont()
-            font3.setFamilies([u"Inter"])
-            font3.setPointSize(48)
-            font3.setBold(True)
-            self.parentInstance.ui.markLabel.setFont(font3)
-            self.parentInstance.ui.markLabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
+    def set_avgMark(self, mark):
+        self.avgMark = mark
 
-            self.parentInstance.ui.verticalLayout_5.addWidget(self.parentInstance.ui.markLabel)
+    def handle_card_clicked(self, courseName):
+        print("Card clicked successfully!")
+        dialog = EditMarksDialog(course_name=courseName) 
+        result = dialog.exec()
+        if result == QDialog.DialogCode.Accepted:
+            ct1, ct2, ct3, ct4 = dialog.get_new_marks()
+            print(f"User saved new marks: {ct1}, {ct2}, {ct3}, {ct4}")
+            if ct1 == '':
+                ct1 = 0
+            if ct2 == '':
+                ct2 = 0
+            if ct3 == '':
+                ct3 = 0
+            if ct4 == '':
+                ct4 = 0
+            marksList = [int(ct1), int(ct2), int(ct3), int(ct4)]
+            self.sendUpdatedMarks.emit(courseName, marksList)
+        else:
+            print("User cancelled the edit.")
 
-            for ctNo, marks in enumerate(allMarks.get(course)):
-                self.parentInstance.ui.ctLabel = QLabel(self.parentInstance.ui.cardFrame)
-                self.parentInstance.ui.ctLabel.setObjectName(u"ctLabel")
-                font4 = QFont()
-                font4.setFamilies([u"Inter"])
-                font4.setPointSize(10)
-                font4.setBold(False)
-                self.parentInstance.ui.ctLabel.setFont(font4)
-                self.parentInstance.ui.ctLabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
-                self.parentInstance.ui.ctLabel.setText(QCoreApplication.translate("HomePage", f"CT{ctNo + 1}: {marks}", None))
-                self.parentInstance.ui.verticalLayout_5.addWidget(self.parentInstance.ui.ctLabel)
+    def set_allMarks_avgMark(self, allMarks, avgMark):
+        self.allMarks = allMarks
+        self.avgMark = avgMark
 
+    def fill_in_cardsFrame(self, syllabus):
+        while self.ui.horizontalLayout_4.count():
+            item = self.ui.horizontalLayout_4.takeAt(0)
+            widget = item.widget()
+            if widget:
+                widget.deleteLater()
 
-            self.parentInstance.ui.horizontalLayout_4.addWidget(self.parentInstance.ui.cardFrame)
+        for courseList in syllabus:
+            self.loadCTMarks.emit(courseList.get('course_code'))
+            # success, self.ctCount = self.load_ct_marks(course.get('course_code'))
+            self.build_dynamic_cards(courseList.get('course_code'), self.avgMark, self.allMarks)
+   
 
-            self.parentInstance.ui.courseCodeLabel.setText(QCoreApplication.translate("HomePage", course, None))
-            self.parentInstance.ui.markLabel.setText(QCoreApplication.translate("HomePage", str(avgMarks.get(course)), None))
+class EditMarksDialog(QDialog):
+    def __init__(self, course_name, parent=None):
+        super().__init__(parent)
+        self.courseCode = course_name
+        self.setWindowTitle(f"Edit Marks for {course_name}")
+        self.setFixedSize(300, 200)
+        
+        layout = QVBoxLayout(self)
+        
+        self.instruction = QLabel("Enter new CT marks:")
+        self.marks_input_ct1 = QLineEdit()
+        self.marks_input_ct2 = QLineEdit()
+        self.marks_input_ct3 = QLineEdit()
+        self.marks_input_ct4 = QLineEdit()
+        
+        btn_layout = QHBoxLayout()
+        self.save_btn = QPushButton("Save")
+        self.cancel_btn = QPushButton("Cancel")
+        btn_layout.addWidget(self.save_btn)
+        btn_layout.addWidget(self.cancel_btn)
+        
+        layout.addWidget(self.instruction)
+        layout.addWidget(self.marks_input_ct1)
+        layout.addWidget(self.marks_input_ct2)
+        layout.addWidget(self.marks_input_ct3)
+        layout.addWidget(self.marks_input_ct4)
+        layout.addLayout(btn_layout)
+        
+        self.save_btn.clicked.connect(self.accept) 
+        self.cancel_btn.clicked.connect(self.reject) 
 
+    # Getter function for the backend
+    def get_new_marks(self):
+        return self.marks_input_ct1.text(), self.marks_input_ct2.text(), self.marks_input_ct3.text(), self.marks_input_ct4.text()
+
+class CTAverageCard(QFrame):
+    cardClicked = Signal(str)
+    
+    def __init__(self, course_name, avg_mark, ct_marks, parent=None):
+        super().__init__(parent)
+        self.courseName = course_name
+        self.setCursor(Qt.CursorShape.PointingHandCursor)
+        self.setFrameShape(QFrame.Shape.StyledPanel)
+        self.setFrameShadow(QFrame.Shadow.Raised)
+        self.setObjectName(u"cardFrame") # Keeps stylesheet targeting
+        
+        layout = QVBoxLayout(self)
+
+        self.courseCodeLabel = QLabel(course_name)
+        self.courseCodeLabel.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents)
+        self.courseCodeLabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        
+        sizePolicy3 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Maximum)
+        self.courseCodeLabel.setSizePolicy(sizePolicy3)
+        
+        font2 = QFont()
+        font2.setFamilies([u"Inter"])
+        font2.setPointSize(12)
+        font2.setBold(True)
+        self.courseCodeLabel.setFont(font2)
+        
+        layout.addWidget(self.courseCodeLabel)
+
+        self.markLabel = QLabel(str(avg_mark))
+        self.markLabel.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents)
+        self.markLabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        
+        font3 = QFont()
+        font3.setFamilies([u"Inter"])
+        font3.setPointSize(48)
+        font3.setBold(True)
+        self.markLabel.setFont(font3)
+        
+        layout.addWidget(self.markLabel)
+
+        for ctNo, marks in enumerate(ct_marks):
+            ctLabel = QLabel(f"CT{ctNo + 1}: {marks}")
+            ctLabel.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents)
+            ctLabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
+            
+            font4 = QFont()
+            font4.setFamilies([u"Inter"])
+            font4.setPointSize(10)
+            ctLabel.setFont(font4)
+            
+            layout.addWidget(ctLabel)
+    
+    def mouseReleaseEvent(self, event):
+        if event.button() == Qt.MouseButton.LeftButton:
+            self.cardClicked.emit(self.courseName) 
+        super().mouseReleaseEvent(event)
 
 class StudyTimerScreen(QWidget):
     def __init__(self, parent):
@@ -448,6 +537,7 @@ class MySoftware(QMainWindow):
         super().__init__()
         self.current_user_id = None
         self.recovery_email = None
+        self.current_user_syllabus = None
 
         self.LOGIN_PAGE_IND = 0
         self.ENTER_EMAIL_IND = 1
@@ -470,6 +560,9 @@ class MySoftware(QMainWindow):
         self.page_selection = InstDeptYearSemPageWrap()
         self.page_syllabus = SyllabusPreviewPageWrap()
 
+        # Setup Backened
+        self.client = BackendClient()
+
         # Recieve signals
         self.page_login.loginSuccess.connect(self.handle_login_success)
         self.page_login.forgotPassword.connect(self.go_to_email)
@@ -477,7 +570,7 @@ class MySoftware(QMainWindow):
         self.current_username = None
         self.page_enter_email.sendValidEmailToParent.connect(self.go_to_code)
         self.page_enter_email.goBack.connect(self.go_to_login)
-        self.page_enter_code.codeValid.connect(self.go_to_home)
+        self.page_enter_code.codeValid.connect(self.go_to_login)
         self.page_enter_code.goBack.connect(self.go_to_email)
         self.page_selection.selectionValid.connect(self.go_to_preview)
         self.page_selection.goBack.connect(self.go_to_login)
@@ -519,12 +612,25 @@ class MySoftware(QMainWindow):
         print(f"Logged in as id: {self.current_user_id}, username: {self.current_username}")
         self.uiOnboardingStackPage.stackedWidget.setCurrentIndex(self.SELECTION_PAGE_IND)
 
+    def load_syllabus(self):
+        print("Fetching syllabus for current session...")
+        success, self.current_user_syllabus = self.client.get_syllabus()
+        # print(self.current_user_syllabus)
+
+        return success
+        # Backend GET /syllabus returns a JSON array of courses (not {"syllabus": [...]})
+        # if success and isinstance(self.current_user_syllabus, list):
+        #     syllabus_list = self.current_user_syllabus
+        #     print("Syllabus loaded:", len(syllabus_list)) 
+        # else:
+        #     print(self.current_user_syllabus)
+        #     return False
+
     def go_to_preview(self):
         data = self.page_selection.preference_payload() 
         sem_val = 1 if data['semester'] == "Odd" else 2
         
-        client = BackendClient()
-        client.set_academic_context(
+        self.client.set_academic_context(
             self.current_user_id,
             data['university'],
             data['department'],
@@ -532,22 +638,66 @@ class MySoftware(QMainWindow):
             sem_val
         )
 
-        syllabus_found = self.page_syllabus.load_data()
+        syllabus_found = self.load_syllabus()
         
         if syllabus_found:
+            self.page_syllabus.build_and_place_cards(self.current_user_syllabus)
             self.uiOnboardingStackPage.stackedWidget.setCurrentIndex(self.PREVIEW_PAGE_IND)
         else:
             QMessageBox.warning(self, "Syllabus not found", "No syllabus was found corresponding to the selected information.")
 
+    # def set_current_user_syllabus(self, syllabusData):
+    #     self.current_user_syllabus = syllabusData
+
     def go_to_home(self):
         self.main_app = HomePageWrap()
+        self.main_app.sendUpdatedMarks.connect(self.update_ct_marks_and_cardsFrame)
+        self.main_app.loadCTMarks.connect(self.load_ct_marks)
         self.setCentralWidget(self.main_app)
         welcome = self.current_username or "User"
         self.main_app.ui.welcomeUserLabel.setText(f"Welcome, {welcome}!")
+
+        # Request course code value from backend to then request ct marks from the backend against those courses
+        success = self.load_syllabus()
+        # print(self.current_user_syllabus)
+        if success:
+            self.main_app.fill_in_cardsFrame(self.current_user_syllabus)
+            # for course in self.current_user_syllabus:
+            #     success, allMarks, avgMark, ctCount = self.load_ct_marks(course.get('course_code'))
+            #     self.main_app.build_dynamic_cards(course.get('course_code'), avgMark, allMarks)
+        
         # Clean up memory by destroying the onboarding views
         self.onboarding_widget.deleteLater()
         self.onboarding_widget = None
 
+    # def fill_in_cardsFrame(self):
+    #     while self.ui.horizontalLayout_4.count():
+    #     item = self.ui.horizontalLayout_4.takeAt(0)
+    #     widget = item.widget()
+    #     if widget:
+    #         widget.deleteLater()
+    #     for course in self.current_user_syllabus:
+    #         success, allMarks, avgMark, ctCount = self.load_ct_marks(course.get('course_code'))
+    #         self.main_app.build_dynamic_cards(course.get('course_code'), avgMark, allMarks)
+
+    def load_ct_marks(self, courseCode):
+        success, response = self.client.get_ct_marks(courseCode)
+        if success:
+            self.main_app.set_allMarks_avgMark(response.get('ct_marks'), response.get('average'))
+            return True, response.get('counted_ct')
+        else:
+            return False, None, None, None
+        
+    def update_ct_marks_and_cardsFrame(self, courseCode, list_ctMarks):
+        for ctNo, mark in enumerate(list_ctMarks):
+            print(ctNo)
+            success, response = self.client.set_ct_marks(courseCode, int(ctNo) + 1, mark)
+            if success:
+                self.main_app.set_avgMark(response.get('average'))
+                print("Marks updated successfully!")
+                self.main_app.fill_in_cardsFrame(self.current_user_syllabus)
+            else:
+                print(response)
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

@@ -6,7 +6,7 @@ class BackendClient:
 
     def __init__(self):
         # REPLACE THIS WITH THE CHANGING IP
-        self.base_url = "http://192.168.0.102:5000/"
+        self.base_url = "http://192.168.0.103:5000/"
         self.req_session = BackendClient.shared_session
 
     def signup(self, username, email, password):
@@ -136,6 +136,40 @@ class BackendClient:
             return True
         except Exception:
             return False
+        
+    def get_ct_marks(self, courseCode):
+        url = f"{self.base_url}ct/{courseCode}"
+
+        try:
+            response = self.req_session.get(url, timeout=5)
+            if response.status_code == 200:
+                return True, response.json()
+            try:
+                err = response.json()
+            except ValueError:
+                err = response.text
+            return False, err
+        except Exception as e:
+            return False, str(e)
+
+    def set_ct_marks(self, courseCode, ctNo, mark):
+        url = f"{self.base_url}ct/update"
+        payload = {
+            "course_code": courseCode,
+            "ct_number": ctNo,
+            "mark": mark
+        }
+        try:
+            response = self.req_session.post(url, json=payload, timeout=5)
+            if response.status_code == 200:
+                return True, response.json()
+            try:
+                err = response.json()
+            except ValueError:
+                err = response.text
+            return False, err
+        except Exception as e:
+            return False, str(e)
 
     def start_study(self, elapsedTime_Seconds):
         url = f"{self.base_url}study/start"
