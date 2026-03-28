@@ -13,8 +13,8 @@ from syllabus_previewWidget import Ui_SyllabusPreview
 from homepageWidget import Ui_HomePage
 from backend_client import BackendClient
 
-# --- WRAPPERS ---
-
+#------ Wrappers ------
+#------ Authentication Page ------
 class LoginPageWrap(QWidget):
     loginSuccess = Signal(int, str)
     forgotPassword = Signal()
@@ -66,7 +66,7 @@ class LoginPageWrap(QWidget):
         else:
             QMessageBox.warning(self, "Signup Failed", response)
 
-
+#------ Selection Page ------
 class InstDeptYearSemPageWrap(QWidget):
     selectionValid = Signal()
     goBack = Signal()
@@ -92,7 +92,7 @@ class InstDeptYearSemPageWrap(QWidget):
             "semester": self.ui.semesterComboBox.currentText()
         }
 
-
+#------ Syllabus Preview Page ------
 class SyllabusPreviewPageWrap(QWidget):
     goNext = Signal()
     goBack = Signal()
@@ -190,7 +190,7 @@ class SyllabusPreviewPageWrap(QWidget):
 
         self.ui.gridLayout.addWidget(card_frame, 1, col_idx, 1, 1)
 
-
+#------ Landing Page ------
 class HomePageWrap(QWidget):
     sendUpdatedMarks = Signal(str, list)
     loadCTMarks = Signal(str)
@@ -266,7 +266,7 @@ class HomePageWrap(QWidget):
             # success, self.ctCount = self.load_ct_marks(course.get('course_code'))
             self.build_dynamic_cards(courseList.get('course_code'), self.avgMark, self.allMarks)
    
-
+#------ Home Tab ------
 class EditMarksDialog(QDialog):
     def __init__(self, course_name, parent=None):
         super().__init__(parent)
@@ -359,6 +359,12 @@ class CTAverageCard(QFrame):
             self.cardClicked.emit(self.courseName) 
         super().mouseReleaseEvent(event)
 
+#------ Syllabus Tab ------
+# class ModuleTopicCard(QWidget):
+
+# class 
+
+#------ Study Timer Tab ------
 class StudyTimerScreen(QWidget):
     def __init__(self, parent):
         super().__init__()
@@ -461,7 +467,7 @@ class StudyTimerScreen(QWidget):
             # Update a label like: self.parent.ui.summaryLabel.setText(...)
 
 
-
+#------ Forgot Password ------
 class EnterEmailWrap(QWidget):
     sendValidEmailToParent = Signal(str)
     goBack = Signal()
@@ -528,8 +534,7 @@ class EnterCodeNewPassWrap(QWidget):
     def handle_backBtn_click(self):
         self.goBack.emit()
 
-# --- MAIN WINDOW ---
-
+#------ MAIN WINDOW ------
 class MySoftware(QMainWindow):
     emitRecoveryEmailSignal = Signal(str)
 
