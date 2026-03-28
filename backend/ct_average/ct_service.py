@@ -8,7 +8,7 @@ def calculate_best_three(ct_marks):
     valid_marks = [m for m in ct_marks if m is not None]
 
     if len(valid_marks) == 0:
-        return 0, 0
+        return None, 0
 
     if len(valid_marks) <= 3:
         average = sum(valid_marks) / len(valid_marks)
