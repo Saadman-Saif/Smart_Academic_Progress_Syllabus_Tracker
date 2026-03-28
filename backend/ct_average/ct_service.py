@@ -11,7 +11,7 @@ def calculate_best_three(ct_marks):
         return 0, 0
 
     if len(valid_marks) <= 3:
-        average = sum(valid_marks) / len(valid_marks)
+        average = ceil(sum(valid_marks) / len(valid_marks))
         return round(average, 2), len(valid_marks)
 
     # If 4 marks exist → drop lowest
