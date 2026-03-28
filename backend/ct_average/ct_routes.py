@@ -27,7 +27,8 @@ def update_ct():
 
     if ct_number not in [1, 2, 3, 4]:
         return jsonify({"error": "Invalid CT number"}), 400
-
+    if mark is None:
+        mark = 0
     if mark < 0 or mark > 20:
         return jsonify({"error": "Invalid mark"}), 400
 
