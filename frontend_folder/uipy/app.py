@@ -237,15 +237,27 @@ class HomePageWrap(QWidget):
         if result == QDialog.DialogCode.Accepted:
             ct1, ct2, ct3, ct4 = dialog.get_new_marks()
             print(f"User saved new marks: {ct1}, {ct2}, {ct3}, {ct4}")
+            marksList = []
             if ct1 == '':
-                ct1 = 0
+                ct1 = None
+                marksList.append(ct1)
+            else:
+                marksList.append(int(ct1))
             if ct2 == '':
-                ct2 = 0
+                ct2 = None
+                marksList.append(ct2)
+            else:
+                marksList.append(int(ct2))
             if ct3 == '':
-                ct3 = 0
+                ct3 = None
+                marksList.append(ct3)
+            else:
+                marksList.append(int(ct3))
             if ct4 == '':
-                ct4 = 0
-            marksList = [int(ct1), int(ct2), int(ct3), int(ct4)]
+                ct4 = None
+                marksList.append(ct4)
+            else:
+                marksList.append(int(ct4))
             self.sendUpdatedMarks.emit(courseName, marksList)
         else:
             print("User cancelled the edit.")
