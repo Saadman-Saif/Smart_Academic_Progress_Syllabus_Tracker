@@ -2,7 +2,7 @@ from math import ceil
 
 def calculate_best_three(ct_marks):
     if not ct_marks:
-        return 0, 0
+        return None, 0
 
     # Remove None values
     valid_marks = [m for m in ct_marks if m is not None]
