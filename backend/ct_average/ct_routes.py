@@ -27,10 +27,9 @@ def update_ct():
 
     if ct_number not in [1, 2, 3, 4]:
         return jsonify({"error": "Invalid CT number"}), 400
-    if mark is None:
-        mark = 0
-    if mark < 0 or mark > 20:
-        return jsonify({"error": "Invalid mark"}), 400
+    if mark is not None:
+        if mark < 0 or mark > 20:
+            return jsonify({"error": "Invalid mark"}), 400
 
     create_ct_if_not_exists(user_id, course_code)
     update_ct_mark(user_id, course_code, ct_number, mark)
