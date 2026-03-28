@@ -394,24 +394,24 @@ class StudyTimerScreen(QWidget):
         self.parentInstance.ui.saveSessionBtn.clicked.connect(self.handle_saveSessionBtn_click)
 
     def handle_playBtn_click(self):
-        # if not self.elapsedTime_Seconds:
-        #     success, result = self.client.start_study(self.elapsedTime_Seconds)
-        #     if success:
-        #         print(f"Session started on backend with ID: {result}")
-        self.timer.start(1000)
-        self.parentInstance.ui.playBtn.setVisible(False)
-        self.parentInstance.ui.resetBtn.setVisible(False)
-        self.parentInstance.ui.pauseBtn.setVisible(True)
-        self.parentInstance.ui.stopBtn.setVisible(True)
-        #     else:
-        #         print(f"Failed to start on backend: {result}")
-        # else:
-        #     success, result = self.client.resume_study()
-        #     if success:
-        #         # Resume your local QTimer
-        #         print("Resumed backend")
-        #     else:
-        #         print("Error resuming timer")
+        if not self.elapsedTime_Seconds:
+            success, result = self.client.start_study(self.elapsedTime_Seconds)
+            if success:
+                print(f"Session started on backend with ID: {result}")
+            else:
+                print(f"Failed to start on backend: {result}")
+        else:
+            success, result = self.client.resume_study()
+            if success:
+                # Resume your local QTimer
+                self.timer.start(1000)
+                self.parentInstance.ui.playBtn.setVisible(False)
+                self.parentInstance.ui.resetBtn.setVisible(False)
+                self.parentInstance.ui.pauseBtn.setVisible(True)
+                self.parentInstance.ui.stopBtn.setVisible(True)
+                print("Resumed backend")
+            else:
+                print("Error resuming timer")
 
     def handle_resetBtn_click(self):
         msgBox = QMessageBox()
@@ -427,13 +427,15 @@ class StudyTimerScreen(QWidget):
             self.parentInstance.ui.stopBtn.setVisible(False)            
 
     def handle_pauseBtn_click(self):
-        # success, result = self.client.pause_study()
-        # if success:
-        #     print("Paused backend")
-        self.timer.stop()
-        self.parentInstance.ui.playBtn.setVisible(True)
-        self.parentInstance.ui.resetBtn.setVisible(True)
-        self.parentInstance.ui.pauseBtn.setVisible(False)
+        success, result = self.client.pause_study()
+        if success:
+            print("Paused backend")
+            self.timer.stop()
+            self.parentInstance.ui.playBtn.setVisible(True)
+            self.parentInstance.ui.resetBtn.setVisible(True)
+            self.parentInstance.ui.pauseBtn.setVisible(False)
+        else:
+            print(f"Error: {result}")
 
     def handle_stopBtn_click(self):
         self.timer.stop()
@@ -708,6 +710,8 @@ class MySoftware(QMainWindow):
     def update_ct_marks_and_cardsFrame(self, courseCode, list_ctMarks):
         for ctNo, mark in enumerate(list_ctMarks):
             print(ctNo)
+            if mark == None:
+                continue
             success, response = self.client.set_ct_marks(courseCode, int(ctNo) + 1, mark)
             if success:
                 self.main_app.set_avgMark(response.get('average'))

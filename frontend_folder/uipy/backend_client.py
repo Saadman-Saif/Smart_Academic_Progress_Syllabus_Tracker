@@ -6,7 +6,7 @@ class BackendClient:
 
     def __init__(self):
         # REPLACE THIS WITH THE CHANGING IP
-        self.base_url = "http://10.29.89.159:5000/"
+        self.base_url = "http://192.168.0.104:5000/"
         self.req_session = BackendClient.shared_session
 
     def signup(self, username, email, password):
@@ -171,6 +171,39 @@ class BackendClient:
         except Exception as e:
             return False, str(e)
 
+    def send_topic_completion(self, topicId):
+        url = f"{self}update-completion"
+        payload = {
+            "topic_id": topicId,
+            "completed": 1
+        }
+        try:
+            response = self.req_session.post(url, json=payload, timeout=5)
+            if response.status_code == 200:
+                return True, response.json()
+            try:
+                err = response.json()
+            except ValueError:
+                err = response.text
+            return False, err
+        except Exception as e:
+            return False, str(e)
+
+
+    def fetch_course_completion(self, courseId):
+        url = f"{self.base_url}course/{courseId}"
+        try:
+            response = self.req_session.get(url, timeout=5)
+            if response.status_code == 200:
+                return True, response.json() # "total_topics, completed, percentage, topics"
+            try:
+                err = response.json()
+            except ValueError:
+                err = response.text
+            return False, err
+        except Exception as e:
+            return False, str(e)
+
     def start_study(self, elapsedTime_Seconds):
         url = f"{self.base_url}study/start"
         payload = {"duration": elapsedTime_Seconds}
@@ -198,7 +231,7 @@ class BackendClient:
         except Exception as e:
             return False, str(e)
 
-    def stop_study(self, interrupted=False):
+    def stop_study(self, interrupted=True):
         url = f"{self.base_url}study/stop"
         payload = {"interrupted": interrupted}
         try:
