@@ -103,8 +103,7 @@ CREATE TABLE IF NOT EXISTS modules (
             date TEXT NOT NULL,
             start_ts INTEGER NOT NULL,
             end_ts INTEGER,
-            planned_duration INTEGER NOT NULL,
-            actual_duration INTEGER,
+            duration INTEGER,
             status TEXT NOT NULL,
             FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE   
         )
