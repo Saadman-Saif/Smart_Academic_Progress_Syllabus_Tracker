@@ -2,13 +2,13 @@ from math import ceil
 
 def calculate_best_three(ct_marks):
     if not ct_marks:
-        return None, 0
+        return 0, 0
 
     # Remove None values
     valid_marks = [m for m in ct_marks if m is not None]
 
     if len(valid_marks) == 0:
-        return None, 0
+        return 0, 0
 
     if len(valid_marks) <= 3:
         average = sum(valid_marks) / len(valid_marks)
