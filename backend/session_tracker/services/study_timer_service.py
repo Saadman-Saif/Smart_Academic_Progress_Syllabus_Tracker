@@ -165,9 +165,11 @@ class StudyTimerService:
 
         if row["status"] == "PAUSED":
             paused_duration = now - row["last_pause_ts"]
-            row["total_paused"] += paused_duration
-            
-        actual_duration = (now - row["start_ts"]) - row["total_paused"]
+            total_paused = row["total_paused"] + paused_duration
+        else:
+            total_paused = row["total_paused"]
+
+        actual_duration = (now - row["start_ts"]) - total_paused
         if actual_duration < 0:
             actual_duration = 0
 
