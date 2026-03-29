@@ -6,7 +6,7 @@ class BackendClient:
 
     def __init__(self):
         # REPLACE THIS WITH THE CHANGING IP
-        self.base_url = "http://192.168.0.104:5000/"
+        self.base_url = "http://10.29.33.189:5000/"
         self.req_session = BackendClient.shared_session
 
     def signup(self, username, email, password):
@@ -204,9 +204,12 @@ class BackendClient:
         except Exception as e:
             return False, str(e)
 
-    def start_study(self, elapsedTime_Seconds):
+    def start_study(self, elapsedTime_Seconds, defaultPlannedDuration_Seconds):
         url = f"{self.base_url}study/start"
-        payload = {"duration": elapsedTime_Seconds}
+        payload = {
+            "duration": elapsedTime_Seconds,
+            "planned_duration": defaultPlannedDuration_Seconds 
+        }
         try:
             response = self.req_session.post(url, json=payload, timeout=5)
             if response.status_code == 200:
@@ -231,11 +234,11 @@ class BackendClient:
         except Exception as e:
             return False, str(e)
 
-    def stop_study(self, interrupted=True):
+    def stop_study(self, interrupted=False):
         url = f"{self.base_url}study/stop"
         payload = {"interrupted": interrupted}
         try:
-            response = self.req_session.post(url, json=payload, timeout=5)
+            response = self.req_session.post(url, timeout=5)
             return response.status_code == 200, response.json()
         except Exception as e:
             return False, str(e)

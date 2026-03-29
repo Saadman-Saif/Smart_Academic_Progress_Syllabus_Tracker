@@ -16,8 +16,8 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QFrame, QGridLayout, QLabel,
-    QLineEdit, QPushButton, QSizePolicy, QVBoxLayout,
-    QWidget)
+    QLineEdit, QPushButton, QSizePolicy, QSpacerItem,
+    QVBoxLayout, QWidget)
 
 class Ui_LoginScreen(object):
     def setupUi(self, LoginScreen):
@@ -27,22 +27,22 @@ class Ui_LoginScreen(object):
         LoginScreen.setStyleSheet(u"background-color: rgb(37, 37, 29);")
         self.gridLayout = QGridLayout(LoginScreen)
         self.gridLayout.setObjectName(u"gridLayout")
-        self.frame = QFrame(LoginScreen)
-        self.frame.setObjectName(u"frame")
-        sizePolicy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
+        self.loginFrame = QFrame(LoginScreen)
+        self.loginFrame.setObjectName(u"loginFrame")
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.MinimumExpanding, QSizePolicy.Policy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(3)
-        sizePolicy.setHeightForWidth(self.frame.sizePolicy().hasHeightForWidth())
-        self.frame.setSizePolicy(sizePolicy)
-        self.frame.setStyleSheet(u"QFrame\n"
+        sizePolicy.setHeightForWidth(self.loginFrame.sizePolicy().hasHeightForWidth())
+        self.loginFrame.setSizePolicy(sizePolicy)
+        self.loginFrame.setStyleSheet(u"QFrame\n"
 "{\n"
 "	border: none;\n"
 "}")
-        self.frame.setFrameShape(QFrame.Shape.StyledPanel)
-        self.frame.setFrameShadow(QFrame.Shadow.Raised)
-        self.verticalLayout_2 = QVBoxLayout(self.frame)
+        self.loginFrame.setFrameShape(QFrame.Shape.StyledPanel)
+        self.loginFrame.setFrameShadow(QFrame.Shadow.Raised)
+        self.verticalLayout_2 = QVBoxLayout(self.loginFrame)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
-        self.label = QLabel(self.frame)
+        self.label = QLabel(self.loginFrame)
         self.label.setObjectName(u"label")
         sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Maximum, QSizePolicy.Policy.Fixed)
         sizePolicy1.setHorizontalStretch(0)
@@ -58,7 +58,7 @@ class Ui_LoginScreen(object):
 
         self.verticalLayout_2.addWidget(self.label, 0, Qt.AlignmentFlag.AlignHCenter)
 
-        self.label_2 = QLabel(self.frame)
+        self.label_2 = QLabel(self.loginFrame)
         self.label_2.setObjectName(u"label_2")
         sizePolicy1.setHeightForWidth(self.label_2.sizePolicy().hasHeightForWidth())
         self.label_2.setSizePolicy(sizePolicy1)
@@ -69,7 +69,7 @@ class Ui_LoginScreen(object):
 
         self.verticalLayout_2.addWidget(self.label_2, 0, Qt.AlignmentFlag.AlignHCenter)
 
-        self.login_email_lineedit = QLineEdit(self.frame)
+        self.login_email_lineedit = QLineEdit(self.loginFrame)
         self.login_email_lineedit.setObjectName(u"login_email_lineedit")
         sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
         sizePolicy2.setHorizontalStretch(0)
@@ -82,7 +82,7 @@ class Ui_LoginScreen(object):
 
         self.verticalLayout_2.addWidget(self.login_email_lineedit, 0, Qt.AlignmentFlag.AlignHCenter)
 
-        self.login_password_lineedit = QLineEdit(self.frame)
+        self.login_password_lineedit = QLineEdit(self.loginFrame)
         self.login_password_lineedit.setObjectName(u"login_password_lineedit")
         sizePolicy2.setHeightForWidth(self.login_password_lineedit.sizePolicy().hasHeightForWidth())
         self.login_password_lineedit.setSizePolicy(sizePolicy2)
@@ -93,7 +93,7 @@ class Ui_LoginScreen(object):
 
         self.verticalLayout_2.addWidget(self.login_password_lineedit, 0, Qt.AlignmentFlag.AlignHCenter)
 
-        self.login_btn = QPushButton(self.frame)
+        self.login_btn = QPushButton(self.loginFrame)
         self.login_btn.setObjectName(u"login_btn")
         sizePolicy2.setHeightForWidth(self.login_btn.sizePolicy().hasHeightForWidth())
         self.login_btn.setSizePolicy(sizePolicy2)
@@ -101,7 +101,7 @@ class Ui_LoginScreen(object):
 
         self.verticalLayout_2.addWidget(self.login_btn, 0, Qt.AlignmentFlag.AlignHCenter)
 
-        self.forgot_password_label = QLabel(self.frame)
+        self.forgot_password_label = QLabel(self.loginFrame)
         self.forgot_password_label.setObjectName(u"forgot_password_label")
         sizePolicy3 = QSizePolicy(QSizePolicy.Policy.Maximum, QSizePolicy.Policy.Preferred)
         sizePolicy3.setHorizontalStretch(0)
@@ -113,22 +113,36 @@ class Ui_LoginScreen(object):
 
         self.verticalLayout_2.addWidget(self.forgot_password_label, 0, Qt.AlignmentFlag.AlignHCenter)
 
+        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
-        self.gridLayout.addWidget(self.frame, 1, 0, 1, 1, Qt.AlignmentFlag.AlignVCenter)
+        self.verticalLayout_2.addItem(self.verticalSpacer)
 
-        self.frame_3 = QFrame(LoginScreen)
-        self.frame_3.setObjectName(u"frame_3")
-        sizePolicy.setHeightForWidth(self.frame_3.sizePolicy().hasHeightForWidth())
-        self.frame_3.setSizePolicy(sizePolicy)
-        self.frame_3.setStyleSheet(u"QFrame\n"
+        self.signupLinkLabel = QLabel(self.loginFrame)
+        self.signupLinkLabel.setObjectName(u"signupLinkLabel")
+        sizePolicy3.setHeightForWidth(self.signupLinkLabel.sizePolicy().hasHeightForWidth())
+        self.signupLinkLabel.setSizePolicy(sizePolicy3)
+        font2 = QFont()
+        font2.setPointSize(11)
+        self.signupLinkLabel.setFont(font2)
+
+        self.verticalLayout_2.addWidget(self.signupLinkLabel, 0, Qt.AlignmentFlag.AlignHCenter)
+
+
+        self.gridLayout.addWidget(self.loginFrame, 1, 0, 1, 1, Qt.AlignmentFlag.AlignVCenter)
+
+        self.signupFrame = QFrame(LoginScreen)
+        self.signupFrame.setObjectName(u"signupFrame")
+        sizePolicy.setHeightForWidth(self.signupFrame.sizePolicy().hasHeightForWidth())
+        self.signupFrame.setSizePolicy(sizePolicy)
+        self.signupFrame.setStyleSheet(u"QFrame\n"
 "{\n"
 "	border: none;\n"
 "}")
-        self.frame_3.setFrameShape(QFrame.Shape.StyledPanel)
-        self.frame_3.setFrameShadow(QFrame.Shadow.Raised)
-        self.verticalLayout_5 = QVBoxLayout(self.frame_3)
+        self.signupFrame.setFrameShape(QFrame.Shape.StyledPanel)
+        self.signupFrame.setFrameShadow(QFrame.Shadow.Raised)
+        self.verticalLayout_5 = QVBoxLayout(self.signupFrame)
         self.verticalLayout_5.setObjectName(u"verticalLayout_5")
-        self.label_7 = QLabel(self.frame_3)
+        self.label_7 = QLabel(self.signupFrame)
         self.label_7.setObjectName(u"label_7")
         sizePolicy1.setHeightForWidth(self.label_7.sizePolicy().hasHeightForWidth())
         self.label_7.setSizePolicy(sizePolicy1)
@@ -137,7 +151,7 @@ class Ui_LoginScreen(object):
 
         self.verticalLayout_5.addWidget(self.label_7, 0, Qt.AlignmentFlag.AlignHCenter)
 
-        self.label_8 = QLabel(self.frame_3)
+        self.label_8 = QLabel(self.signupFrame)
         self.label_8.setObjectName(u"label_8")
         sizePolicy1.setHeightForWidth(self.label_8.sizePolicy().hasHeightForWidth())
         self.label_8.setSizePolicy(sizePolicy1)
@@ -146,7 +160,7 @@ class Ui_LoginScreen(object):
 
         self.verticalLayout_5.addWidget(self.label_8, 0, Qt.AlignmentFlag.AlignHCenter)
 
-        self.signup_username_lineedit = QLineEdit(self.frame_3)
+        self.signup_username_lineedit = QLineEdit(self.signupFrame)
         self.signup_username_lineedit.setObjectName(u"signup_username_lineedit")
         sizePolicy2.setHeightForWidth(self.signup_username_lineedit.sizePolicy().hasHeightForWidth())
         self.signup_username_lineedit.setSizePolicy(sizePolicy2)
@@ -156,7 +170,7 @@ class Ui_LoginScreen(object):
 
         self.verticalLayout_5.addWidget(self.signup_username_lineedit, 0, Qt.AlignmentFlag.AlignHCenter)
 
-        self.signup_email_lineedit = QLineEdit(self.frame_3)
+        self.signup_email_lineedit = QLineEdit(self.signupFrame)
         self.signup_email_lineedit.setObjectName(u"signup_email_lineedit")
         sizePolicy2.setHeightForWidth(self.signup_email_lineedit.sizePolicy().hasHeightForWidth())
         self.signup_email_lineedit.setSizePolicy(sizePolicy2)
@@ -166,7 +180,7 @@ class Ui_LoginScreen(object):
 
         self.verticalLayout_5.addWidget(self.signup_email_lineedit, 0, Qt.AlignmentFlag.AlignHCenter)
 
-        self.signup_password_lineedit = QLineEdit(self.frame_3)
+        self.signup_password_lineedit = QLineEdit(self.signupFrame)
         self.signup_password_lineedit.setObjectName(u"signup_password_lineedit")
         sizePolicy2.setHeightForWidth(self.signup_password_lineedit.sizePolicy().hasHeightForWidth())
         self.signup_password_lineedit.setSizePolicy(sizePolicy2)
@@ -177,7 +191,7 @@ class Ui_LoginScreen(object):
 
         self.verticalLayout_5.addWidget(self.signup_password_lineedit, 0, Qt.AlignmentFlag.AlignHCenter)
 
-        self.signup_btn = QPushButton(self.frame_3)
+        self.signup_btn = QPushButton(self.signupFrame)
         self.signup_btn.setObjectName(u"signup_btn")
         sizePolicy2.setHeightForWidth(self.signup_btn.sizePolicy().hasHeightForWidth())
         self.signup_btn.setSizePolicy(sizePolicy2)
@@ -185,8 +199,15 @@ class Ui_LoginScreen(object):
 
         self.verticalLayout_5.addWidget(self.signup_btn, 0, Qt.AlignmentFlag.AlignHCenter)
 
+        self.backToLoginBtn = QPushButton(self.signupFrame)
+        self.backToLoginBtn.setObjectName(u"backToLoginBtn")
+        sizePolicy1.setHeightForWidth(self.backToLoginBtn.sizePolicy().hasHeightForWidth())
+        self.backToLoginBtn.setSizePolicy(sizePolicy1)
 
-        self.gridLayout.addWidget(self.frame_3, 1, 1, 1, 1, Qt.AlignmentFlag.AlignVCenter)
+        self.verticalLayout_5.addWidget(self.backToLoginBtn, 0, Qt.AlignmentFlag.AlignHCenter)
+
+
+        self.gridLayout.addWidget(self.signupFrame, 1, 1, 1, 1, Qt.AlignmentFlag.AlignVCenter)
 
         self.myLabel = QLabel(LoginScreen)
         self.myLabel.setObjectName(u"myLabel")
@@ -195,11 +216,11 @@ class Ui_LoginScreen(object):
         sizePolicy4.setVerticalStretch(1)
         sizePolicy4.setHeightForWidth(self.myLabel.sizePolicy().hasHeightForWidth())
         self.myLabel.setSizePolicy(sizePolicy4)
-        font2 = QFont()
-        font2.setFamilies([u"Inter"])
-        font2.setPointSize(22)
-        font2.setBold(True)
-        self.myLabel.setFont(font2)
+        font3 = QFont()
+        font3.setFamilies([u"Inter"])
+        font3.setPointSize(22)
+        font3.setBold(True)
+        self.myLabel.setFont(font3)
         self.myLabel.setAlignment(Qt.AlignmentFlag.AlignBottom|Qt.AlignmentFlag.AlignHCenter)
 
         self.gridLayout.addWidget(self.myLabel, 0, 0, 1, 2)
@@ -232,6 +253,7 @@ class Ui_LoginScreen(object):
         self.login_password_lineedit.setPlaceholderText(QCoreApplication.translate("LoginScreen", u"Password", None))
         self.login_btn.setText(QCoreApplication.translate("LoginScreen", u"Log In", None))
         self.forgot_password_label.setText(QCoreApplication.translate("LoginScreen", u"<a href=\"authpageWidget\">Forgot password?</a>", None))
+        self.signupLinkLabel.setText(QCoreApplication.translate("LoginScreen", u"Don't have an account? <a href=\"authpageWidget\">Sign Up</a>", None))
         self.label_7.setText(QCoreApplication.translate("LoginScreen", u"Sign Up", None))
         self.label_8.setText(QCoreApplication.translate("LoginScreen", u"Create your account", None))
         self.signup_username_lineedit.setText("")
@@ -240,6 +262,7 @@ class Ui_LoginScreen(object):
         self.signup_email_lineedit.setPlaceholderText(QCoreApplication.translate("LoginScreen", u"Email", None))
         self.signup_password_lineedit.setPlaceholderText(QCoreApplication.translate("LoginScreen", u"Password", None))
         self.signup_btn.setText(QCoreApplication.translate("LoginScreen", u"Sign Up", None))
+        self.backToLoginBtn.setText(QCoreApplication.translate("LoginScreen", u"Back to Login", None))
         self.myLabel.setText(QCoreApplication.translate("LoginScreen", u"App Name", None))
     # retranslateUi
 

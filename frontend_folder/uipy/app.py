@@ -25,12 +25,23 @@ class LoginPageWrap(QWidget):
         self.ui = Ui_LoginScreen()
         self.ui.setupUi(self)
         self.client = BackendClient()
+        self.ui.signupFrame.setVisible(False)
 
         # Connect the buttons
         self.ui.login_btn.clicked.connect(self.handle_login_click)
         self.ui.forgot_password_label.linkActivated.connect(self.handle_link_click)
         self.ui.signup_btn.clicked.connect(self.handle_signup_click)
+        self.ui.signupLinkLabel.linkActivated.connect(self.handle_signupLinkLabel_click)
+        self.ui.backToLoginBtn.clicked.connect(self.handle_backToLoginBtn_click)
     
+    def handle_signupLinkLabel_click(self):
+        self.ui.loginFrame.setVisible(False)
+        self.ui.signupFrame.setVisible(True)
+
+    def handle_backToLoginBtn_click(self):
+        self.ui.loginFrame.setVisible(True)
+        self.ui.signupFrame.setVisible(False)
+
     def handle_login_click(self):
         user_text = self.ui.login_email_lineedit.text()
         pass_text = self.ui.login_password_lineedit.text()
@@ -384,6 +395,7 @@ class StudyTimerScreen(QWidget):
         self.parentInstance = parent
         self.parentInstance.ui.pauseBtn.setVisible(False)
         self.parentInstance.ui.stopBtn.setVisible(False)
+        self.defaultPlannedDuration_Seconds = 3600
         self.elapsedTime_Seconds = 0
         self.timer = QTimer()
         self.timer.timeout.connect(self.update_timer_display)
@@ -395,9 +407,14 @@ class StudyTimerScreen(QWidget):
 
     def handle_playBtn_click(self):
         if not self.elapsedTime_Seconds:
-            success, result = self.client.start_study(self.elapsedTime_Seconds)
+            success, result = self.client.start_study(self.elapsedTime_Seconds, self.defaultPlannedDuration_Seconds)
             if success:
                 print(f"Session started on backend with ID: {result}")
+                self.timer.start(1000)
+                self.parentInstance.ui.playBtn.setVisible(False)
+                self.parentInstance.ui.resetBtn.setVisible(False)
+                self.parentInstance.ui.pauseBtn.setVisible(True)
+                self.parentInstance.ui.stopBtn.setVisible(True)
             else:
                 print(f"Failed to start on backend: {result}")
         else:
@@ -472,7 +489,7 @@ class StudyTimerScreen(QWidget):
                 # Bonus: Automatically fetch the daily summary to update a label!
                 self.fetch_summary()
             else:
-                print("Error while saving session")
+                print(result)
 
     def fetch_summary(self):
         success, data = self.client.get_today_summary()
