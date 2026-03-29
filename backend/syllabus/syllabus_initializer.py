@@ -1,9 +1,9 @@
 import os
 from syllabus.import_syllabus import import_syllabus
-from db import get_db
+from db import get_db, init_db
 
 SYLLABUS_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), "syllabus_data")
-
+init_db()
 def initialize_syllabus():
 
     conn = get_db()
