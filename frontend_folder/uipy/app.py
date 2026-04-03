@@ -1,5 +1,5 @@
 import sys
-from PySide6.QtWidgets import (QApplication, QMainWindow, QWidget, QDialog, QLineEdit, QHBoxLayout, QPushButton, QMessageBox, QSizePolicy, QFrame, QVBoxLayout, QLabel, QScrollArea)
+from PySide6.QtWidgets import (QProgressBar, QApplication, QMainWindow, QWidget, QDialog, QLineEdit, QHBoxLayout, QPushButton, QMessageBox, QSizePolicy, QFrame, QVBoxLayout, QLabel, QScrollArea)
 from PySide6.QtCore import (QSize, QCoreApplication, Qt, Signal, QTimer)
 from PySide6.QtGui import QFont
 
@@ -206,13 +206,15 @@ class SyllabusPreviewPageWrap(QWidget):
 class HomePageWrap(QWidget):
     sendUpdatedMarks = Signal(str, list)
     loadCTMarks = Signal(str)
-    topicDeletedRelay = Signal(int) 
-    topicAddedRelay = Signal(int, str)
+    # topicDeletedRelay = Signal(int) 
+    # topicAddedRelay = Signal(int, str)
+    progressUpdatedRelay = Signal(int, bool)
     def __init__(self):
         super().__init__()
         self.ui = Ui_HomePage()
         self.ui.setupUi(self)
         # self.build_dynamic_cards()
+        self.active_course_tabs = []
         self.avgMark = 0
         self.allMarks = []
         self.timerScreenInstance = StudyTimerScreen(parent=self)
@@ -310,11 +312,82 @@ class HomePageWrap(QWidget):
             course_tab.set_syllabus_data(course)
             
             # 5. Connect its signals to our Home Page relays
-            course_tab.topicDeleted.connect(self.topicDeletedRelay.emit)
-            course_tab.topicAdded.connect(self.topicAddedRelay.emit)
+            # course_tab.topicDeleted.connect(self.topicDeletedRelay.emit)
+            # course_tab.topicAdded.connect(self.topicAddedRelay.emit)
+            course_tab.progressUpdated.connect(self.progressUpdatedRelay.emit)
             
             # 6. Inject it into the UI's Tab Widget!
             self.ui.courseSyllabusTabWidget.addTab(course_tab, course_code)
+
+            self.active_course_tabs.append(course_tab)
+
+    def update_syllabus_progress_bars(self, full_syllabus_data):
+        layout = self.ui.horizontalLayout
+        
+        while layout.count():
+            item = layout.takeAt(0)
+            widget = item.widget()
+            if widget:
+                widget.deleteLater()
+
+        # 2. Loop through the courses and do the math
+        for course in full_syllabus_data:
+            course_code = course.get('course_code', 'Unknown')
+            total_topics = 0
+            completed_topics = 0
+
+            # Dig into the nested JSON to count topics
+            for module in course.get('modules', []):
+                for topic in module.get('topics', []):
+                    total_topics += 1
+                    # Treat '1' or 'True' as completed
+                    if topic.get('completed'): 
+                        completed_topics += 1
+
+            # Avoid division by zero!
+            percentage = 0
+            if total_topics > 0:
+                percentage = int((completed_topics / total_topics) * 100)
+
+            # 3. Build the dynamic UI elements
+            bar_container = QWidget()
+            v_layout = QVBoxLayout(bar_container)
+            v_layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+            # The Vertical Progress Bar
+            progress_bar = QProgressBar()
+            progress_bar.setOrientation(Qt.Orientation.Vertical)
+            progress_bar.setMinimum(0)
+            progress_bar.setMaximum(100)
+            progress_bar.setValue(percentage)
+            progress_bar.setTextVisible(True)
+            progress_bar.setAlignment(Qt.AlignmentFlag.AlignCenter)
+            progress_bar.setFixedSize(30, 150) # Tweak these dimensions to match your design!
+            
+            # Styling it to match your dark/yellow theme
+            progress_bar.setStyleSheet("""
+                QProgressBar {
+                    background-color: #555555;
+                    border-radius: 5px;
+                    color: white; 
+                    text-align: center;
+                }
+                QProgressBar::chunk {
+                    background-color: #D4D925; /* Your Yellow */
+                    border-radius: 5px;
+                }
+            """)
+
+            # The Course Label beneath it
+            lbl = QLabel(course_code) # e.g., turns "CSE 2201" into just "2201" to save space
+            lbl.setStyleSheet("color: #AAAAAA; font-size: 10px;")
+            lbl.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+            v_layout.addWidget(progress_bar)
+            v_layout.addWidget(lbl)
+
+            # Add the completed container to the main horizontal layout
+            layout.addWidget(bar_container)
    
 #------ Home Tab ------
 class EditMarksDialog(QDialog):
@@ -729,10 +802,14 @@ class MySoftware(QMainWindow):
 
     def go_to_home(self):
         self.main_app = HomePageWrap()
+
+        # Relay Signal connections
         self.main_app.sendUpdatedMarks.connect(self.update_ct_marks_and_cardsFrame)
         self.main_app.loadCTMarks.connect(self.load_ct_marks)
-        self.main_app.topicAddedRelay.connect(self.add_new_topic)
-        self.main_app.topicDeletedRelay.connect(self.delete_topic)
+        # self.main_app.topicAddedRelay.connect(self.add_new_topic)
+        # self.main_app.topicDeletedRelay.connect(self.delete_topic)
+        self.main_app.progressUpdatedRelay.connect(self.update_topic_progress)
+
         self.setCentralWidget(self.main_app)
         welcome = self.current_username or "User"
         self.main_app.ui.welcomeUserLabel.setText(f"Welcome, {welcome}!")
@@ -747,10 +824,29 @@ class MySoftware(QMainWindow):
             #     success, allMarks, avgMark, ctCount = self.load_ct_marks(course.get('course_code'))
             #     self.main_app.build_dynamic_cards(course.get('course_code'), avgMark, allMarks)
             self.main_app.populate_course_tabs(self.current_user_syllabus)
+
+            self.main_app.update_syllabus_progress_bars(self.current_user_syllabus)
         
         # Clean up memory by destroying the onboarding views
         self.onboarding_widget.deleteLater()
         self.onboarding_widget = None
+
+    # --- THE SMART METHOD ---
+    def update_topic_progress(self, topic_id, is_checked):
+        print(f"API CALL: Setting topic {topic_id} completion to {is_checked}")
+        
+        success, response = self.client.update_topic_completion(topic_id, is_checked)
+        
+        if success:
+            print("Database updated successfully!")
+            # Optional: Write a quick loop here to update self.current_user_syllabus 
+            # so the checkbox stays checked if the user navigates away and comes back.
+            # Fetch the fresh data from the database with the new completion status
+            if self.load_syllabus():
+                # Re-calculate and redraw the progress bars!
+                self.main_app.update_syllabus_progress_bars(self.current_user_syllabus)
+        else:
+            print("Failed to update database:", response)
 
     # def fill_in_cardsFrame(self):
     #     while self.ui.horizontalLayout_4.count():
@@ -796,14 +892,14 @@ class MySoftware(QMainWindow):
             
         self.stackedWidget.setCurrentIndex(self.HOME_PAGE_IND)
 
-    def add_new_topic(self, module_name, new_topic):
-        print(f"API CALL: Adding '{new_topic}' to '{module_name}'")
-        # success, resp = self.client.add_topic(module_name, new_topic)
-        # if success: update self.master_syllabus and refresh!
+    # def add_new_topic(self, module_name, new_topic):
+    #     print(f"API CALL: Adding '{new_topic}' to '{module_name}'")
+    #     # success, resp = self.client.add_topic(module_name, new_topic)
+    #     # if success: update self.master_syllabus and refresh!
         
-    def delete_topic(self, module_name, topic_name):
-        print(f"API CALL: Deleting '{topic_name}' from '{module_name}'")
-        # success, resp = self.client.delete_topic(module_name, topic_name)
+    # def delete_topic(self, module_name, topic_name):
+    #     print(f"API CALL: Deleting '{topic_name}' from '{module_name}'")
+    #     # success, resp = self.client.delete_topic(module_name, topic_name)
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

@@ -170,39 +170,80 @@ class BackendClient:
             return False, err
         except Exception as e:
             return False, str(e)
-
-    def send_topic_completion(self, topicId):
-        url = f"{self}update-completion"
+        
+    def update_topic_completion(self, topic_id, is_completed):
+        url = f"{self.base_url}/update-completion"
         payload = {
-            "topic_id": topicId,
-            "completed": 1
+            "topic_id": topic_id,
+            "completed": is_completed # Python boolean becomes JSON true/false
         }
+        
         try:
-            response = self.req_session.post(url, json=payload, timeout=5)
+            response = self.req_session.post(url, json=payload)
             if response.status_code == 200:
                 return True, response.json()
-            try:
-                err = response.json()
-            except ValueError:
-                err = response.text
-            return False, err
+            else:
+                return False, response.json().get("error", "Failed to update completion")
         except Exception as e:
             return False, str(e)
+        
+    # def add_topic(self, module_id, topic_name):
+    #     url = f"{self.base_url}/add-topic"
+    #     payload = {"module_id": module_id, "name": topic_name}
+        
+    #     try:
+    #         response = self.session.post(url, json=payload)
+    #         if response.status_code == 200:
+    #             return True, response.json()
+    #         return False, response.json().get("error", "Failed to add topic")
+    #     except Exception as e:
+    #         return False, str(e)
+
+    # def delete_topic(self, topic_id):
+    #     url = f"{self.base_url}/delete-topic"
+    #     payload = {"topic_id": topic_id}
+        
+    #     try:
+    #         # Using POST here is often easier for simple Flask JSON APIs than DELETE
+    #         response = self.session.post(url, json=payload) 
+    #         if response.status_code == 200:
+    #             return True, response.json()
+    #         return False, response.json().get("error", "Failed to delete topic")
+    #     except Exception as e:
+    #         return False, str(e)
+
+    # def send_topic_completion(self, topicId):
+    #     url = f"{self}update-completion"
+    #     payload = {
+    #         "topic_id": topicId,
+    #         "completed": 1
+    #     }
+    #     try:
+    #         response = self.req_session.post(url, json=payload, timeout=5)
+    #         if response.status_code == 200:
+    #             return True, response.json()
+    #         try:
+    #             err = response.json()
+    #         except ValueError:
+    #             err = response.text
+    #         return False, err
+    #     except Exception as e:
+    #         return False, str(e)
 
 
-    def fetch_course_completion(self, courseId):
-        url = f"{self.base_url}course/{courseId}"
-        try:
-            response = self.req_session.get(url, timeout=5)
-            if response.status_code == 200:
-                return True, response.json() # "total_topics, completed, percentage, topics"
-            try:
-                err = response.json()
-            except ValueError:
-                err = response.text
-            return False, err
-        except Exception as e:
-            return False, str(e)
+    # def fetch_course_completion(self, courseId):
+    #     url = f"{self.base_url}course/{courseId}"
+    #     try:
+    #         response = self.req_session.get(url, timeout=5)
+    #         if response.status_code == 200:
+    #             return True, response.json() # "total_topics, completed, percentage, topics"
+    #         try:
+    #             err = response.json()
+    #         except ValueError:
+    #             err = response.text
+    #         return False, err
+    #     except Exception as e:
+    #         return False, str(e)
 
     def start_study(self, elapsedTime_Seconds, defaultPlannedDuration_Seconds):
         url = f"{self.base_url}study/start"

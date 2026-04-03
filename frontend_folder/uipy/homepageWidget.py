@@ -16,8 +16,8 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QFrame, QGridLayout, QHBoxLayout,
-    QLabel, QProgressBar, QPushButton, QSizePolicy,
-    QTabWidget, QVBoxLayout, QWidget)
+    QLabel, QPushButton, QSizePolicy, QTabWidget,
+    QVBoxLayout, QWidget)
 
 from shadow_frame import ShadowFrame
 
@@ -127,57 +127,6 @@ class Ui_HomePage(object):
         self.progressBarsFrame.setFrameShadow(QFrame.Shadow.Raised)
         self.horizontalLayout = QHBoxLayout(self.progressBarsFrame)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.progressBar = QProgressBar(self.progressBarsFrame)
-        self.progressBar.setObjectName(u"progressBar")
-        self.progressBar.setValue(24)
-        self.progressBar.setOrientation(Qt.Orientation.Vertical)
-        self.progressBar.setInvertedAppearance(False)
-        self.progressBar.setTextDirection(QProgressBar.Direction.TopToBottom)
-
-        self.horizontalLayout.addWidget(self.progressBar)
-
-        self.progressBar_2 = QProgressBar(self.progressBarsFrame)
-        self.progressBar_2.setObjectName(u"progressBar_2")
-        self.progressBar_2.setValue(24)
-        self.progressBar_2.setOrientation(Qt.Orientation.Vertical)
-        self.progressBar_2.setInvertedAppearance(False)
-        self.progressBar_2.setTextDirection(QProgressBar.Direction.TopToBottom)
-
-        self.horizontalLayout.addWidget(self.progressBar_2)
-
-        self.progressBar_3 = QProgressBar(self.progressBarsFrame)
-        self.progressBar_3.setObjectName(u"progressBar_3")
-        self.progressBar_3.setValue(24)
-        self.progressBar_3.setOrientation(Qt.Orientation.Vertical)
-        self.progressBar_3.setInvertedAppearance(False)
-        self.progressBar_3.setTextDirection(QProgressBar.Direction.TopToBottom)
-
-        self.horizontalLayout.addWidget(self.progressBar_3)
-
-        self.progressBar_4 = QProgressBar(self.progressBarsFrame)
-        self.progressBar_4.setObjectName(u"progressBar_4")
-        self.progressBar_4.setValue(24)
-        self.progressBar_4.setOrientation(Qt.Orientation.Vertical)
-        self.progressBar_4.setInvertedAppearance(False)
-        self.progressBar_4.setTextDirection(QProgressBar.Direction.TopToBottom)
-
-        self.horizontalLayout.addWidget(self.progressBar_4)
-
-        self.progressBar_5 = QProgressBar(self.progressBarsFrame)
-        self.progressBar_5.setObjectName(u"progressBar_5")
-        sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Expanding)
-        sizePolicy2.setHorizontalStretch(0)
-        sizePolicy2.setVerticalStretch(0)
-        sizePolicy2.setHeightForWidth(self.progressBar_5.sizePolicy().hasHeightForWidth())
-        self.progressBar_5.setSizePolicy(sizePolicy2)
-        self.progressBar_5.setValue(24)
-        self.progressBar_5.setTextVisible(True)
-        self.progressBar_5.setOrientation(Qt.Orientation.Vertical)
-        self.progressBar_5.setInvertedAppearance(False)
-        self.progressBar_5.setTextDirection(QProgressBar.Direction.TopToBottom)
-
-        self.horizontalLayout.addWidget(self.progressBar_5)
-
 
         self.verticalLayout_2.addWidget(self.progressBarsFrame)
 
@@ -195,11 +144,11 @@ class Ui_HomePage(object):
         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
         self.label_2 = QLabel(self.ctAvgFrame)
         self.label_2.setObjectName(u"label_2")
-        sizePolicy3 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Maximum)
-        sizePolicy3.setHorizontalStretch(0)
-        sizePolicy3.setVerticalStretch(0)
-        sizePolicy3.setHeightForWidth(self.label_2.sizePolicy().hasHeightForWidth())
-        self.label_2.setSizePolicy(sizePolicy3)
+        sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Maximum)
+        sizePolicy2.setHorizontalStretch(0)
+        sizePolicy2.setVerticalStretch(0)
+        sizePolicy2.setHeightForWidth(self.label_2.sizePolicy().hasHeightForWidth())
+        self.label_2.setSizePolicy(sizePolicy2)
         self.label_2.setFont(font1)
         self.label_2.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
@@ -221,20 +170,17 @@ class Ui_HomePage(object):
 
         self.weeklyReportFrame = QFrame(self.homeTab)
         self.weeklyReportFrame.setObjectName(u"weeklyReportFrame")
-        sizePolicy4 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
-        sizePolicy4.setHorizontalStretch(0)
-        sizePolicy4.setVerticalStretch(1)
-        sizePolicy4.setHeightForWidth(self.weeklyReportFrame.sizePolicy().hasHeightForWidth())
-        self.weeklyReportFrame.setSizePolicy(sizePolicy4)
+        sizePolicy3 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
+        sizePolicy3.setHorizontalStretch(0)
+        sizePolicy3.setVerticalStretch(1)
+        sizePolicy3.setHeightForWidth(self.weeklyReportFrame.sizePolicy().hasHeightForWidth())
+        self.weeklyReportFrame.setSizePolicy(sizePolicy3)
         self.weeklyReportFrame.setFrameShape(QFrame.Shape.StyledPanel)
         self.weeklyReportFrame.setFrameShadow(QFrame.Shadow.Raised)
 
         self.gridLayout.addWidget(self.weeklyReportFrame, 2, 0, 1, 2)
 
         self.tabWidget.addTab(self.homeTab, "")
-        self.tab_2 = QWidget()
-        self.tab_2.setObjectName(u"tab_2")
-        self.tabWidget.addTab(self.tab_2, "")
         self.tab_5 = QWidget()
         self.tab_5.setObjectName(u"tab_5")
         self.verticalLayout_5 = QVBoxLayout(self.tab_5)
@@ -245,20 +191,17 @@ class Ui_HomePage(object):
         self.verticalLayout_5.addWidget(self.courseSyllabusTabWidget)
 
         self.tabWidget.addTab(self.tab_5, "")
-        self.tab_6 = QWidget()
-        self.tab_6.setObjectName(u"tab_6")
-        self.tabWidget.addTab(self.tab_6, "")
         self.tab_7 = QWidget()
         self.tab_7.setObjectName(u"tab_7")
         self.horizontalLayout_2 = QHBoxLayout(self.tab_7)
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
         self.timerPanel = QFrame(self.tab_7)
         self.timerPanel.setObjectName(u"timerPanel")
-        sizePolicy5 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Maximum)
-        sizePolicy5.setHorizontalStretch(1)
-        sizePolicy5.setVerticalStretch(0)
-        sizePolicy5.setHeightForWidth(self.timerPanel.sizePolicy().hasHeightForWidth())
-        self.timerPanel.setSizePolicy(sizePolicy5)
+        sizePolicy4 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Maximum)
+        sizePolicy4.setHorizontalStretch(1)
+        sizePolicy4.setVerticalStretch(0)
+        sizePolicy4.setHeightForWidth(self.timerPanel.sizePolicy().hasHeightForWidth())
+        self.timerPanel.setSizePolicy(sizePolicy4)
         self.timerPanel.setFrameShape(QFrame.Shape.StyledPanel)
         self.timerPanel.setFrameShadow(QFrame.Shadow.Raised)
         self.verticalLayout_3 = QVBoxLayout(self.timerPanel)
@@ -333,11 +276,11 @@ class Ui_HomePage(object):
 
         self.topicsPanel = QFrame(self.tab_7)
         self.topicsPanel.setObjectName(u"topicsPanel")
-        sizePolicy6 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
-        sizePolicy6.setHorizontalStretch(2)
-        sizePolicy6.setVerticalStretch(0)
-        sizePolicy6.setHeightForWidth(self.topicsPanel.sizePolicy().hasHeightForWidth())
-        self.topicsPanel.setSizePolicy(sizePolicy6)
+        sizePolicy5 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
+        sizePolicy5.setHorizontalStretch(2)
+        sizePolicy5.setVerticalStretch(0)
+        sizePolicy5.setHeightForWidth(self.topicsPanel.sizePolicy().hasHeightForWidth())
+        self.topicsPanel.setSizePolicy(sizePolicy5)
         self.topicsPanel.setFrameShape(QFrame.Shape.StyledPanel)
         self.topicsPanel.setFrameShadow(QFrame.Shadow.Raised)
 
@@ -363,9 +306,7 @@ class Ui_HomePage(object):
         self.label.setText(QCoreApplication.translate("HomePage", u"Syllabus Completion", None))
         self.label_2.setText(QCoreApplication.translate("HomePage", u"CT Average", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.homeTab), QCoreApplication.translate("HomePage", u"Home", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), QCoreApplication.translate("HomePage", u"Routine", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_5), QCoreApplication.translate("HomePage", u"Syllabus", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_6), QCoreApplication.translate("HomePage", u"Overview", None))
         self.timerLabel.setText(QCoreApplication.translate("HomePage", u"<html><head/><body><p>0<span style=\" font-size:24pt;\">hr   </span>0<span style=\" font-size:24pt;\">min </span>0<span style=\" font-size:24pt;\">sec</span></p></body></html>", None))
         self.playBtn.setText("")
         self.pauseBtn.setText("")
