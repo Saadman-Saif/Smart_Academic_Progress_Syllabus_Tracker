@@ -237,6 +237,13 @@ class Ui_HomePage(object):
         self.tabWidget.addTab(self.tab_2, "")
         self.tab_5 = QWidget()
         self.tab_5.setObjectName(u"tab_5")
+        self.verticalLayout_5 = QVBoxLayout(self.tab_5)
+        self.verticalLayout_5.setObjectName(u"verticalLayout_5")
+        self.courseSyllabusTabWidget = QTabWidget(self.tab_5)
+        self.courseSyllabusTabWidget.setObjectName(u"courseSyllabusTabWidget")
+
+        self.verticalLayout_5.addWidget(self.courseSyllabusTabWidget)
+
         self.tabWidget.addTab(self.tab_5, "")
         self.tab_6 = QWidget()
         self.tab_6.setObjectName(u"tab_6")
@@ -343,7 +350,8 @@ class Ui_HomePage(object):
 
         self.retranslateUi(HomePage)
 
-        self.tabWidget.setCurrentIndex(0)
+        self.tabWidget.setCurrentIndex(2)
+        self.courseSyllabusTabWidget.setCurrentIndex(-1)
 
 
         QMetaObject.connectSlotsByName(HomePage)

@@ -11,6 +11,7 @@ from forgotPasswordEnterCodeNewPass_ui import Ui_EnterCodeNewPass
 from inst_dept_year_semesterWidget import Ui_instDeptYearSemSelection
 from syllabus_previewWidget import Ui_SyllabusPreview
 from homepageWidget import Ui_HomePage
+from syllabus_tab import SyllabusTabWrap
 from backend_client import BackendClient
 
 #------ Wrappers ------
@@ -205,6 +206,8 @@ class SyllabusPreviewPageWrap(QWidget):
 class HomePageWrap(QWidget):
     sendUpdatedMarks = Signal(str, list)
     loadCTMarks = Signal(str)
+    topicDeletedRelay = Signal(int) 
+    topicAddedRelay = Signal(int, str)
     def __init__(self):
         super().__init__()
         self.ui = Ui_HomePage()
@@ -213,6 +216,9 @@ class HomePageWrap(QWidget):
         self.avgMark = 0
         self.allMarks = []
         self.timerScreenInstance = StudyTimerScreen(parent=self)
+        self.syllabusTabInstance = CourseTabWidget(parent=self)
+        self.syllabus_tab = SyllabusTabWrap()
+        self.ui.courseSyllabusTabWidget.addTab(self.syllabus_tab, "Test")
 
     def build_dynamic_cards(self, course, avgMarks, allMarks):
         # avgMarks = {"CSE 2201": 16, 
@@ -288,6 +294,27 @@ class HomePageWrap(QWidget):
             self.loadCTMarks.emit(courseList.get('course_code'))
             # success, self.ctCount = self.load_ct_marks(course.get('course_code'))
             self.build_dynamic_cards(courseList.get('course_code'), self.avgMark, self.allMarks)
+
+    def populate_course_tabs(self, full_syllabus_data):
+        # 1. Clear any existing tabs (important if the user refreshes)
+        self.ui.courseSyllabusTabWidget.clear()
+
+        # 2. Loop through the JSON array
+        for course in full_syllabus_data:
+            course_code = course.get('course_code', 'Unknown')
+            
+            # 3. Instantiate a fresh wrapper for THIS specific course
+            course_tab = SyllabusTabWrap()
+            
+            # 4. Feed it the data
+            course_tab.set_syllabus_data(course)
+            
+            # 5. Connect its signals to our Home Page relays
+            course_tab.topicDeleted.connect(self.topicDeletedRelay.emit)
+            course_tab.topicAdded.connect(self.topicAddedRelay.emit)
+            
+            # 6. Inject it into the UI's Tab Widget!
+            self.ui.courseSyllabusTabWidget.addTab(course_tab, course_code)
    
 #------ Home Tab ------
 class EditMarksDialog(QDialog):
@@ -383,8 +410,23 @@ class CTAverageCard(QFrame):
         super().mouseReleaseEvent(event)
 
 #------ Syllabus Tab ------
-# class ModuleTopicCard(QWidget):
+class CourseTabWidget(QWidget):
+    def __init__(self, parent=None):
+        super().__init__()
+        self.parentInstance = parent
 
+    def handover_syllabus_to_builder(self, syllabusData):
+        for index, course in enumerate(syllabusData):
+            print(course.get('course_code', 'Unknown Code'))
+            self.tab_2 = QWidget()
+            self.tab_2.setObjectName(course.get('course_code', 'Unknown Code'))
+
+
+            self.parentInstance.ui.courseSyllabusTabWidget.addTab(self.tab_2, "")
+            self.parentInstance.ui.courseSyllabusTabWidget.setTabText(self.parentInstance.ui.courseSyllabusTabWidget.indexOf(self.tab_2), QCoreApplication.translate("HomePage", course.get('course_code', 'Unknown Code'), None))
+
+    # def build_module_topic_cards():
+        
 # class 
 
 #------ Study Timer Tab ------
@@ -689,18 +731,22 @@ class MySoftware(QMainWindow):
         self.main_app = HomePageWrap()
         self.main_app.sendUpdatedMarks.connect(self.update_ct_marks_and_cardsFrame)
         self.main_app.loadCTMarks.connect(self.load_ct_marks)
+        self.main_app.topicAddedRelay.connect(self.add_new_topic)
+        self.main_app.topicDeletedRelay.connect(self.delete_topic)
         self.setCentralWidget(self.main_app)
         welcome = self.current_username or "User"
         self.main_app.ui.welcomeUserLabel.setText(f"Welcome, {welcome}!")
 
         # Request course code value from backend to then request ct marks from the backend against those courses
         success = self.load_syllabus()
+        self.build_syllabus_preview_for_home_page()
         # print(self.current_user_syllabus)
         if success:
             self.main_app.fill_in_cardsFrame(self.current_user_syllabus)
             # for course in self.current_user_syllabus:
             #     success, allMarks, avgMark, ctCount = self.load_ct_marks(course.get('course_code'))
             #     self.main_app.build_dynamic_cards(course.get('course_code'), avgMark, allMarks)
+            self.main_app.populate_course_tabs(self.current_user_syllabus)
         
         # Clean up memory by destroying the onboarding views
         self.onboarding_widget.deleteLater()
@@ -736,6 +782,28 @@ class MySoftware(QMainWindow):
                 self.main_app.fill_in_cardsFrame(self.current_user_syllabus)
             else:
                 print(response)
+
+    def build_syllabus_preview_for_home_page(self):
+        self.main_app.syllabusTabInstance.handover_syllabus_to_builder(self.current_user_syllabus)
+
+    def load_home_page(self):
+        # Pass the data DOWN when the user logs in
+        # (Assuming self.master_syllabus contains the list of courses. 
+        # Here we just pass the first course as an example).
+        if self.current_user_syllabus:
+            first_course = self.current_user_syllabus[0]
+            self.main_app.syllabus_tab.set_syllabus_data(first_course)
+            
+        self.stackedWidget.setCurrentIndex(self.HOME_PAGE_IND)
+
+    def add_new_topic(self, module_name, new_topic):
+        print(f"API CALL: Adding '{new_topic}' to '{module_name}'")
+        # success, resp = self.client.add_topic(module_name, new_topic)
+        # if success: update self.master_syllabus and refresh!
+        
+    def delete_topic(self, module_name, topic_name):
+        print(f"API CALL: Deleting '{topic_name}' from '{module_name}'")
+        # success, resp = self.client.delete_topic(module_name, topic_name)
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

@@ -6,7 +6,7 @@ class BackendClient:
 
     def __init__(self):
         # REPLACE THIS WITH THE CHANGING IP
-        self.base_url = "http://10.29.33.189:5000/"
+        self.base_url = "http://127.0.0.1:5000/"
         self.req_session = BackendClient.shared_session
 
     def signup(self, username, email, password):
