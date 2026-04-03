@@ -169,9 +169,9 @@ class StudyTimerService:
         else:
             total_paused = row["total_paused"]
 
-        actual_duration = (now - row["start_ts"]) - total_paused
-        if actual_duration < 0:
-            actual_duration = 0
+        duration = (now - row["start_ts"]) - total_paused
+        if duration < 0:
+            duration = 0
 
         final_status = "INTERRUPTED" if interrupted else "COMPLETED"
 
@@ -182,7 +182,7 @@ class StudyTimerService:
             WHERE session_id = ?
         """, (
             now,
-            actual_duration,
+            duration,
             final_status,
             row["session_id"]
         ))
