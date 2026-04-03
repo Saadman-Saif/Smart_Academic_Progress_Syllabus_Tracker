@@ -178,7 +178,7 @@ class StudyTimerService:
         # Update study_session
         cursor.execute("""
             UPDATE study_session
-            SET end_ts = ?, actual_duration = ?, status = ?
+            SET end_ts = ?, duration = ?, status = ?
             WHERE session_id = ?
         """, (
             now,
@@ -208,7 +208,7 @@ class StudyTimerService:
 
         cursor.execute("""
             SELECT COUNT(*) as session_count,
-                COALESCE(SUM(actual_duration), 0) as total_seconds
+                COALESCE(SUM(duration), 0) as total_seconds
             FROM study_session
             WHERE date = ? AND user_id = ?
         """, (today, user_id))
