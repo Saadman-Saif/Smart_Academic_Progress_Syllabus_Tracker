@@ -6,13 +6,13 @@ from email.message import EmailMessage
 from db import get_db
 from datetime import datetime, timedelta
 
-# Blueprint MUST be named password_bp
+# Blueprint for password reset routes
 password_bp = Blueprint("password_bp", __name__)
 
 #  EMAIL CONFIG 
 SMTP_SERVER = "smtp.gmail.com"
 SMTP_PORT = 587
-SENDER_EMAIL = "academicprogresstracker0@gmail.com"       #  change
+SENDER_EMAIL = "academicprogresstracker0@gmail.com"
 SENDER_PASSWORD = "ufjagddzwuyfdwqr"     #  change
 
 #  FORGOT PASSWORD 
@@ -86,7 +86,7 @@ def reset_password():
         conn.close()
         return jsonify({"message": "No reset request found"}), 404
 
-    # Check code validity (10 minutes)
+    # Check code validity
     if reset_request["code"] != code:
         conn.close()
         return jsonify({"message": "Invalid reset code"}), 401
@@ -105,7 +105,7 @@ def reset_password():
         WHERE id = ?
     """, (hashed_password, user_id))
 
-    # Optional: delete used reset codes
+    # delete used reset codes
     cursor.execute("""
         DELETE FROM password_resets
         WHERE user_id = ?
@@ -117,7 +117,7 @@ def reset_password():
     return jsonify({"message": "Password updated successfully"}), 200
 
 
-# ================= EMAIL FUNCTION =================
+# EMAIL FUNCTION 
 def send_email(to_email, code):
     msg = EmailMessage()
     msg["Subject"] = "Password Reset Code"
