@@ -1,0 +1,311 @@
+[
+  {
+    "course_code": "CSE 2100",
+    "course_name": "Software Development Project I",
+    "contact_hours_per_week": "3/2 Hours",
+    "credit_hour": 0.75,
+    "modules": [
+      {
+        "title": "Software Development Project",
+        "topics": [
+          "Develop one or more programs/projects on practical problems",
+          "Apply sound Software Engineering practices",
+          "Project assigned by the teacher"
+        ]
+      }
+    ]
+  },
+  {
+    "course_code": "CSE 2101",
+    "course_name": "Discrete Mathematics",
+    "contact_hours_per_week": "3 Hours",
+    "credit_hour": 3.0,
+    "modules": [
+      {
+        "title": "Logic and Proof",
+        "topics": [
+          "Propositional Logic",
+          "Applications of Propositional Logic",
+          "Propositional Equivalences",
+          "Predicates and Quantifiers",
+          "Nested Quantifiers",
+          "Rules of Inference",
+          "Introduction to Proofs",
+          "Proof Methods and Strategy"
+        ]
+      },
+      {
+        "title": "Set Theory",
+        "topics": [
+          "Using Set Notation with Quantifiers",
+          "Truth Sets and Quantifiers",
+          "Generalized Unions and Intersections",
+          "Computer Representation of Set"
+        ]
+      },
+      {
+        "title": "Functions",
+        "topics": [
+          "One-to-One and Onto Functions",
+          "Inverse Functions",
+          "Composition of Functions",
+          "Graphs of Functions",
+          "Floor and Ceiling Functions",
+          "Partial Functions"
+        ]
+      },
+      {
+        "title": "Sequences and Summations",
+        "topics": [
+          "Sequences",
+          "Recurrence Relations",
+          "Summations"
+        ]
+      },
+      {
+        "title": "Cardinality of Sets",
+        "topics": [
+          "Countable Sets",
+          "Uncountable Sets",
+          "Uncomputable Functions"
+        ]
+      },
+      {
+        "title": "Number Theory",
+        "topics": [
+          "Divisibility and Modular Arithmetic",
+          "Primes and Greatest Common Divisors",
+          "Solving Congruences",
+          "Applications of Congruences"
+        ]
+      },
+      {
+        "title": "Induction and Recursion",
+        "topics": [
+          "Mathematical Induction",
+          "Strong Induction and Well-Ordering",
+          "Recursive Definitions",
+          "Structural Induction"
+        ]
+      },
+      {
+        "title": "Counting",
+        "topics": [
+          "Pigeonhole Principle",
+          "Binomial Coefficients and Identities",
+          "Permutations and Combinations",
+          "Generating Functions",
+          "Inclusion-Exclusion"
+        ]
+      },
+      {
+        "title": "Relations",
+        "topics": [
+          "Properties of Relations",
+          "Representing Relations",
+          "Closures of Relations",
+          "Equivalence Relations",
+          "Partial Orderings"
+        ]
+      },
+      {
+        "title": "Graphs",
+        "topics": [
+          "Graph Models",
+          "Graph Terminology",
+          "Special Types of Graphs",
+          "Representing Graphs",
+          "Graph Traversal",
+          "Graph Isomorphism",
+          "Connectivity",
+          "Euler and Hamilton Paths",
+          "Planar Graphs",
+          "Graph Coloring"
+        ]
+      }
+    ]
+  },
+  {
+    "course_code": "CSE 2102",
+    "course_name": "Discrete Mathematics Sessional",
+    "contact_hours_per_week": "3 Hours",
+    "credit_hour": 1.5,
+    "modules": [
+      {
+        "title": "Sessional Topics",
+        "topics": [
+          "Logic and Proof",
+          "Set",
+          "Function",
+          "Sequences and Summations",
+          "Cardinality of Sets",
+          "Relation",
+          "Number Theory",
+          "Induction and Recursion",
+          "Counting",
+          "Graphs"
+        ]
+      }
+    ]
+  },
+  {
+    "course_code": "CSE 2103",
+    "course_name": "Digital Logic Design",
+    "contact_hours_per_week": "3 Hours",
+    "credit_hour": 3.0,
+    "modules": [
+      {
+        "title": "Information and Digital Systems",
+        "topics": [
+          "Introduction to Digital Systems",
+          "Number Systems",
+          "Weighted and Non-Weighted Codes",
+          "Error Detection Code",
+          "Binary Addition and Subtraction",
+          "2’s Complement Methods"
+        ]
+      },
+      {
+        "title": "Boolean Algebra and Combinational Logic Circuits",
+        "topics": [
+          "Boolean Algebra",
+          "Boolean Functions",
+          "Canonical Forms",
+          "Karnaugh Maps",
+          "Logic Gates and Truth Tables",
+          "Combinational Logic Circuit Design",
+          "Arithmetic and Data Handling Circuits",
+          "Decoders",
+          "Encoders",
+          "Multiplexers",
+          "Demultiplexers"
+        ]
+      },
+      {
+        "title": "Sequential Logic Circuits",
+        "topics": [
+          "Latch and Flip-Flops",
+          "Clock Signals",
+          "SR, JK and D Flip-Flops",
+          "Master/Slave JK Flip-Flop",
+          "Timing Diagrams",
+          "Counters",
+          "Registers",
+          "Memory Devices"
+        ]
+      },
+      {
+        "title": "Hardware Description Language",
+        "topics": [
+          "Digital Circuit Synthesis",
+          "Verilog HDL"
+        ]
+      },
+      {
+        "title": "Technology Parameters",
+        "topics": [
+          "Fan In",
+          "Fan Out",
+          "Propagation Delay",
+          "Power Dissipation",
+          "Noise Immunity"
+        ]
+      },
+      {
+        "title": "Logic Families",
+        "topics": [
+          "Diode Logic Gates",
+          "Transistor Gates",
+          "MOS Gates",
+          "TTL Logic",
+          "CMOS Logic"
+        ]
+      }
+    ]
+  },
+  {
+    "course_code": "CSE 2104",
+    "course_name": "Digital Logic Design Sessional",
+    "contact_hours_per_week": "3 Hours",
+    "credit_hour": 1.5,
+    "modules": [
+      {
+        "title": "Sessional Topics",
+        "topics": [
+          "Designing Combinational Circuits",
+          "Designing Sequential Circuits",
+          "Hardware Description Language",
+          "TTL and CMOS Logic Devices",
+          "Verilog HDL"
+        ]
+      }
+    ]
+  },
+  {
+    "course_code": "EEE 2151",
+    "course_name": "Electrical Drives and Instrumentations",
+    "contact_hours_per_week": "3 Hours",
+    "credit_hour": 3.0,
+    "modules": [
+      {
+        "title": "DC Machines",
+        "topics": [
+          "Generators and Motors",
+          "Starting, Speed Control and Braking",
+          "Applications of DC Motors"
+        ]
+      },
+      {
+        "title": "AC Machines",
+        "topics": [
+          "Transformer Operation",
+          "Single Phase Induction Motors",
+          "Alternator Introduction"
+        ]
+      },
+      {
+        "title": "Special Machines",
+        "topics": [
+          "Stepper Motor",
+          "Servomotor",
+          "Brushless Motors"
+        ]
+      },
+      {
+        "title": "Measuring Instruments",
+        "topics": [
+          "Electromechanical Meters",
+          "Electronic Meters",
+          "Extension of Instrument Range"
+        ]
+      },
+      {
+        "title": "Instrumentation Amplifiers",
+        "topics": [
+          "Differential Amplifiers",
+          "Logarithmic Amplifiers",
+          "Chopper Amplifiers",
+          "Frequency and Voltage Measurements",
+          "Recorders and Display Devices",
+          "Spectrum Analyzers",
+          "Logic Analyzers"
+        ]
+      },
+      {
+        "title": "Transducers",
+        "topics": [
+          "Photovoltaic Transducer",
+          "Piezoelectric Transducer",
+          "Thermoelectric Transducer",
+          "LVDT",
+          "Optical Pressure Transducer",
+          "Ultrasonic Transducer",
+          "Humidity Transducer",
+          "Hall Effect Transducer",
+          "Speed Transducer",
+          "Noise Reduction in Instrumentation"
+        ]
+      }
+    ]
+  }
+]
