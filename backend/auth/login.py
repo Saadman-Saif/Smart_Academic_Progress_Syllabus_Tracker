@@ -4,7 +4,7 @@ from db import get_db
 
 # 1. Define the Blueprint
 login_bp = Blueprint("login_bp", __name__)
-
+logout_bp = Blueprint("logout_bp", __name__)
 @login_bp.route("/login", methods=["POST"])
 def login():
    
@@ -29,6 +29,7 @@ def login():
         user = cursor.fetchone()
 
         if user and check_password_hash(user["password"], password):
+            session.permanent = True
             session["user_id"] = user["id"]
             return jsonify(
                 {
@@ -45,3 +46,7 @@ def login():
         return jsonify({"message": f"Server error: {str(e)}"}), 500
     finally:
         conn.close()
+@logout_bp.route("/logout", methods=["POST"])
+def logout():
+    session.clear()
+    return jsonify({"message": "Logout successful"}), 200

@@ -3,15 +3,17 @@ from flask import Flask
 from dotenv import load_dotenv
 from db import init_db
 from syllabus.syllabus_initializer import initialize_syllabus
-
+from datetime import timedelta
 load_dotenv()
 app = Flask(__name__)
 initialize_syllabus()
 init_db()
 app.secret_key = os.getenv("FLASK_SECRET_KEY") or "secret_for_team_project"
+app.permanent_session_lifetime = timedelta(days=30)
 # Auth blueprints
 from auth.signup import signup_bp
 from auth.login import login_bp
+from auth.login import logout_bp
 from auth.forget_pass import password_bp
 # Syllabus blueprint
 from syllabus.routes import syllabus_bp
