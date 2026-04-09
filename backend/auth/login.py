@@ -13,7 +13,7 @@ def login():
         return jsonify({"message": "Request must be JSON"}), 400
 
     data = request.get_json()
-    email = data.get("email") # Changed from username to email to match your DB
+    email = data.get("email") # Changed from username to email
     password = data.get("password")
 
     if not email or not password:
@@ -32,6 +32,11 @@ def login():
         if user and check_password_hash(user["password"], password):
             session.permanent = True
             session["user_id"] = user["id"]
+            cursor.execute(
+            "UPDATE users SET is_logged_in = 1 WHERE id = ?",
+            (user["id"],)
+                )
+            conn.commit()
             return jsonify(
                 {
                     "message": "Login successful",
@@ -49,16 +54,40 @@ def login():
         conn.close()
 @logout_bp.route("/logout", methods=["POST"])
 def logout():
+    conn = get_db()
+    cursor = conn.cursor()
+
+    if "user_id" in session:
+        cursor.execute(
+            "UPDATE users SET is_logged_in = 0 WHERE id = ?",
+            (session["user_id"],)
+        )
+        conn.commit()
+
     session.clear()
+    conn.close()
+
     return jsonify({"message": "Logout successful"}), 200
+
 @session_bp.route("/check-session", methods=["GET"])
 def check_session():
-    if "user_id" in session:
+    if "user_id" not in session:
+        return jsonify({"logged_in": False}), 401
+
+    conn = get_db()
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "SELECT is_logged_in FROM users WHERE id = ?",
+        (session["user_id"],)
+    )
+    user = cursor.fetchone()
+    conn.close()
+
+    if user and user["is_logged_in"] == 1:
         return jsonify({
             "logged_in": True,
             "user_id": session["user_id"]
         }), 200
 
-    return jsonify({
-        "logged_in": False
-    }), 401
+    return jsonify({"logged_in": False}), 401

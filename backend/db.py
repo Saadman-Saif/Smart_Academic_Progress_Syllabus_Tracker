@@ -1,5 +1,6 @@
 import sqlite3
 import os
+from unittest.mock import DEFAULT
 
 # Base directory (path-safe for all OS)
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -26,7 +27,8 @@ def init_db():
             department TEXT,
             year INTEGER,
             semester INTEGER,
-            created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            is_logged_in INTEGER DEFAULT 0
         )
     """)
 
@@ -134,6 +136,17 @@ CREATE TABLE IF NOT EXISTS modules (
             UNIQUE(user_id, course_code),
             FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
     )
+""")
+    #store routine 
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS routine (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER NOT NULL,
+            file_name TEXT,
+            file_path TEXT NOT NULL,
+            file_type TEXT NOT NULL,
+            uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
 """)
     conn.commit()
     conn.close()

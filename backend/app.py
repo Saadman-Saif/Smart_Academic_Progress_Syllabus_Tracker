@@ -20,10 +20,13 @@ from auth.login import session_bp
 from syllabus.routes import syllabus_bp
 #timer blueprint
 from session_tracker.services.timer_routes import study_timer_bp
+from routine import routine_bp
 # Register auth blueprints
 app.register_blueprint(signup_bp)
 app.register_blueprint(login_bp)
 app.register_blueprint(password_bp)
+app.register_blueprint(logout_bp)
+app.register_blueprint(session_bp)
 # Register syllabus blueprint
 app.register_blueprint(syllabus_bp)
 # Register context blueprint
@@ -34,8 +37,8 @@ app.register_blueprint(study_timer_bp)
 #Register ct avg blueprint
 from ct_average.ct_routes import ct_bp
 app.register_blueprint(ct_bp)
-app.register_blueprint(logout_bp)
-app.register_blueprint(session_bp)
+#Register routine blueprint
+app.register_blueprint(routine_bp)
 if __name__ == "__main__":
     app.run(
         debug=True,
