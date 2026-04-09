@@ -15,6 +15,7 @@ from auth.signup import signup_bp
 from auth.login import login_bp
 from auth.login import logout_bp
 from auth.forget_pass import password_bp
+from auth.login import session_bp
 # Syllabus blueprint
 from syllabus.routes import syllabus_bp
 #timer blueprint
@@ -33,6 +34,8 @@ app.register_blueprint(study_timer_bp)
 #Register ct avg blueprint
 from ct_average.ct_routes import ct_bp
 app.register_blueprint(ct_bp)
+app.register_blueprint(logout_bp)
+app.register_blueprint(session_bp)
 if __name__ == "__main__":
     app.run(
         debug=True,

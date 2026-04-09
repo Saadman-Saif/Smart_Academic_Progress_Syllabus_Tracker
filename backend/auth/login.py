@@ -5,6 +5,7 @@ from db import get_db
 # 1. Define the Blueprint
 login_bp = Blueprint("login_bp", __name__)
 logout_bp = Blueprint("logout_bp", __name__)
+session_bp = Blueprint("session_bp", __name__)
 @login_bp.route("/login", methods=["POST"])
 def login():
    
@@ -50,3 +51,14 @@ def login():
 def logout():
     session.clear()
     return jsonify({"message": "Logout successful"}), 200
+@session_bp.route("/check-session", methods=["GET"])
+def check_session():
+    if "user_id" in session:
+        return jsonify({
+            "logged_in": True,
+            "user_id": session["user_id"]
+        }), 200
+
+    return jsonify({
+        "logged_in": False
+    }), 401
