@@ -1,3 +1,5 @@
+import json
+import os
 import requests
 
 
@@ -6,8 +8,10 @@ class BackendClient:
 
     def __init__(self):
         # REPLACE THIS WITH THE CHANGING IP
-        self.base_url = "http://127.0.0.1:5000/"
+        self.base_url = "http://192.168.0.103:5000/"
         self.req_session = BackendClient.shared_session
+        self.COOKIE_FILE = "session_data.json"
+        self.load_cookies()
 
     def signup(self, username, email, password):
         url = f"{self.base_url}signup"
@@ -24,6 +28,7 @@ class BackendClient:
             data = response.json()
             user_id = data.get("user_id")
             uname = data.get("username")
+            self.save_cookies()
             return True, "Account Created Successfully", user_id, uname
         elif response.status_code == 409:
             return False, "Email already exists", None, None
@@ -45,6 +50,7 @@ class BackendClient:
                 data = response.json()
                 user_id = data.get("user_id")
                 username = data.get("username")
+                self.save_cookies()
                 return True, "Login Successful", user_id, username
             elif response.status_code == 401:
                 return False, "Invalid Username or Password", None, None
@@ -55,6 +61,51 @@ class BackendClient:
             return False, "Could not connect to server.", None, None
         except Exception as e:
             return False, f"An error occurred: {str(e)}", None, None
+        
+    def save_cookies(self):
+        """Saves the current session cookies to a local file."""
+        try:
+            with open(self.COOKIE_FILE, 'w') as f:
+                # Convert the session cookies into a simple dictionary and save as JSON
+                json.dump(self.req_session.cookies.get_dict(), f)
+            print("DEBUG: Session cookies saved to disk.")
+        except Exception as e:
+            print(f"DEBUG: Failed to save cookies: {e}")
+
+    def load_cookies(self):
+        """Loads cookies from the local file into the session."""
+        try:
+            if os.path.exists(self.COOKIE_FILE):
+                with open(self.COOKIE_FILE, 'r') as f:
+                    cookies = json.load(f)
+                    # Inject the loaded cookies back into the shared session
+                    self.req_session.cookies.update(cookies)
+                print("DEBUG: Session cookies loaded from disk.")
+        except Exception as e:
+            print(f"DEBUG: Failed to load cookies: {e}")
+
+    def is_logged_in(self):
+        url = f"{self.base_url}check-session"
+        try:
+            response = self.req_session.get(url, timeout=5)
+            print(f"DEBUG: Server returned status code {response.status_code}")
+            print(f"DEBUG: Raw server response: {response.text}")
+            isLoggedIn = response.json().get("logged_in")
+            if response.status_code == 200:
+                print(isLoggedIn)
+                print("200")
+                return True, isLoggedIn, response.json()
+            if response.status_code == 401:
+                print(isLoggedIn)
+                print("401")
+                return True, isLoggedIn, response.json()
+            try:
+                err = response.text
+            except ValueError:
+                err = response.text
+            return False, False, err
+        except Exception as e:
+            return False, False, str(e)
 
     def get_me(self):
         """Fetch current user from study.db via session cookie (same as login/signup session)."""

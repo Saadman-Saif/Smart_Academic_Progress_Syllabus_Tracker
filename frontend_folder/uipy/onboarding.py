@@ -7,7 +7,7 @@
 from PySide6.QtCore import (QCoreApplication, QMetaObject, QRect)
 from PySide6.QtWidgets import (QMenuBar, QStatusBar, QVBoxLayout, QWidget)
 
-from sliding_stacked_widget import SlidingStackedWidget
+from uipy.sliding_stacked_widget import SlidingStackedWidget
 
 class Ui_AppName(object):
     def setupUi(self, AppName):

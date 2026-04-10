@@ -68,7 +68,7 @@ QTabWidget::pane, QTabBar::tab
 }</string>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <property name="elideMode">
       <enum>Qt::TextElideMode::ElideNone</enum>
@@ -108,7 +108,7 @@ QTabWidget::pane, QTabBar::tab
         </widget>
        </item>
        <item row="1" column="0">
-        <widget class="ShadowFrame" name="syllabusCompletionFrame">
+        <widget class="QFrame" name="syllabusCompletionFrame">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
            <horstretch>1</horstretch>
@@ -344,6 +344,12 @@ QTabWidget::pane, QTabBar::tab
                  <height>60</height>
                 </size>
                </property>
+               <property name="toolTip">
+                <string>Play</string>
+               </property>
+               <property name="toolTipDuration">
+                <number>-1</number>
+               </property>
                <property name="text">
                 <string/>
                </property>
@@ -359,6 +365,9 @@ QTabWidget::pane, QTabBar::tab
                  <width>60</width>
                  <height>60</height>
                 </size>
+               </property>
+               <property name="toolTip">
+                <string>Pause</string>
                </property>
                <property name="text">
                 <string/>
@@ -376,6 +385,9 @@ QTabWidget::pane, QTabBar::tab
                  <height>60</height>
                 </size>
                </property>
+               <property name="toolTip">
+                <string>Stop</string>
+               </property>
                <property name="text">
                 <string/>
                </property>
@@ -391,6 +403,9 @@ QTabWidget::pane, QTabBar::tab
                  <width>60</width>
                  <height>60</height>
                 </size>
+               </property>
+               <property name="toolTip">
+                <string>Reset</string>
                </property>
                <property name="text">
                 <string/>
@@ -435,14 +450,6 @@ QTabWidget::pane, QTabBar::tab
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>ShadowFrame</class>
-   <extends>QFrame</extends>
-   <header>shadow_frame.h</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

@@ -1,1 +1,8 @@
 toBeIgnored/
+frontend_folder/uipy/dist/
+frontend_folder/uipy/build/
+frontend_folder/uipy/__pycache__/
+backend/__pycache__/
+backend/auth/__pycache__/
+backend/ct_average/__pycache__/
+

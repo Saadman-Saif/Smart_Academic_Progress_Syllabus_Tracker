@@ -19,8 +19,6 @@ from PySide6.QtWidgets import (QApplication, QFrame, QGridLayout, QHBoxLayout,
     QLabel, QPushButton, QSizePolicy, QTabWidget,
     QVBoxLayout, QWidget)
 
-from shadow_frame import ShadowFrame
-
 class Ui_HomePage(object):
     def setupUi(self, HomePage):
         if not HomePage.objectName():
@@ -98,7 +96,7 @@ class Ui_HomePage(object):
 
         self.gridLayout.addWidget(self.welcomeUserLabel, 0, 0, 1, 1)
 
-        self.syllabusCompletionFrame = ShadowFrame(self.homeTab)
+        self.syllabusCompletionFrame = QFrame(self.homeTab)
         self.syllabusCompletionFrame.setObjectName(u"syllabusCompletionFrame")
         sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
         sizePolicy1.setHorizontalStretch(1)
@@ -234,6 +232,7 @@ class Ui_HomePage(object):
         self.playBtn = QPushButton(self.timerControlsFrame)
         self.playBtn.setObjectName(u"playBtn")
         self.playBtn.setMinimumSize(QSize(60, 60))
+        self.playBtn.setToolTipDuration(-1)
         icon = QIcon(QIcon.fromTheme(QIcon.ThemeIcon.MediaPlaybackStart))
         self.playBtn.setIcon(icon)
 
@@ -293,7 +292,7 @@ class Ui_HomePage(object):
 
         self.retranslateUi(HomePage)
 
-        self.tabWidget.setCurrentIndex(2)
+        self.tabWidget.setCurrentIndex(0)
         self.courseSyllabusTabWidget.setCurrentIndex(-1)
 
 
@@ -308,9 +307,21 @@ class Ui_HomePage(object):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.homeTab), QCoreApplication.translate("HomePage", u"Home", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_5), QCoreApplication.translate("HomePage", u"Syllabus", None))
         self.timerLabel.setText(QCoreApplication.translate("HomePage", u"<html><head/><body><p>0<span style=\" font-size:24pt;\">hr   </span>0<span style=\" font-size:24pt;\">min </span>0<span style=\" font-size:24pt;\">sec</span></p></body></html>", None))
+#if QT_CONFIG(tooltip)
+        self.playBtn.setToolTip(QCoreApplication.translate("HomePage", u"Play", None))
+#endif // QT_CONFIG(tooltip)
         self.playBtn.setText("")
+#if QT_CONFIG(tooltip)
+        self.pauseBtn.setToolTip(QCoreApplication.translate("HomePage", u"Pause", None))
+#endif // QT_CONFIG(tooltip)
         self.pauseBtn.setText("")
+#if QT_CONFIG(tooltip)
+        self.stopBtn.setToolTip(QCoreApplication.translate("HomePage", u"Stop", None))
+#endif // QT_CONFIG(tooltip)
         self.stopBtn.setText("")
+#if QT_CONFIG(tooltip)
+        self.resetBtn.setToolTip(QCoreApplication.translate("HomePage", u"Reset", None))
+#endif // QT_CONFIG(tooltip)
         self.resetBtn.setText("")
         self.saveSessionBtn.setText(QCoreApplication.translate("HomePage", u"Save Session", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_7), QCoreApplication.translate("HomePage", u"Study Session", None))

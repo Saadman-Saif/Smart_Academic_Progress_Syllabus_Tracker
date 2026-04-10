@@ -1,6 +1,7 @@
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QPushButton, QScrollArea
 from PySide6.QtCore import Qt, Signal
-from module_cards import ModuleCard 
+
+from components.module_cards import ModuleCard 
 
 class SyllabusTabWrap(QWidget):
     # ONLY the progress relay remains!
