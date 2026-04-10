@@ -1,71 +1,16 @@
 import sys
-from PySide6.QtWidgets import (QProgressBar, QApplication, QMainWindow, QWidget, QDialog, QLineEdit, QHBoxLayout, QPushButton, QMessageBox, QSizePolicy, QFrame, QVBoxLayout, QLabel, QScrollArea)
-from PySide6.QtCore import (QSize, QCoreApplication, Qt, Signal, QTimer)
-from PySide6.QtGui import QFont
+from PySide6.QtWidgets import (QApplication, QMainWindow, QWidget, QMessageBox, QVBoxLayout, QStackedWidget)
+from PySide6.QtCore import Signal
 
 #------ Imports ------
 # Wrappers
 from pages.login_page import LoginPageWrap, EnterEmailWrap, EnterCodeNewPassWrap
 from pages.onboarding_pages import InstDeptYearSemPageWrap, SyllabusPreviewPageWrap
 from pages.home_page import HomePageWrap
-# Components
-from components.ct_average_card import CTAverageCard
-from components.study_timer import StudyTimerScreen
-# Dialogs
-from dialogs.edit_marks_dialog import EditMarksDialog
 
 # Pyside UI elements
 from uipy.onboarding import Ui_AppName
-from uipy.authpageWidget import Ui_LoginScreen
-from uipy.forgotPasswordEnterEmail import Ui_EnterEmail
-from uipy.forgotPasswordEnterCodeNewPass_ui import Ui_EnterCodeNewPass
-from uipy.inst_dept_year_semesterWidget import Ui_instDeptYearSemSelection
-from uipy.syllabus_previewWidget import Ui_SyllabusPreview
-from uipy.homepageWidget import Ui_HomePage
-from components.syllabus_tab import SyllabusTabWrap
 from backend_client import BackendClient
-
-#------ Wrappers ------
-#------ Authentication Page ------
-
-
-#------ Selection Page ------
-
-
-#------ Landing Page ------
-
-   
-#------ Home Tab ------
-
-
-
-
-#------ Syllabus Tab ------
-# class CourseTabWidget(QWidget):
-#     def __init__(self, parent=None):
-#         super().__init__()
-#         self.parentInstance = parent
-
-#     def handover_syllabus_to_builder(self, syllabusData):
-#         for index, course in enumerate(syllabusData):
-#             print(course.get('course_code', 'Unknown Code'))
-#             self.tab_2 = QWidget()
-#             self.tab_2.setObjectName(course.get('course_code', 'Unknown Code'))
-
-
-#             self.parentInstance.ui.courseSyllabusTabWidget.addTab(self.tab_2, "")
-#             self.parentInstance.ui.courseSyllabusTabWidget.setTabText(self.parentInstance.ui.courseSyllabusTabWidget.indexOf(self.tab_2), QCoreApplication.translate("HomePage", course.get('course_code', 'Unknown Code'), None))
-
-    # def build_module_topic_cards():
-        
-# class 
-
-#------ Study Timer Tab ------
-
-
-
-#------ Forgot Password ------
-
 
 #------ MAIN WINDOW ------
 class MySoftware(QMainWindow):
@@ -84,13 +29,20 @@ class MySoftware(QMainWindow):
         self.SELECTION_PAGE_IND = 3
         self.PREVIEW_PAGE_IND = 4
         
-        # Setup Main Container (The Stack)
+        # Setup Main Container (The Master Stack)
+        self.master_stack = QStackedWidget()
+        self.setCentralWidget(self.master_stack)
+
+        # Setup Onboarding Stack
         self.uiOnboardingStackPage = Ui_AppName()
         self.onboarding_widget = QWidget()
         self.uiOnboardingStackPage.setupUi(self.onboarding_widget)
+        
+        # Restore the Layout Stretcher!
         self.setStyleSheet(u"background-color: rgb(37, 37, 29);")
         onboarding_layout = QVBoxLayout(self.onboarding_widget)
         onboarding_layout.addWidget(self.uiOnboardingStackPage.centralwidget, 1)
+        onboarding_layout.setContentsMargins(0, 0, 0, 0)
 
         # Setup Pages
         self.page_login = LoginPageWrap()
@@ -99,10 +51,10 @@ class MySoftware(QMainWindow):
         self.page_selection = InstDeptYearSemPageWrap()
         self.page_syllabus = SyllabusPreviewPageWrap()
 
-        # Setup Backened
+        # Setup Backend
         self.client = BackendClient()
 
-        # Recieve signals
+        # Receive signals
         self.page_login.loginSuccess.connect(self.handle_login_success)
         self.page_login.forgotPassword.connect(self.go_to_email)
         self.page_login.signupSuccess.connect(self.go_to_selection)
@@ -116,43 +68,27 @@ class MySoftware(QMainWindow):
         self.page_syllabus.goNext.connect(self.go_to_home)
         self.page_syllabus.goBack.connect(self.go_to_selection_from_preview)
 
-        self.setCentralWidget(self.onboarding_widget)
-        self.resize(1100, 700)
-
-        # Add to stack
+        # Add to Stacks
         self.uiOnboardingStackPage.stackedWidget.addWidget(self.page_login)      # Index 0
         self.uiOnboardingStackPage.stackedWidget.addWidget(self.page_enter_email) # Index 1
-        self.uiOnboardingStackPage.stackedWidget.addWidget(self.page_enter_code) # Index 2
-        self.uiOnboardingStackPage.stackedWidget.addWidget(self.page_selection)  # Index 3
-        self.uiOnboardingStackPage.stackedWidget.addWidget(self.page_syllabus)   # Index 4
+        self.uiOnboardingStackPage.stackedWidget.addWidget(self.page_enter_code)  # Index 2
+        self.uiOnboardingStackPage.stackedWidget.addWidget(self.page_selection)   # Index 3
+        self.uiOnboardingStackPage.stackedWidget.addWidget(self.page_syllabus)    # Index 4
+        self.master_stack.addWidget(self.onboarding_widget) 
+        
+        self.resize(1100, 700)
         self.go_to_login()
 
         success, loggedIn, response = self.client.is_logged_in()
         if success:
             if loggedIn:
+                self.current_user_id = response.get("user_id") 
+                self.current_username = response.get("username", "User")
                 self.go_to_home()
             else:
                 self.go_to_login()
         else:
             print(f"Error occurred: {response}")
-
-    def toggle_application_theme(self):
-        self.is_dark_mode = not self.is_dark_mode
-        theme_file = "styles/dark_theme.qss" if self.is_dark_mode else "styles/light_theme.qss"
-        
-        with open(theme_file, "r") as f:
-            self.setStyleSheet(f.read())
-        
-        if self.is_dark_mode:
-            print("Switching to Dark Mode...")
-            self.main_app.theme_toggle_btn.setText("☀️ Light Mode")
-            # Apply your global Dark stylesheet here
-            self.setStyleSheet()
-        else:
-            print("Switching to Bright Mode...")
-            self.main_app.theme_toggle_btn.setText("🌙 Dark Mode")
-            # Apply your global Light stylesheet here
-            self.setStyleSheet()
 
     def handle_login_success(self, user_id, username):
         self.current_user_id = user_id
@@ -161,6 +97,9 @@ class MySoftware(QMainWindow):
         self.go_to_home()
 
     def go_to_login(self):
+        # 1. Tell the Master Stack to show the Onboarding Phase
+        self.master_stack.setCurrentWidget(self.onboarding_widget)
+        # 2. Tell the Inner Stack to show the actual Login Screen
         self.uiOnboardingStackPage.stackedWidget.setCurrentIndex(self.LOGIN_PAGE_IND)
     
     def go_to_email(self):
@@ -168,7 +107,6 @@ class MySoftware(QMainWindow):
 
     def go_to_code(self, email):
         self.recovery_email = email
-        # Send the recovery email to EnterCodeNewPassWrap
         self.page_enter_code.set_recovery_email(self.recovery_email)
         self.uiOnboardingStackPage.stackedWidget.setCurrentIndex(self.ENTER_CODE_NEW_PASS_IND)
 
@@ -181,20 +119,10 @@ class MySoftware(QMainWindow):
     def go_to_selection_from_preview(self):
         self.uiOnboardingStackPage.stackedWidget.setCurrentIndex(self.SELECTION_PAGE_IND)
 
-
     def load_syllabus(self):
         print("Fetching syllabus for current session...")
         success, self.current_user_syllabus = self.client.get_syllabus()
-        # print(self.current_user_syllabus)
-
         return success
-        # Backend GET /syllabus returns a JSON array of courses (not {"syllabus": [...]})
-        # if success and isinstance(self.current_user_syllabus, list):
-        #     syllabus_list = self.current_user_syllabus
-        #     print("Syllabus loaded:", len(syllabus_list)) 
-        # else:
-        #     print(self.current_user_syllabus)
-        #     return False
 
     def go_to_preview(self):
         data = self.page_selection.preference_payload() 
@@ -216,42 +144,38 @@ class MySoftware(QMainWindow):
         else:
             QMessageBox.warning(self, "Syllabus not found", "No syllabus was found corresponding to the selected information.")
 
-    # def set_current_user_syllabus(self, syllabusData):
-    #     self.current_user_syllabus = syllabusData
-
-    def go_to_home(self):
-        self.main_app = HomePageWrap()
-        self.client.get_me()
-        # Relay Signal connections
-        self.main_app.sendUpdatedMarks.connect(self.update_ct_marks_and_cardsFrame)
-        self.main_app.loadCTMarks.connect(self.load_ct_marks)
-        self.main_app.themeToggledRelay.connect(self.toggle_application_theme)
-        # self.main_app.topicAddedRelay.connect(self.add_new_topic)
-        # self.main_app.topicDeletedRelay.connect(self.delete_topic)
-        self.main_app.progressUpdatedRelay.connect(self.update_topic_progress)
-
-        self.setCentralWidget(self.main_app)
+    def set_welcome_text(self):
         welcome = self.current_username or "User"
         self.main_app.ui.welcomeUserLabel.setText(f"Welcome, {welcome}!")
 
-        # Request course code value from backend to then request ct marks from the backend against those courses
+    def go_to_home(self):
+        self.main_app = HomePageWrap(self.client, self.current_user_id)
+        
+        # Use a safe .get() in case get_me() fails
+        me_success, me_data = self.client.get_me()
+        if me_success:
+            self.current_username = me_data.get('username', self.current_username)
+            
+        self.set_welcome_text()
+        
+        # Relay Signal connections
+        self.main_app.sendUpdatedMarks.connect(self.update_ct_marks_and_cardsFrame)
+        self.main_app.loadCTMarks.connect(self.load_ct_marks)
+        self.main_app.progressUpdatedRelay.connect(self.update_topic_progress)
+        self.main_app.logoutRelay.connect(self.process_logout)
+
+        # Request course code value from backend
         success = self.load_syllabus()
-        # self.build_syllabus_preview_for_home_page()
-        # print(self.current_user_syllabus)
         if success:
             self.main_app.fill_in_cardsFrame(self.current_user_syllabus)
-            # for course in self.current_user_syllabus:
-            #     success, allMarks, avgMark, ctCount = self.load_ct_marks(course.get('course_code'))
-            #     self.main_app.build_dynamic_cards(course.get('course_code'), avgMark, allMarks)
             self.main_app.populate_course_tabs(self.current_user_syllabus)
-
             self.main_app.update_syllabus_progress_bars(self.current_user_syllabus)
         
-        # Clean up memory by destroying the onboarding views
-        self.onboarding_widget.deleteLater()
-        self.onboarding_widget = None
+        # 1. Add the main app to the master stack
+        self.master_stack.addWidget(self.main_app)
+        # 2. Switch the screen to show it!
+        self.master_stack.setCurrentWidget(self.main_app)
 
-    # --- THE SMART METHOD ---
     def update_topic_progress(self, topic_id, is_checked):
         print(f"API CALL: Setting topic {topic_id} completion to {is_checked}")
         
@@ -259,24 +183,10 @@ class MySoftware(QMainWindow):
         
         if success:
             print("Database updated successfully!")
-            # Optional: Write a quick loop here to update self.current_user_syllabus 
-            # so the checkbox stays checked if the user navigates away and comes back.
-            # Fetch the fresh data from the database with the new completion status
             if self.load_syllabus():
-                # Re-calculate and redraw the progress bars!
                 self.main_app.update_syllabus_progress_bars(self.current_user_syllabus)
         else:
             print("Failed to update database:", response)
-
-    # def fill_in_cardsFrame(self):
-    #     while self.ui.horizontalLayout_4.count():
-    #     item = self.ui.horizontalLayout_4.takeAt(0)
-    #     widget = item.widget()
-    #     if widget:
-    #         widget.deleteLater()
-    #     for course in self.current_user_syllabus:
-    #         success, allMarks, avgMark, ctCount = self.load_ct_marks(course.get('course_code'))
-    #         self.main_app.build_dynamic_cards(course.get('course_code'), avgMark, allMarks)
 
     def load_ct_marks(self, courseCode):
         success, response = self.client.get_ct_marks(courseCode)
@@ -288,8 +198,7 @@ class MySoftware(QMainWindow):
         
     def update_ct_marks_and_cardsFrame(self, courseCode, list_ctMarks):
         for ctNo, mark in enumerate(list_ctMarks):
-            print(ctNo)
-            if mark == None:
+            if mark is None:
                 continue
             success, response = self.client.set_ct_marks(courseCode, int(ctNo) + 1, mark)
             if success:
@@ -299,27 +208,25 @@ class MySoftware(QMainWindow):
             else:
                 print(response)
 
-    # def build_syllabus_preview_for_home_page(self):
-    #     self.main_app.syllabusTabInstance.handover_syllabus_to_builder(self.current_user_syllabus)
-
-    # def load_home_page(self):
-    #     # Pass the data DOWN when the user logs in
-    #     # (Assuming self.master_syllabus contains the list of courses. 
-    #     # Here we just pass the first course as an example).
-    #     if self.current_user_syllabus:
-    #         first_course = self.current_user_syllabus[0]
-    #         self.main_app.syllabus_tab.set_syllabus_data(first_course)
-            
-    #     self.stackedWidget.setCurrentIndex(self.HOME_PAGE_IND)
-
-    # def add_new_topic(self, module_name, new_topic):
-    #     print(f"API CALL: Adding '{new_topic}' to '{module_name}'")
-    #     # success, resp = self.client.add_topic(module_name, new_topic)
-    #     # if success: update self.master_syllabus and refresh!
+    def process_logout(self):
+        print("User logged out. Locking the app.")
         
-    # def delete_topic(self, module_name, topic_name):
-    #     print(f"API CALL: Deleting '{topic_name}' from '{module_name}'")
-    #     # success, resp = self.client.delete_topic(module_name, topic_name)
+        # 1. Scrub the user data from memory
+        self.current_user_id = None
+        self.current_username = None
+        self.current_user_syllabus = None
+        
+        # 2. Switch the Master Stack back to the Onboarding Widget!
+        self.master_stack.setCurrentWidget(self.onboarding_widget)
+        
+        # 3. Safely destroy the Home Page to free up memory
+        if getattr(self, 'main_app', None):
+            self.master_stack.removeWidget(self.main_app)
+            self.main_app.deleteLater()
+            self.main_app = None
+            
+        # 4. Reset the inner stack to the login page
+        self.go_to_login()
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

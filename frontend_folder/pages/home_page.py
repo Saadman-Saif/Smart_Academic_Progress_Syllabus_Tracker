@@ -1,31 +1,41 @@
-from PySide6.QtWidgets import (QProgressBar, QWidget, QDialog, QPushButton, QVBoxLayout, QLabel)
+from PySide6.QtWidgets import (QApplication, QFileDialog, QProgressBar, QWidget, QDialog, QPushButton, QVBoxLayout, QLabel)
+from PySide6.QtGui import QPixmap
 from PySide6.QtCore import (Qt, Signal)
+import os
 
 from uipy.homepageWidget import Ui_HomePage
 from components.study_timer import StudyTimerScreen
 from components.ct_average_card import CTAverageCard
 from components.syllabus_tab import SyllabusTabWrap
+from components.profile_tab import ProfileTabWrap
 from dialogs.edit_marks_dialog import EditMarksDialog
 
 class HomePageWrap(QWidget):
     sendUpdatedMarks = Signal(str, list)
     loadCTMarks = Signal(str)
-    themeToggledRelay = Signal()
+    # themeToggledRelay = Signal()
     # topicDeletedRelay = Signal(int) 
     # topicAddedRelay = Signal(int, str)
     progressUpdatedRelay = Signal(int, bool)
-    def __init__(self):
+    changeSyllabusRelay = Signal()
+    logoutRelay = Signal()
+    def __init__(self, api_client, user_id):
         super().__init__()
         self.ui = Ui_HomePage()
         self.ui.setupUi(self)
+        self.client = api_client
+        self.user_id = user_id # Save the ID!
+        self.setup_routine_tab()
+        self.load_saved_routine()
         # self.build_dynamic_cards()
         self.active_course_tabs = []
 
-        # --- THE CORNER WIDGET MAGIC ---
-        self.theme_toggle_btn = QPushButton("☀️ Light Mode")
-        self.theme_toggle_btn.setFixedSize(120, 30)
-        self.theme_toggle_btn.setCursor(Qt.CursorShape.PointingHandCursor)
-        self.theme_toggle_btn.setStyleSheet("""
+        # # --- THE CORNER WIDGET MAGIC ---
+        # self.theme_toggle_btn = QPushButton("☀️ Light Mode")
+        # self.theme_toggle_btn.setFixedSize(120, 30)
+        self.ui.changeSyllabusBtn.setCursor(Qt.CursorShape.PointingHandCursor)
+        self.ui.updateProgressBtn.setCursor(Qt.CursorShape.PointingHandCursor)
+        self.ui.updateProgressBtn.setStyleSheet("""
             QPushButton {
                 background-color: #444444; 
                 color: white; 
@@ -33,19 +43,32 @@ class HomePageWrap(QWidget):
                 margin-right: 20px; /* Keeps it from touching the edge of the screen */
             }
         """)
+        self.ui.changeSyllabusBtn.setStyleSheet("""
+            QPushButton {
+                background-color: #444444; 
+                color: white; 
+                border-radius: 4px;
+                margin-right: 0px;
+            }
+        """)
         
         # Inject it into the top-right corner of the Tab Widget!
-        self.ui.tabWidget.setCornerWidget(self.theme_toggle_btn, Qt.Corner.TopRightCorner)
+        self.ui.courseSyllabusTabWidget.setCornerWidget(self.ui.frame, Qt.Corner.TopRightCorner)
         
-        # Wire it up to the relay
-        self.theme_toggle_btn.clicked.connect(self.themeToggledRelay.emit)
+        # # Wire it up to the relay
+        # self.ui.updateProgressBtn.clicked.connect(self.themeToggledRelay.emit)
 
         self.avgMark = 0
         self.allMarks = []
         self.timerScreenInstance = StudyTimerScreen(parent=self)
+        self.profile_tab = ProfileTabWrap(self.client, self.user_id)
+        self.ui.label_4.setVisible(False)
+        self.ui.verticalLayout_9.addWidget(self.profile_tab)
+
+        self.profile_tab.logoutRelay.connect(self.logoutRelay.emit)
         # self.syllabusTabInstance = CourseTabWidget(parent=self)
-        self.syllabus_tab = SyllabusTabWrap()
-        self.ui.courseSyllabusTabWidget.addTab(self.syllabus_tab, "Test")
+        # self.syllabus_tab = SyllabusTabWrap()
+        # self.ui.courseSyllabusTabWidget.addTab(self.syllabus_tab, "Test")
 
     def build_dynamic_cards(self, course, avgMarks, allMarks):
         # avgMarks = {"CSE 2201": 16, 
@@ -122,6 +145,105 @@ class HomePageWrap(QWidget):
             # success, self.ctCount = self.load_ct_marks(course.get('course_code'))
             self.build_dynamic_cards(courseList.get('course_code'), self.avgMark, self.allMarks)
 
+    def setup_routine_tab(self):
+        # Assuming you have an empty layout in your Routine Tab called `routineLayout`
+        # self.routine_layout = self.ui.routineLayout 
+        
+        # self.upload_btn = QPushButton("📁 Upload Routine (Image/PDF)")
+        # self.upload_btn.setFixedSize(250, 40)
+        # self.upload_btn.setStyleSheet("background-color: #005f73; color: white; font-weight: bold;")
+        self.ui.uploadRoutineBtn.clicked.connect(self.handle_file_upload)
+        
+        # This label will hold the actual image of the routine
+        self.routine_display = QLabel("No routine uploaded yet.")
+        self.routine_display.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.routine_display.setStyleSheet("border: 2px dashed #555555; color: #777777;")
+        self.routine_display.setMinimumSize(400, 500)
+        
+        # Add them to the tab
+        # self.routine_layout.addWidget(self.upload_btn, alignment=Qt.AlignmentFlag.AlignCenter)
+        self.ui.verticalLayout_6.addWidget(self.routine_display)
+
+    def load_saved_routine(self):
+        success, data = self.client.get_routine_info(self.user_id)
+        if success:
+            db_file_path = data.get("file_path")
+            file_type = data.get("file_type")
+
+            # 1. Take the elevator up to the Master Folder
+            # __file__ is in: frontend_folder/pages/home_page.py
+            pages_folder = os.path.dirname(os.path.abspath(__file__))
+            frontend_folder = os.path.dirname(pages_folder)
+            master_project_folder = os.path.dirname(frontend_folder) 
+
+            # 2. Clean the database string
+            clean_db_path = os.path.normpath(db_file_path.strip())
+
+            # 3. Build a net to catch the file no matter where it is
+            paths_to_test = [
+                os.path.join(master_project_folder, "backend", clean_db_path), # Scenario A: backend is next to frontend
+                os.path.join(master_project_folder, clean_db_path),            # Scenario B: uploads are in the master folder
+                os.path.join(frontend_folder, clean_db_path)                   # Scenario C: what we tried last time
+            ]
+
+            actual_path = None
+            
+            # 4. Check all possible timelines
+            for test_path in paths_to_test:
+                if os.path.exists(test_path):
+                    actual_path = test_path
+                    break # Stop looking, we found it!
+
+            if actual_path:
+                print(f"DEBUG: Found routine file at -> {actual_path}")
+                self.display_routine_file(actual_path, file_type)
+            else:
+                print(f"DEBUG: Still missing. I checked all of these:")
+                for p in paths_to_test:
+                    print(f" - {p}")
+                self.routine_display.setText("Routine file missing from disk.")
+                self.routine_display.setStyleSheet("border: 2px dashed red; color: red;")
+        else:
+            print("No saved routine found.")
+
+    def display_routine_file(self, file_path, file_extension):
+        # Move your existing display logic here to keep things DRY (Don't Repeat Yourself)
+        if file_extension in ['image', '.png', '.jpg', '.jpeg']:
+            pixmap = QPixmap(file_path)
+            scaled_pixmap = pixmap.scaled(self.routine_display.size(), Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation)
+            self.routine_display.setPixmap(scaled_pixmap)
+            
+        elif file_extension in ['pdf', '.pdf']:
+            file_name = os.path.basename(file_path)
+            self.routine_display.setText(f"📄 PDF Routine:\n\n{file_name}")
+
+    def handle_file_upload(self):
+        file_path, _ = QFileDialog.getOpenFileName(self, "Select Your Routine", "", "Supported Files (*.png *.jpg *.jpeg *.pdf)")
+        
+        if file_path:
+            file_extension = os.path.splitext(file_path)[1].lower()
+            
+            # 1. Show it instantly
+            self.display_routine_file(file_path, file_extension)
+            
+            # 2. Upload to database
+            self.ui.uploadRoutineBtn.setText("Uploading...")
+            QApplication.processEvents() # Force UI to update
+            
+            success, response = self.client.upload_routine(self.user_id, file_path)
+            
+            self.ui.uploadRoutineBtn.setText("📁 Upload Routine (Image/PDF)")
+            if not success:
+                print("Failed to save routine to cloud:", response)
+
+    def change_updateProgressBtn_text(self, is_editing):
+        if is_editing:
+            self.ui.updateProgressBtn.setText("Close Progress Editor")
+            self.ui.updateProgressBtn.setStyleSheet("background-color: #005f73; color: white; border-radius: 5px;") # Nice teal color
+        else:
+            self.ui.updateProgressBtn.setText("✎ Update Progress")
+            self.ui.updateProgressBtn.setStyleSheet("background-color: #444444; color: white; border-radius: 5px;")
+
     def populate_course_tabs(self, full_syllabus_data):
         # 1. Clear any existing tabs (important if the user refreshes)
         self.ui.courseSyllabusTabWidget.clear()
@@ -132,7 +254,8 @@ class HomePageWrap(QWidget):
             
             # 3. Instantiate a fresh wrapper for THIS specific course
             course_tab = SyllabusTabWrap()
-            
+            course_tab.isEditingRelay.connect(self.change_updateProgressBtn_text)
+            self.ui.updateProgressBtn.clicked.connect(course_tab.toggle_all_cards)
             # 4. Feed it the data
             course_tab.set_syllabus_data(course)
             

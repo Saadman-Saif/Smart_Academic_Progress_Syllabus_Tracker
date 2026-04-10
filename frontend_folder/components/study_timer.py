@@ -1,5 +1,5 @@
-from PySide6.QtWidgets import (QWidget, QMessageBox)
-from PySide6.QtCore import QTimer
+from PySide6.QtWidgets import (QWidget, QMessageBox, QLabel)
+from PySide6.QtCore import (QTimer, Qt)
 # Backend
 from backend_client import BackendClient
 
@@ -11,7 +11,7 @@ class StudyTimerScreen(QWidget):
         self.parentInstance.ui.pauseBtn.setVisible(False)
         self.parentInstance.ui.stopBtn.setVisible(False)
         self.defaultPlannedDuration_Seconds = 3600
-        self.elapsedTime_Seconds = 0
+        self.total_time = 0
         self.timer = QTimer()
         self.timer.timeout.connect(self.update_timer_display)
         self.parentInstance.ui.playBtn.clicked.connect(self.handle_playBtn_click)
@@ -20,9 +20,19 @@ class StudyTimerScreen(QWidget):
         self.parentInstance.ui.resetBtn.clicked.connect(self.handle_resetBtn_click)
         self.parentInstance.ui.saveSessionBtn.clicked.connect(self.handle_saveSessionBtn_click)
 
+        self.parentInstance.ui.label_3.setVisible(False)
+        # 1. Create the label
+        self.summary_label = QLabel("Ready to study! Your daily summary will appear here.")
+        self.summary_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.summary_label.setWordWrap(True)
+        self.summary_label.setStyleSheet("color: #AAAAAA; font-size: 14px; margin-top: 20px;")
+
+        # 2. Inject it into the UI
+        self.parentInstance.ui.verticalLayout_7.addWidget(self.summary_label)
+
     def handle_playBtn_click(self):
-        if not self.elapsedTime_Seconds:
-            success, result = self.client.start_study(self.elapsedTime_Seconds, self.defaultPlannedDuration_Seconds)
+        if not self.total_time:
+            success, result = self.client.start_study(self.total_time, self.defaultPlannedDuration_Seconds)
             if success:
                 print(f"Session started on backend with ID: {result}")
                 self.timer.start(1000)
@@ -54,7 +64,7 @@ class StudyTimerScreen(QWidget):
         msgBox.setStandardButtons(QMessageBox.StandardButton.Reset | QMessageBox.StandardButton.Cancel)
         ret = msgBox.exec()
         if ret == QMessageBox.StandardButton.Reset:
-            self.elapsedTime_Seconds = -1
+            self.total_time = -1
             self.update_timer_display()
             self.parentInstance.ui.stopBtn.setVisible(False)            
 
@@ -82,10 +92,10 @@ class StudyTimerScreen(QWidget):
             print(result)
 
     def update_timer_display(self):
-        self.elapsedTime_Seconds += 1
-        hours = self.elapsedTime_Seconds // 3600
-        minutes = (self.elapsedTime_Seconds % 3600) // 60
-        seconds = self.elapsedTime_Seconds % 60
+        self.total_time += 1
+        hours = self.total_time // 3600
+        minutes = (self.total_time % 3600) // 60
+        seconds = self.total_time % 60
         timerText = f"<html><head/><body><p>{hours}<span style=\" font-size:24pt;\">hr   </span>{minutes}<span style=\" font-size:24pt;\">min </span>{seconds}<span style=\" font-size:24pt;\">sec</span></p></body></html>" 
         self.parentInstance.ui.timerLabel.setText(timerText)
 
@@ -105,7 +115,7 @@ class StudyTimerScreen(QWidget):
             if success:
                 # Reset your local QTimer and UI
                 print("Stopped backend")
-                self.elapsedTime_Seconds = -1
+                self.total_time = -1
                 self.update_timer_display()
                 
                 # Bonus: Automatically fetch the daily summary to update a label!
@@ -115,6 +125,23 @@ class StudyTimerScreen(QWidget):
 
     def fetch_summary(self):
         success, data = self.client.get_today_summary()
+        
         if success:
-            print("Today's Summary:", data)
-            # Update a label like: self.parent.ui.summaryLabel.setText(...)
+            print("DEBUG: Raw summary data:", data)
+            
+            # Extract the data (Change these keys to match your teammate's JSON response!)
+            total_time = data.get('total_seconds', 'N/A')
+            hours = total_time // 3600
+            minutes = (total_time % 3600) // 60
+            seconds = total_time % 60
+            message = data.get('message', 'Great job today!')
+
+            # Format and display it
+            summary_text = f"✅ Session Saved!\n\nToday's Total: {hours} hr {minutes} min {seconds} sec \n{message}"
+            self.summary_label.setText(summary_text)
+            
+            # Make it pop with your yellow theme
+            self.summary_label.setStyleSheet("color: #D4D925; font-weight: bold; font-size: 16px; margin-top: 20px;")
+        else:
+            self.summary_label.setText("Session saved, but could not load daily summary.")
+            print(f"Failed to fetch summary: {data}")

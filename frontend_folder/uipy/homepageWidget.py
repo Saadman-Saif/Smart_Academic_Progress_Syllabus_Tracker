@@ -15,15 +15,15 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QFrame, QGridLayout, QHBoxLayout,
-    QLabel, QPushButton, QSizePolicy, QTabWidget,
-    QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QFrame, QHBoxLayout, QLabel,
+    QPushButton, QSizePolicy, QTabWidget, QVBoxLayout,
+    QWidget)
 
 class Ui_HomePage(object):
     def setupUi(self, HomePage):
         if not HomePage.objectName():
             HomePage.setObjectName(u"HomePage")
-        HomePage.resize(1328, 667)
+        HomePage.resize(1071, 623)
         HomePage.setStyleSheet(u"QWidget\n"
 "{\n"
 "	background-color: rgb(37, 37, 29);\n"
@@ -79,8 +79,8 @@ class Ui_HomePage(object):
         self.tabWidget.setTabBarAutoHide(False)
         self.homeTab = QWidget()
         self.homeTab.setObjectName(u"homeTab")
-        self.gridLayout = QGridLayout(self.homeTab)
-        self.gridLayout.setObjectName(u"gridLayout")
+        self.verticalLayout_8 = QVBoxLayout(self.homeTab)
+        self.verticalLayout_8.setObjectName(u"verticalLayout_8")
         self.welcomeUserLabel = QLabel(self.homeTab)
         self.welcomeUserLabel.setObjectName(u"welcomeUserLabel")
         sizePolicy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
@@ -94,7 +94,7 @@ class Ui_HomePage(object):
         font.setBold(True)
         self.welcomeUserLabel.setFont(font)
 
-        self.gridLayout.addWidget(self.welcomeUserLabel, 0, 0, 1, 1)
+        self.verticalLayout_8.addWidget(self.welcomeUserLabel)
 
         self.syllabusCompletionFrame = QFrame(self.homeTab)
         self.syllabusCompletionFrame.setObjectName(u"syllabusCompletionFrame")
@@ -129,13 +129,13 @@ class Ui_HomePage(object):
         self.verticalLayout_2.addWidget(self.progressBarsFrame)
 
 
-        self.gridLayout.addWidget(self.syllabusCompletionFrame, 1, 0, 1, 1)
+        self.verticalLayout_8.addWidget(self.syllabusCompletionFrame)
 
         self.ctAvgFrame = QFrame(self.homeTab)
         self.ctAvgFrame.setObjectName(u"ctAvgFrame")
         sizePolicy1.setHeightForWidth(self.ctAvgFrame.sizePolicy().hasHeightForWidth())
         self.ctAvgFrame.setSizePolicy(sizePolicy1)
-        self.ctAvgFrame.setMinimumSize(QSize(643, 271))
+        self.ctAvgFrame.setMinimumSize(QSize(0, 0))
         self.ctAvgFrame.setFrameShape(QFrame.Shape.StyledPanel)
         self.ctAvgFrame.setFrameShadow(QFrame.Shadow.Raised)
         self.verticalLayout_4 = QVBoxLayout(self.ctAvgFrame)
@@ -164,25 +164,66 @@ class Ui_HomePage(object):
         self.verticalLayout_4.addWidget(self.cardsFrame)
 
 
-        self.gridLayout.addWidget(self.ctAvgFrame, 1, 1, 1, 1)
-
-        self.weeklyReportFrame = QFrame(self.homeTab)
-        self.weeklyReportFrame.setObjectName(u"weeklyReportFrame")
-        sizePolicy3 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
-        sizePolicy3.setHorizontalStretch(0)
-        sizePolicy3.setVerticalStretch(1)
-        sizePolicy3.setHeightForWidth(self.weeklyReportFrame.sizePolicy().hasHeightForWidth())
-        self.weeklyReportFrame.setSizePolicy(sizePolicy3)
-        self.weeklyReportFrame.setFrameShape(QFrame.Shape.StyledPanel)
-        self.weeklyReportFrame.setFrameShadow(QFrame.Shadow.Raised)
-
-        self.gridLayout.addWidget(self.weeklyReportFrame, 2, 0, 1, 2)
+        self.verticalLayout_8.addWidget(self.ctAvgFrame)
 
         self.tabWidget.addTab(self.homeTab, "")
+        self.tab = QWidget()
+        self.tab.setObjectName(u"tab")
+        self.verticalLayout_6 = QVBoxLayout(self.tab)
+        self.verticalLayout_6.setObjectName(u"verticalLayout_6")
+        self.uploadRoutineBtn = QPushButton(self.tab)
+        self.uploadRoutineBtn.setObjectName(u"uploadRoutineBtn")
+        sizePolicy3 = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
+        sizePolicy3.setHorizontalStretch(0)
+        sizePolicy3.setVerticalStretch(0)
+        sizePolicy3.setHeightForWidth(self.uploadRoutineBtn.sizePolicy().hasHeightForWidth())
+        self.uploadRoutineBtn.setSizePolicy(sizePolicy3)
+        self.uploadRoutineBtn.setMinimumSize(QSize(150, 35))
+        self.uploadRoutineBtn.setMaximumSize(QSize(150, 35))
+        self.uploadRoutineBtn.setStyleSheet(u"background-color: #444444; color: white; border-radius: 5px;")
+
+        self.verticalLayout_6.addWidget(self.uploadRoutineBtn, 0, Qt.AlignmentFlag.AlignHCenter)
+
+        self.tabWidget.addTab(self.tab, "")
         self.tab_5 = QWidget()
         self.tab_5.setObjectName(u"tab_5")
         self.verticalLayout_5 = QVBoxLayout(self.tab_5)
         self.verticalLayout_5.setObjectName(u"verticalLayout_5")
+        self.frame = QFrame(self.tab_5)
+        self.frame.setObjectName(u"frame")
+        sizePolicy4 = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Preferred)
+        sizePolicy4.setHorizontalStretch(0)
+        sizePolicy4.setVerticalStretch(0)
+        sizePolicy4.setHeightForWidth(self.frame.sizePolicy().hasHeightForWidth())
+        self.frame.setSizePolicy(sizePolicy4)
+        self.frame.setMinimumSize(QSize(0, 35))
+        self.frame.setStyleSheet(u"QFrame { border: none; }")
+        self.frame.setFrameShape(QFrame.Shape.StyledPanel)
+        self.frame.setFrameShadow(QFrame.Shadow.Raised)
+        self.horizontalLayout_5 = QHBoxLayout(self.frame)
+        self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
+        self.horizontalLayout_5.setContentsMargins(0, 0, 0, 0)
+        self.changeSyllabusBtn = QPushButton(self.frame)
+        self.changeSyllabusBtn.setObjectName(u"changeSyllabusBtn")
+        sizePolicy3.setHeightForWidth(self.changeSyllabusBtn.sizePolicy().hasHeightForWidth())
+        self.changeSyllabusBtn.setSizePolicy(sizePolicy3)
+        self.changeSyllabusBtn.setMinimumSize(QSize(150, 35))
+        self.changeSyllabusBtn.setStyleSheet(u"background-color: #444444; color: white; border-radius: 5px;")
+
+        self.horizontalLayout_5.addWidget(self.changeSyllabusBtn)
+
+        self.updateProgressBtn = QPushButton(self.frame)
+        self.updateProgressBtn.setObjectName(u"updateProgressBtn")
+        sizePolicy3.setHeightForWidth(self.updateProgressBtn.sizePolicy().hasHeightForWidth())
+        self.updateProgressBtn.setSizePolicy(sizePolicy3)
+        self.updateProgressBtn.setMinimumSize(QSize(150, 35))
+        self.updateProgressBtn.setStyleSheet(u"background-color: #444444; color: white; border-radius: 5px;")
+
+        self.horizontalLayout_5.addWidget(self.updateProgressBtn)
+
+
+        self.verticalLayout_5.addWidget(self.frame, 0, Qt.AlignmentFlag.AlignRight)
+
         self.courseSyllabusTabWidget = QTabWidget(self.tab_5)
         self.courseSyllabusTabWidget.setObjectName(u"courseSyllabusTabWidget")
 
@@ -195,11 +236,11 @@ class Ui_HomePage(object):
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
         self.timerPanel = QFrame(self.tab_7)
         self.timerPanel.setObjectName(u"timerPanel")
-        sizePolicy4 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Maximum)
-        sizePolicy4.setHorizontalStretch(1)
-        sizePolicy4.setVerticalStretch(0)
-        sizePolicy4.setHeightForWidth(self.timerPanel.sizePolicy().hasHeightForWidth())
-        self.timerPanel.setSizePolicy(sizePolicy4)
+        sizePolicy5 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Maximum)
+        sizePolicy5.setHorizontalStretch(1)
+        sizePolicy5.setVerticalStretch(0)
+        sizePolicy5.setHeightForWidth(self.timerPanel.sizePolicy().hasHeightForWidth())
+        self.timerPanel.setSizePolicy(sizePolicy5)
         self.timerPanel.setFrameShape(QFrame.Shape.StyledPanel)
         self.timerPanel.setFrameShadow(QFrame.Shadow.Raised)
         self.verticalLayout_3 = QVBoxLayout(self.timerPanel)
@@ -275,17 +316,34 @@ class Ui_HomePage(object):
 
         self.topicsPanel = QFrame(self.tab_7)
         self.topicsPanel.setObjectName(u"topicsPanel")
-        sizePolicy5 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
-        sizePolicy5.setHorizontalStretch(2)
-        sizePolicy5.setVerticalStretch(0)
-        sizePolicy5.setHeightForWidth(self.topicsPanel.sizePolicy().hasHeightForWidth())
-        self.topicsPanel.setSizePolicy(sizePolicy5)
+        sizePolicy6 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
+        sizePolicy6.setHorizontalStretch(2)
+        sizePolicy6.setVerticalStretch(0)
+        sizePolicy6.setHeightForWidth(self.topicsPanel.sizePolicy().hasHeightForWidth())
+        self.topicsPanel.setSizePolicy(sizePolicy6)
         self.topicsPanel.setFrameShape(QFrame.Shape.StyledPanel)
         self.topicsPanel.setFrameShadow(QFrame.Shadow.Raised)
+        self.verticalLayout_7 = QVBoxLayout(self.topicsPanel)
+        self.verticalLayout_7.setObjectName(u"verticalLayout_7")
+        self.label_3 = QLabel(self.topicsPanel)
+        self.label_3.setObjectName(u"label_3")
+
+        self.verticalLayout_7.addWidget(self.label_3)
+
 
         self.horizontalLayout_2.addWidget(self.topicsPanel)
 
         self.tabWidget.addTab(self.tab_7, "")
+        self.tab_2 = QWidget()
+        self.tab_2.setObjectName(u"tab_2")
+        self.verticalLayout_9 = QVBoxLayout(self.tab_2)
+        self.verticalLayout_9.setObjectName(u"verticalLayout_9")
+        self.label_4 = QLabel(self.tab_2)
+        self.label_4.setObjectName(u"label_4")
+
+        self.verticalLayout_9.addWidget(self.label_4)
+
+        self.tabWidget.addTab(self.tab_2, "")
 
         self.verticalLayout.addWidget(self.tabWidget)
 
@@ -305,6 +363,10 @@ class Ui_HomePage(object):
         self.label.setText(QCoreApplication.translate("HomePage", u"Syllabus Completion", None))
         self.label_2.setText(QCoreApplication.translate("HomePage", u"CT Average", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.homeTab), QCoreApplication.translate("HomePage", u"Home", None))
+        self.uploadRoutineBtn.setText(QCoreApplication.translate("HomePage", u"Upload Routine", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), QCoreApplication.translate("HomePage", u"Routine", None))
+        self.changeSyllabusBtn.setText(QCoreApplication.translate("HomePage", u"Change Syllabus", None))
+        self.updateProgressBtn.setText(QCoreApplication.translate("HomePage", u"\u270e Update Progress", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_5), QCoreApplication.translate("HomePage", u"Syllabus", None))
         self.timerLabel.setText(QCoreApplication.translate("HomePage", u"<html><head/><body><p>0<span style=\" font-size:24pt;\">hr   </span>0<span style=\" font-size:24pt;\">min </span>0<span style=\" font-size:24pt;\">sec</span></p></body></html>", None))
 #if QT_CONFIG(tooltip)
@@ -324,6 +386,9 @@ class Ui_HomePage(object):
 #endif // QT_CONFIG(tooltip)
         self.resetBtn.setText("")
         self.saveSessionBtn.setText(QCoreApplication.translate("HomePage", u"Save Session", None))
+        self.label_3.setText(QCoreApplication.translate("HomePage", u"TextLabel", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_7), QCoreApplication.translate("HomePage", u"Study Session", None))
+        self.label_4.setText(QCoreApplication.translate("HomePage", u"TextLabel", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), QCoreApplication.translate("HomePage", u"Profile", None))
     # retranslateUi
 

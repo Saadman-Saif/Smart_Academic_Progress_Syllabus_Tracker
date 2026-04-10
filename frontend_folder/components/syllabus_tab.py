@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QPushButton, QScrollArea
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QPushButton, QScrollArea, QFrame
 from PySide6.QtCore import Qt, Signal
 
 from components.module_cards import ModuleCard 
@@ -6,7 +6,7 @@ from components.module_cards import ModuleCard
 class SyllabusTabWrap(QWidget):
     # ONLY the progress relay remains!
     progressUpdated = Signal(int, bool) 
-
+    isEditingRelay = Signal(bool)
     def __init__(self):
         super().__init__()
         self.is_editing = False
@@ -14,12 +14,20 @@ class SyllabusTabWrap(QWidget):
 
         main_layout = QVBoxLayout(self)
 
-        self.edit_btn = QPushButton("✎ Update Progress")
-        self.edit_btn.setFixedSize(150, 35)
-        self.edit_btn.setStyleSheet("background-color: #444444; color: white; border-radius: 5px;")
-        self.edit_btn.clicked.connect(self.toggle_all_cards)
+        # self.edit_btn = QPushButton("✎ Update Progress")
+        # self.edit_btn.setFixedSize(150, 35)
+        # self.edit_btn.setStyleSheet("background-color: #444444; color: white; border-radius: 5px;")
+        # self.edit_btn.clicked.connect(self.toggle_all_cards)
+
+        # self.change_syllabus_btn = QPushButton("Change Syllabus")
+        # self.change_syllabus_btn.setFixedSize(150, 35)
+        # self.change_syllabus_btn.setStyleSheet("background-color: #444444; color: white; border-radius: 5px;")
+        # self.change_syllabus_btn.clicked.connect(self.toggle_all_cards)
+
+        # self.buttonFrame = QFrame(self)
         
-        main_layout.addWidget(self.edit_btn, alignment=Qt.AlignmentFlag.AlignRight)
+        # main_layout.addWidget(self.edit_btn, alignment=Qt.AlignmentFlag.AlignRight)
+        # main_layout.addWidget(self.change_syllabus_btn)
 
         self.scroll_area = QScrollArea()
         self.scroll_area.setWidgetResizable(True)
@@ -48,13 +56,13 @@ class SyllabusTabWrap(QWidget):
 
     def toggle_all_cards(self):
         self.is_editing = not self.is_editing
-        
-        if self.is_editing:
-            self.edit_btn.setText("Close Progress Editor")
-            self.edit_btn.setStyleSheet("background-color: #005f73; color: white; border-radius: 5px;") # Nice teal color
-        else:
-            self.edit_btn.setText("✎ Update Progress")
-            self.edit_btn.setStyleSheet("background-color: #444444; color: white; border-radius: 5px;")
+        self.isEditingRelay.emit(self.is_editing)
+        # if self.is_editing:
+        #     self.edit_btn.setText("Close Progress Editor")
+        #     self.edit_btn.setStyleSheet("background-color: #005f73; color: white; border-radius: 5px;") # Nice teal color
+        # else:
+        #     self.edit_btn.setText("✎ Update Progress")
+        #     self.edit_btn.setStyleSheet("background-color: #444444; color: white; border-radius: 5px;")
 
         for card in self.cards:
             card.set_edit_mode(self.is_editing)

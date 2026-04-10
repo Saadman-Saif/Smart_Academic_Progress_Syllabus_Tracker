@@ -106,6 +106,28 @@ class BackendClient:
             return False, False, err
         except Exception as e:
             return False, False, str(e)
+        
+    def logout(self):
+        # 1. Ping the backend to destroy the server-side session (optional but best practice)
+        url = f"{self.base_url}logout" 
+        try:
+            self.req_session.post(url)
+        except Exception:
+            pass # We don't care if this fails, we force the local logout anyway!
+
+        # 2. Clear the cookies from Python's RAM
+        self.req_session.cookies.clear()
+        
+        # 3. Delete the saved cookie file from the hard drive!
+        try:
+            import os
+            if os.path.exists(self.COOKIE_FILE):
+                os.remove(self.COOKIE_FILE)
+                print("DEBUG: Local session cookie deleted.")
+        except Exception as e:
+            print(f"DEBUG: Could not delete cookie file: {e}")
+            
+        return True
 
     def get_me(self):
         """Fetch current user from study.db via session cookie (same as login/signup session)."""
@@ -238,6 +260,28 @@ class BackendClient:
         except Exception as e:
             return False, str(e)
         
+    def upload_routine(self, user_id, file_path):
+        url = f"{self.base_url}routine/upload"
+        try:
+            # Open file in binary read mode
+            with open(file_path, 'rb') as f:
+                files = {'file': f}
+                data = {'user_id': user_id}
+                # requests handles the multipart/form-data headers automatically!
+                response = self.req_session.post(url, files=files, data=data)
+                
+            return response.status_code == 200, response.json()
+        except Exception as e:
+            return False, str(e)
+
+    def get_routine_info(self, user_id):
+        url = f"{self.base_url}routine/{user_id}"
+        try:
+            response = self.req_session.get(url)
+            return response.status_code == 200, response.json()
+        except Exception as e:
+            return False, str(e)
+
     # def add_topic(self, module_id, topic_name):
     #     url = f"{self.base_url}/add-topic"
     #     payload = {"module_id": module_id, "name": topic_name}
