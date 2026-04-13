@@ -8,7 +8,7 @@ class BackendClient:
 
     def __init__(self):
         # REPLACE THIS WITH THE CHANGING IP
-        self.base_url = "http://192.168.0.103:5000/"
+        self.base_url = "http://127.0.0.1:5000/"
         self.req_session = BackendClient.shared_session
         self.COOKIE_FILE = "session_data.json"
         self.load_cookies()
@@ -63,7 +63,6 @@ class BackendClient:
             return False, f"An error occurred: {str(e)}", None, None
         
     def save_cookies(self):
-        """Saves the current session cookies to a local file."""
         try:
             with open(self.COOKIE_FILE, 'w') as f:
                 # Convert the session cookies into a simple dictionary and save as JSON
@@ -73,7 +72,6 @@ class BackendClient:
             print(f"DEBUG: Failed to save cookies: {e}")
 
     def load_cookies(self):
-        """Loads cookies from the local file into the session."""
         try:
             if os.path.exists(self.COOKIE_FILE):
                 with open(self.COOKIE_FILE, 'r') as f:
@@ -108,17 +106,17 @@ class BackendClient:
             return False, False, str(e)
         
     def logout(self):
-        # 1. Ping the backend to destroy the server-side session (optional but best practice)
+        # ping the backend to destroy the server-side session
         url = f"{self.base_url}logout" 
         try:
             self.req_session.post(url)
         except Exception:
-            pass # We don't care if this fails, we force the local logout anyway!
+            pass 
 
-        # 2. Clear the cookies from Python's RAM
+        # Clear the cookies from Python's RAM
         self.req_session.cookies.clear()
         
-        # 3. Delete the saved cookie file from the hard drive!
+        # Delete the saved cookie file from the hard drive
         try:
             import os
             if os.path.exists(self.COOKIE_FILE):
@@ -130,7 +128,7 @@ class BackendClient:
         return True
 
     def get_me(self):
-        """Fetch current user from study.db via session cookie (same as login/signup session)."""
+        """Fetches academic context and user info"""
         url = f"{self.base_url}me"
         try:
             response = self.req_session.get(url, timeout=5)
@@ -267,7 +265,7 @@ class BackendClient:
             with open(file_path, 'rb') as f:
                 files = {'file': f}
                 data = {'user_id': user_id}
-                # requests handles the multipart/form-data headers automatically!
+                # requests handles the multipart/form-data headers automatically
                 response = self.req_session.post(url, files=files, data=data)
                 
             return response.status_code == 200, response.json()

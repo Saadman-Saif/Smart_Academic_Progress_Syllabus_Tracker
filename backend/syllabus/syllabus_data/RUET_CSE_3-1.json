@@ -1,0 +1,73 @@
+[
+  {
+    "course_code": "CSE 3101",
+    "course_name": "Database Systems",
+    "contact_hours_per_week": "3 Hours",
+    "credit_hour": 3.00,
+    "modules": [
+      { "title": "Concepts of Database Systems", "topics": ["Files and Databases", "Database Management Systems", "Transaction management", "Structure of a DBMS"] },
+      { "title": "Entity-Relationship Concepts", "topics": ["Entity types, Entity set, Attribute and key", "ER modeling, ER diagrams", "Enhanced Entity-Relationship (EER) model"] },
+      { "title": "Normalization", "topics": ["Normal forms", "Normalized Relations and Database performance", "De-normalization"] },
+      { "title": "Relational Model", "topics": ["Structure of relational databases", "Relational algebra operations", "Modification of the database", "Introduction to views", "Pitfalls in relational database design"] },
+      { "title": "SQL", "topics": ["Data Definition Language, Data Manipulation Language", "Basics of SQL, Query designing in SQL", "Embedded SQL, Triggers, Procedures", "Indexes, Declarative Constrains"] },
+      { "title": "Concurrency Control", "topics": ["Lock based protocols", "Timestamp based protocols", "Validation based protocols", "Deadlock"] },
+      { "title": "Recovery System", "topics": ["Failure classification", "Storage structure", "Recovery and atomicity", "Log-based recovery", "RAID model"] },
+      { "title": "Advanced Database Management Systems", "topics": ["No SQL Systems, distributed systems, object-oriented System", "Database Security", "Data Warehousing and Data Mining", "Database Administration and Tuning"] }
+    ]
+  },
+  {
+    "course_code": "CSE 3103",
+    "course_name": "Theory of Computation",
+    "contact_hours_per_week": "3 Hours",
+    "credit_hour": 3.00,
+    "modules": [
+      { "title": "Finite State Machine", "topics": ["Fundamental of Finite State Machine", "State Equivalence and Minimization of Machine", "Incompletely Specified Machine and Minimal Machine", "Merger Graph and Compatibility Graph", "Finite Memory and Definite Memory Machine"] },
+      { "title": "Finite Automata", "topics": ["Deterministic Finite Automata", "Nondeterministic Finite Automata", "Finite automata with Epsilon-Transitions"] },
+      { "title": "Regular Expressions and Languages", "topics": ["Regular Expressions", "Finite Automata and Regular Expression", "Closure Properties of Regular Language", "Decision Properties of Regular Languages"] },
+      { "title": "Context-Free Grammar and Languages", "topics": ["Context-Free Grammars, Parse Trees", "Ambiguity in Grammars and Languages", "Normal Form for Context-Free Grammars", "Pumping Lemma for Context-Free Languages", "Closure and Decision Properties"] },
+      { "title": "Pushdown Automata", "topics": ["Definition of the Pushdown Automata", "The Languages of a PDA", "Equivalence of PDA’s and CFG’s", "Deterministic Pushdown Automata"] },
+      { "title": "Introduction to Turing Machines", "topics": ["The Turing Machine", "Programming Techniques for Turing Machines", "Extensions to the Basic Turing Machine", "Restricted Turing Machines"] },
+      { "title": "Undecidability", "topics": ["A language that is not recursively enumerable", "Undecidable problem that is RE", "Post’s correspondence problem"] }
+    ]
+  },
+  {
+    "course_code": "CSE 3105",
+    "course_name": "Computer Interfacing and Embedded System",
+    "contact_hours_per_week": "3 Hours",
+    "credit_hour": 3.00,
+    "modules": [
+      { "title": "Microprocessor Interfacing", "topics": ["8086/8088 Hardware Specifications", "82C55 Programmable Peripheral Interface", "8254 Programmable Interval Timer", "8259A Programmable Interrupt Controller", "8237 DMA Controller", "80X87 Architecture and Programming"] },
+      { "title": "Microcontroller Interfacing", "topics": ["Microcontroller Hardware Connection", "Microcontroller Programming in C", "I/O Port, Timer, Interrupt and Serial Port Programming", "LCD, Keyboard, Display and Motor Interfacing", "A/D Conversion, D/A Conversion", "UART, SPI and I2C Protocol"] },
+      { "title": "Embedded System", "topics": ["Overview of the Design Flow", "Embedded Systems Specifications and Modeling", "Embedded Hardware Platforms: Raspberry Pi & Arduino", "Real Time Operating System (RTOS)", "Interfacing Ethernet, Bluetooth & 802.15.4"] }
+    ]
+  },
+  {
+    "course_code": "CSE 3107",
+    "course_name": "Computer Architecture",
+    "contact_hours_per_week": "3 Hours",
+    "credit_hour": 3.00,
+    "modules": [
+      { "title": "Introduction", "topics": ["Von Neumann Organization", "RISC and CISC Machines", "HDL for Simple CPU Implementation, FPGA"] },
+      { "title": "Data Representation and Computer Arithmetic", "topics": ["Big-Endian and Little-Endian Organization", "Computer Integer Arithmetic", "Booth Multiplication Algorithm", "IEEE Floating Point Representation and Arithmetic"] },
+      { "title": "CPU Design", "topics": ["Fetch-Execute Cycle", "ALU and Register Set Design", "CPU Instruction Set Design, Addressing Modes", "Bus Architecture"] },
+      { "title": "Memory Design", "topics": ["Memory Hierarchy", "ROM and RAM Architectures", "Flash Memory, Secondary Memory", "Cache Memory, Basic Cache Algorithm", "Virtual Memory"] },
+      { "title": "Pipelining and Parallel Processing", "topics": ["Pipelining, Pipeline Hazards", "Branch Prediction", "Instruction Level Parallelism", "Superscalar Processor, Parallel Processing, Threading"] }
+    ]
+  },
+  {
+    "course_code": "CSE 3109",
+    "course_name": "Applied Statistics and Queuing Theory",
+    "contact_hours_per_week": "3 Hours",
+    "credit_hour": 3.00,
+    "modules": [
+      { "title": "Introduction", "topics": ["Statistics and its Importance", "Population and Sample", "Construction of Frequency Distribution and Graphical Presentation"] },
+      { "title": "Measures of Central Tendency", "topics": ["Arithmetic Mean, Geometric Mean, Harmonic Mean, Median, Mode, Weighted Mean"] },
+      { "title": "Measures of Dispersion", "topics": ["Range, Standard Deviation, Variance, Moments, Skewness and Kurtosis"] },
+      { "title": "Correlation Theory and Causality Analysis", "topics": ["Linear Correlation and its Measures", "Rank Correlation", "Causality Analysis"] },
+      { "title": "Tests of Significance", "topics": ["Hypothesis Testing, P-value, t-test, z-test", "Statistical Significance, Statistical Inference"] },
+      { "title": "Probability", "topics": ["Laws of Probability", "Conditional Probability and Bayes Theorem", "Random Variables, Mathematical Expectation"] },
+      { "title": "Probability Distributions", "topics": ["Binomial Distribution", "Poisson Distribution", "Normal Distribution"] },
+      { "title": "Queuing Theory", "topics": ["Stochastic Processes", "Discrete Time Markov Chain and Continuous Time Markov Chain", "Queuing Models: M/M/1, M/M/C, M/G/1, M/D/1, G/M/1", "Application of Queuing Models in Computer Science"] }
+    ]
+  }
+]

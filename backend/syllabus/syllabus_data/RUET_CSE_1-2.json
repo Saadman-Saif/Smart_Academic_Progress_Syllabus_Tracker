@@ -1,0 +1,75 @@
+[
+  {
+    "course_code": "CSE 1201",
+    "course_name": "Data Structure",
+    "contact_hours_per_week": "3 Hours",
+    "credit_hour": 3.00,
+    "modules": [
+      { "title": "Introduction", "topics": ["Concepts and Examples of Elementary Data Objects", "Necessity of Structured Data", "Types of Data Structure", "Ideas on Linear and Nonlinear Data Structure"] },
+      { "title": "Linear Array", "topics": ["Linear Array & its Representation in Memory", "Traversing, Insertion & Deletion in LA", "Multidimensional Array", "Algebra of Matrices", "Sparse Matrices"] },
+      { "title": "Stack", "topics": ["Stack Representation & Applications", "PUSH and POP Operation", "Polish Notation, Reverse Polish Notation", "Evaluation of a Postfix Expression", "Transforming Infix Expression into Postfix"] },
+      { "title": "Queue", "topics": ["Representation, Insertion & Deletion in Queue", "Priority Queues", "Recursion: Factorial, Fibonacci, Ackermann, Towers of Hanoi"] },
+      { "title": "Linked List", "topics": ["Linked List & its Representation in Memory", "Traversing, Searching, Insertion & Deletion", "Circular List, Header Linked Lists, Two Way Lists"] },
+      { "title": "Complexity Analysis", "topics": ["Algorithm and Flowchart", "Asymptotic Notations: Best, Worst, Average Case", "Complexity Analysis of Different Algorithms"] },
+      { "title": "Sorting and Searching", "topics": ["Insertion Sort, Selection Sort, Bubble Sort, Quick Sort, Merge Sort", "Binary and Linear Search", "Hash Function, Collision Resolution"] },
+      { "title": "Tree", "topics": ["Tree Terminology, Representation of Binary Trees", "Traversing Binary Tree, Binary Search Tree, Insertion & Deletion", "Balanced Binary Search Tree, AVL tree, Red Black Tree", "Heap, Heap Sort", "B Trees, General Tree"] }
+    ]
+  },
+  {
+    "course_code": "CSE 1203",
+    "course_name": "Object Oriented Programming",
+    "contact_hours_per_week": "3 Hours",
+    "credit_hour": 3.00,
+    "modules": [
+      { "title": "Fundamentals of OOP", "topics": ["Introduction to OOP", "Principles of Object-Oriented Design", "Encapsulation and Information-hiding", "Data Binding", "Static and Dynamic Binding"] },
+      { "title": "Classes and Objects", "topics": ["Structure of Class, Access Modifiers, Nested Classes, Abstract Classes", "Arrays of Objects, Pointer to Objects", "Friend Function, Data Abstraction", "Static Variable and Function"] },
+      { "title": "Constructors and Destructors", "topics": ["Default Constructor, Copy Constructor, Dynamic Constructor", "Deep Copy and Shallow Copy", "Constructor Function for Derived Class", "Destructor"] },
+      { "title": "Inheritance", "topics": ["Single vs. Multiple Inheritance", "Mode of Inheritance", "Virtual Inheritance", "Interface"] },
+      { "title": "Polymorphism", "topics": ["Operator and Function Overloading", "Run-Time and Compile Time Polymorphism", "Virtual Function", "Errors and Exception Handling"] },
+      { "title": "Advanced Topics", "topics": ["Persistent Objects", "Objects and Portable Data", "UML Basics", "Namespace, Package, Templates, JFrame", "Multithreading, Concept of MVC Framework"] }
+    ]
+  },
+  {
+    "course_code": "EEE 1251",
+    "course_name": "Electronic Devices and Circuits",
+    "contact_hours_per_week": "3 Hours",
+    "credit_hour": 3.00,
+    "modules": [
+      { "title": "Introduction to Semiconductors & Diode", "topics": ["P-N Junction Diode, V-I Characteristics", "LED, Zener Diode", "Diode Applications: Half-Wave and Full-Wave Rectifiers"] },
+      { "title": "Linear Wave Shaping", "topics": ["Diode Wave Shaping Techniques", "Clipping and Clamping Circuits", "Voltage Regulation using Zener Diode"] },
+      { "title": "Bipolar Junction Transistor", "topics": ["NPN and PNP Transistors", "Amplifying and Switching Actions", "CB, CE & CC Configurations", "Transistor Load Line and Operating Point, BJT Biasing", "Small Signal Equivalent Circuit Models", "Designing Logic Gate using BJT"] },
+      { "title": "Field Effect Transistor", "topics": ["Principle of Operation of JFET and MOSFET", "Depletion and Enhancement Type NMOS and PMOS", "MOSFET as switch and amplifier", "CMOS Inverter"] },
+      { "title": "Op-amp", "topics": ["Basic OP-amp Characteristics, Gain, Impedance, Feedback", "Inverting and Non-Inverting Amplifiers", "Integrators, Differentiators, Summing Amplifiers", "Oscillators, Comparator Circuits, Schmitt Trigger"] },
+      { "title": "555 Timer", "topics": ["Architecture of 555 Timer", "Monostable, Bistable and Astable Multivibrators"] },
+      { "title": "Filter Circuits", "topics": ["Filter Fundamentals", "Passive Filters, Active Filters"] },
+      { "title": "Power Electronic Devices", "topics": ["SCR, TRIAC, DIAC, UJT Characteristics", "Introduction to IC Fabrication Techniques"] }
+    ]
+  },
+  {
+    "course_code": "Math 1213",
+    "course_name": "Coordinate Geometry and Ordinary Differential Equation",
+    "contact_hours_per_week": "3 Hours",
+    "credit_hour": 3.00,
+    "modules": [
+      { "title": "Coordinate Geometry of Two Dimensions", "topics": ["Change of Axes, Transformation of Coordinates", "Simplification of Equations of Curves"] },
+      { "title": "Coordinate Geometry of Three Dimensions", "topics": ["System of Coordinates, Distance between two Points", "Section Formula, Direction Cosines and Projection", "Planes and Straight Lines"] },
+      { "title": "Ordinary Differential Equation", "topics": ["Degree and Order of Ordinary Differential Equations", "Formation of Differential Equations", "Solutions of First, Second and Higher Order Differential Equations", "Solutions of Homogeneous Linear Differential Equations", "Differential Equations with Variable Coefficients"] },
+      { "title": "Series Solution", "topics": ["Singular Points", "Series Solutions: Frobenius Method", "Bessel's and Legender’s Differential Equations"] }
+    ]
+  },
+  {
+    "course_code": "Phy 1213",
+    "course_name": "Physics",
+    "contact_hours_per_week": "3 Hours",
+    "credit_hour": 3.00,
+    "modules": [
+      { "title": "Structure of Matter", "topics": ["Different Types of Bonds in Solids", "Packing in Solids", "X-Ray Diffraction, Bragg's Law", "Distinction among Insulator, Semiconductor and Conductor"] },
+      { "title": "Atomic Physics", "topics": ["Atom Models: Thomson, Rutherford, Bohr", "Photoelectric Effect, Einstein's Equation", "Wave Properties of Particle: De Broglie Waves"] },
+      { "title": "Waves and Oscillations", "topics": ["Simple Harmonic Motion, Lissajous' Figures", "Damped and Forced Oscillations, Resonance", "Traveling and Standing waves", "Beats, Doppler Effect"] },
+      { "title": "Physical Optics", "topics": ["Theories of Light: Wave theory, Electromagnetic Theory, Particle Theory, Quantum Theory"] },
+      { "title": "Interference", "topics": ["Conditions of Interference, Young's Double Slit Experiment", "Fresnel’s Bi-prism, Thin Film Interference, Newton's Ring"] },
+      { "title": "Diffraction", "topics": ["Fresnel and Fraunhofer Diffraction", "Diffraction by Single and Double Slit", "Diffraction Gratings"] },
+      { "title": "Polarization", "topics": ["Methods of Producing Polarized Light", "Polarization by Reflection, Refraction, Double Refraction", "Optical Activity, Optics of Crystals, Polarimeter"] }
+    ]
+  }
+]

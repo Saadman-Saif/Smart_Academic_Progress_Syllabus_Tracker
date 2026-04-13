@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'syllabus_previewWidget.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.10.1
+##  DON'T EDIT THIS IN PYSIDE6 DESIGNER - SAADMAN
 ##
-## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
 from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
@@ -16,7 +14,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QFrame, QGridLayout, QLabel,
-    QPushButton, QSizePolicy, QVBoxLayout, QWidget)
+    QPushButton, QSizePolicy, QVBoxLayout, QHBoxLayout, QWidget, QScrollArea)
 
 class Ui_SyllabusPreview(object):
     def setupUi(self, SyllabusPreview):
@@ -73,17 +71,35 @@ class Ui_SyllabusPreview(object):
 
         self.verticalLayout_3.addWidget(self.label_2)
 
-        self.gridFrame = QFrame(self.bodyFrame)
-        self.gridFrame.setObjectName(u"gridFrame")
-        sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
+        self.scrollArea = QScrollArea(self.bodyFrame)
+        self.scrollArea.setObjectName(u"scrollArea")
+        sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         sizePolicy2.setHorizontalStretch(0)
-        sizePolicy2.setVerticalStretch(14)
-        sizePolicy2.setHeightForWidth(self.gridFrame.sizePolicy().hasHeightForWidth())
-        self.gridFrame.setSizePolicy(sizePolicy2)
-        self.gridLayout = QGridLayout(self.gridFrame)
-        self.gridLayout.setObjectName(u"gridLayout")
+        sizePolicy2.setVerticalStretch(3)
+        sizePolicy2.setHeightForWidth(self.scrollArea.sizePolicy().hasHeightForWidth())
+        self.scrollArea.setSizePolicy(sizePolicy2)
+        self.scrollArea.setMinimumSize(QSize(0, 400))
+        self.scrollArea.setStyleSheet(u"background: rgb(50, 50, 50);")
+        self.scrollArea.setWidgetResizable(True)
+        self.scrollAreaWidgetContents = QWidget()
+        self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
+        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 1407, 388))
+        self.horizontalLayout = QHBoxLayout(self.scrollAreaWidgetContents)
+        self.horizontalLayout.setObjectName(u"horizontalLayout")
+        # sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
+        # self.gridFrame = QFrame(self.bodyFrame)
+        # self.gridFrame.setObjectName(u"gridFrame")
+        # sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
+        # sizePolicy2.setHorizontalStretch(0)
+        # sizePolicy2.setVerticalStretch(14)
+        # sizePolicy2.setHeightForWidth(self.gridFrame.sizePolicy().hasHeightForWidth())
+        # self.gridFrame.setSizePolicy(sizePolicy2)
+        # self.gridLayout = QGridLayout(self.gridFrame)
+        # self.gridLayout.setObjectName(u"gridLayout")
 
-        self.verticalLayout_3.addWidget(self.gridFrame)
+        # self.verticalLayout_3.addWidget(self.gridFrame)
+        self.scrollArea.setWidget(self.scrollAreaWidgetContents)
+        self.verticalLayout_3.addWidget(self.scrollArea)
 
 
         self.verticalLayout_2.addWidget(self.bodyFrame, 0, Qt.AlignmentFlag.AlignVCenter)

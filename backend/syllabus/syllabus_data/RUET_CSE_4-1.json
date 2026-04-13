@@ -1,0 +1,154 @@
+[
+  {
+    "course_code": "CSE 4101",
+    "course_name": "Compiler Design",
+    "contact_hours_per_week": "3 Hours",
+    "credit_hour": 3.00,
+    "modules": [
+      { "title": "Introduction to Compiler", "topics": ["Compiler Structure, Analysis-Synthesis Model", "Cross-Compilation, Just-In-Time Compilation, Ahead-Of-Time Compilation", "Bootstrapping"] },
+      { "title": "Lexical Analysis", "topics": ["Token, Lexeme and Patterns", "Regular Definition, Transition Diagrams, Lex"] },
+      { "title": "Syntax Analysis", "topics": ["Top-Down Parsing, Recursive Descent Parsing", "Bottom-Up Parsing", "Operator Precedence Grammars, LR Parsers, YACC"] },
+      { "title": "Syntax Directed Translation", "topics": ["Inherited and Synthesized Attributes", "Dependency Graph, Evaluation Order", "L- and S-Attributed Definitions"] },
+      { "title": "Type Checking", "topics": ["Type Expressions, Structural and Name Equivalence", "Type Conversion, Overloaded Functions and Operators"] },
+      { "title": "Run Time System", "topics": ["Storage Organization, Activation Tree, Activation Record", "Dynamic Storage Allocation, Garbage Collection"] },
+      { "title": "Intermediate Code Generation", "topics": ["Intermediate Representations", "Translation of Declarations, Assignments, Control Flow"] },
+      { "title": "Code Generation and Instruction Selection", "topics": ["Basic Blocks and Flow Graphs", "Register Allocation, Code Generation from Dags", "Peephole Optimization, Code Optimization Techniques"] }
+    ]
+  },
+  {
+    "course_code": "CSE 4103",
+    "course_name": "Computer Networks",
+    "contact_hours_per_week": "3 Hours",
+    "credit_hour": 3.00,
+    "modules": [
+      { "title": "Introduction", "topics": ["Definition, Uses of Computer Networks", "Network Topology, Media, Devices", "Types of Networks: PAN, LAN, MAN, WAN"] },
+      { "title": "Network Model", "topics": ["OSI Reference Model", "TCP/IP Reference Model"] },
+      { "title": "IP Addressing", "topics": ["IPV4 & IPV6, Classification of IP Addressing", "Subnet Mask, CIDR, Private IP, Public IP, Subnetting"] },
+      { "title": "Data Link Layer", "topics": ["Data Link layer Design Issues", "Framing: Character Count, Byte Stuffing, Bit Stuffing"] },
+      { "title": "Data Link Layer Protocols", "topics": ["Simplex Stop & Wait Protocol", "Point to Point Protocol (PPP)", "Sliding Window Protocols (Go Back N ARQ, Selective Repeat ARQ)"] },
+      { "title": "Media Access Control", "topics": ["ALOHA, CSMA, CSMA/CD, CSMA/CA", "Controlled Access", "CDMA, TDMA, FDMA"] },
+      { "title": "Wired & Wireless LANs", "topics": ["IEEE 802.*, Ethernet, ATM", "Bluetooth, WiMAX"] },
+      { "title": "Network Layer", "topics": ["Routing Algorithms (Static & Dynamic, Distance Vector, Link State)", "Congestion Control Algorithms", "Internetworking"] },
+      { "title": "Network Layer Protocols", "topics": ["ARP, IP, ICMP, RIP, OSPF, BGP", "UDP, TCP"] },
+      { "title": "Transport Layer", "topics": ["Elements of Transport Protocols", "Connection Establishment, Connection Release"] },
+      { "title": "Application Layer & Others", "topics": ["HTTP", "Web Server Performance, Proxy Servers", "IP Security"] }
+    ]
+  },
+  {
+    "course_code": "CSE 4105",
+    "course_name": "Digital Image Processing",
+    "contact_hours_per_week": "3 Hours",
+    "credit_hour": 3.00,
+    "modules": [
+      { "title": "Digital Image Fundamentals", "topics": ["Different Types of Digital Images", "Sampling and Quantization, Imaging Geometry", "Image Acquisition Systems"] },
+      { "title": "Bilevel Image Processing", "topics": ["Distance Transform, Medial Axis Transform", "Component Labeling, Thinning, Morphological Processing"] },
+      { "title": "Binarization of Grey Level Images", "topics": ["Histogram of Grey Level Images", "Optimal Thresholding using Bayesian Classification", "Multilevel Thresholding"] },
+      { "title": "Edge Detection", "topics": ["First Order and Second Order Edge Operators", "Multi-Scale Edge Detection, Canny's Algorithm", "Hough Transform for Detecting Lines and Curves"] },
+      { "title": "Image Enhancement", "topics": ["Point Processing, Spatial Filtering", "Frequency Domain Filtering", "Image Restoration"] },
+      { "title": "Image Segmentation", "topics": ["Segmentation of Grey Level Images", "Water Shade Algorithm", "Image Representation and Description"] },
+      { "title": "Image Compression", "topics": ["Lossy and Lossless Compression Schemes", "Vector Quantization", "JPEG Compression Standard, Fractal Compression, Wavelet Compression"] }
+    ]
+  },
+  {
+    "course_code": "CSE 4109",
+    "course_name": "Information Systems Analysis and Design",
+    "contact_hours_per_week": "3 Hours",
+    "credit_hour": 3.00,
+    "modules": [
+      { "title": "Application Development Policy and Strategies", "topics": ["Planning of Information System", "Policy in Information System Development"] },
+      { "title": "Application System Development Life Cycle", "topics": ["Phases in Application System Development", "Interrelationship among Each Phase"] },
+      { "title": "Feasibility Assessment", "topics": ["Preliminary Application Requirements Determination", "Economic, Technical, Operational and Schedule Feasibility"] },
+      { "title": "Information Requirements Determination", "topics": ["Strategies for Obtaining Information Requirements", "Technique for Information Requirements Determination"] },
+      { "title": "Structured Systems Analysis", "topics": ["Steps in Structured Systems Analysis", "Activity Diagrams and Related Documentation", "Data Dictionary, Problem Analysis"] },
+      { "title": "Systems Design Methodology", "topics": ["Check List Methodology", "Process-Oriented Methodology", "Application Generator, Structured Design"] },
+      { "title": "Program Development and Testing", "topics": ["Structured Programming and Method for Testing"] }
+    ]
+  },
+  {
+    "course_code": "CSE 4111",
+    "course_name": "Unix Programming",
+    "contact_hours_per_week": "3 Hours",
+    "credit_hour": 3.00,
+    "modules": [
+      { "title": "Introduction", "topics": ["Introduction to Unix Programming"] },
+      { "title": "Unix Environment", "topics": ["Command Line, Globbing, I/O Redirection", "Piping, Basic Commands, Memory Layout"] },
+      { "title": "Debugging and Processes", "topics": ["GDB, Valgrind", "Fork, Exec, Wait, Process Status", "Sending Signals, Unix I/O", "Walking a Directory Tree, Permissions"] },
+      { "title": "Signals and Networking", "topics": ["Signals and Signal Handling", "Backgrounding, Popen / Pclose", "Networking Client / Server, I/O Multiplexing"] },
+      { "title": "Multi-threading and IPC", "topics": ["Mutual Exclusion, Condition Variables", "Deadlocks, Non-Blocking I/O", "Regular Expressions, Sys V IPC", "Semaphores and Shared Memory, Shell Scripting"] }
+    ]
+  },
+  {
+    "course_code": "CSE 4113",
+    "course_name": "Digital System Design",
+    "contact_hours_per_week": "3 Hours",
+    "credit_hour": 3.00,
+    "modules": [
+      { "title": "System Design", "topics": ["Designing I/O System", "I/O Devices", "Designing Microprocessor based System with Interfacing Chips"] },
+      { "title": "Programmable Design", "topics": ["Programmable Peripheral Interface", "Keyboard/Display Interface", "Programmable Timer", "Programmable Interrupt Controller, DMA Controller"] },
+      { "title": "Memory Design", "topics": ["Design using MSI and LSI Components", "Design of Memory Subsystem using SRAM and DRAM"] },
+      { "title": "Design of Various Components of a Computer", "topics": ["ALU, Memory and Control Unit", "Microprocessor based Designs", "Computer BUS Standards", "Design Special Purpose Controllers"] }
+    ]
+  },
+  {
+    "course_code": "CSE 4115",
+    "course_name": "Simulation and Modeling",
+    "contact_hours_per_week": "3 Hours",
+    "credit_hour": 3.00,
+    "modules": [
+      { "title": "Simulation Modeling Basics", "topics": ["Systems, Models and Simulation", "Classification of Simulation Models", "Steps in a Simulation Study"] },
+      { "title": "Concepts in Discrete-Event Simulation", "topics": ["Event-Scheduling vs. Process-Interaction Approaches", "Time-Advance Mechanism", "Continuous Simulation Models", "Monte Carlo Simulation", "Simulation of Queuing Systems"] },
+      { "title": "Building Valid and Credible Simulation Models", "topics": ["Validation Principles and Techniques", "Generating Random Numbers and Random Variates", "Output Analysis", "Simulation Languages"] }
+    ]
+  },
+  {
+    "course_code": "CSE 4117",
+    "course_name": "Wireless Networks",
+    "contact_hours_per_week": "3 Hours",
+    "credit_hour": 3.00,
+    "modules": [
+      { "title": "Introduction to Wireless Networks", "topics": ["Wireless Access Networks", "Wireless Mesh Networks", "Personal Area Networks (Wireless Sensor Networks, Bluetooth)", "Wireless and Mobile Ad Hoc Networks", "Challenged Networks (Dtns, Vanets)"] },
+      { "title": "Wireless MAC Protocols", "topics": ["IEEE 802.11, IEEE 802.11e, IEEE 802.11n, IEEE 802.11s", "IEEE 802.15.4, S-MAC, B-MAC", "IEEE 802.22/20, IEEE 802.16d/e"] },
+      { "title": "Wireless Routing", "topics": ["Routing Matrix ETX, ETT, WCETT", "Routing Protocols AODV, DSR, DSDV, HWMP", "Sensor Network Routing, VANET Routing"] },
+      { "title": "Others", "topics": ["Wireless Transport Protocols", "Wireless TCP and its Variants", "Hop by Hop Congestion Control", "Quality of Service in Wireless Networks"] }
+    ]
+  },
+  {
+    "course_code": "CSE 4119",
+    "course_name": "Data Mining",
+    "contact_hours_per_week": "3 Hours",
+    "credit_hour": 3.00,
+    "modules": [
+      { "title": "Introduction and Applications", "topics": ["Relational Databases, Data Warehouses, Transactional Databases", "Characterization and Discrimination", "Classification and Prediction", "Cluster Analysis, Outlier Analysis"] },
+      { "title": "Data Preprocessing", "topics": ["Descriptive Data Summarization", "Data Cleaning, Data Integration and Transformation", "Data Reduction, Data Discretization"] },
+      { "title": "Mining Frequent Patterns, Associations, and Correlations", "topics": ["Closed and maximal frequent itemsets", "Apriori and FP-growth algorithms", "Generating association rules from frequent itemsets", "Mining correlations"] },
+      { "title": "Classification, Clustering and Prediction", "topics": ["Classification by Decision Tree Induction, Bayesian Classification", "Clustering by Partitioning/Hierarchical/Density-based/Model-based methods", "Clustering High-Dimensional Data", "Linear and Nonlinear Regression", "Evaluating Accuracy and error measures"] },
+      { "title": "Advanced Analysis", "topics": ["Mining Stream, Time-Series, and Sequence Data", "Graph Mining, Social Network Analysis", "Mining Object, Spatial, Multimedia, and Text Data"] }
+    ]
+  },
+  {
+    "course_code": "CSE 4121",
+    "course_name": "Computer Vision",
+    "contact_hours_per_week": "3 Hours",
+    "credit_hour": 3.00,
+    "modules": [
+      { "title": "Introduction and Image Formation", "topics": ["Human vision, Computer Vision", "Geometry, Photometry (brightness and color)", "Camera calibration", "Photometric Stereo, Depth from Defocus", "Construction of 3D models"] },
+      { "title": "Image segmentation and Feature Extraction", "topics": ["Image preprocessing", "Convolution, Filtering, Edge detection", "Contour and Region based representation", "Snakes and active contours", "SIFT features"] },
+      { "title": "Motion Estimation", "topics": ["Regularization theory, Optical computation", "Stereo Vision, Motion Estimation", "Structure from motion, Shape from stereo and motion", "Feature matching, Surface fitting"] },
+      { "title": "Object Recognition", "topics": ["Detectors and Descriptors", "SIFT & Single Object Recognition", "Optical Flow & Tracking", "Hough transforms", "Principal component analysis, Bayes classifiers, SVM classifiers", "Human Motion Recognition"] }
+    ]
+  },
+  {
+    "course_code": "CSE 4123",
+    "course_name": "Knowledge Engineering",
+    "contact_hours_per_week": "3 Hours",
+    "credit_hour": 3.00,
+    "modules": [
+      { "title": "Introduction", "topics": ["Knowledge-based systems", "Classical mathematical models vs. knowledge representations (KRs)", "Automated knowledge extraction from large data sets", "Knowledge Acquisition and Sharing", "Sharing Ontologies, Tools for Knowledge Acquisition"] },
+      { "title": "Knowledge representation", "topics": ["Using Predicate logic", "Conversion to clause form, Resolution in propositional logic", "Representing Knowledge Using Rules", "Procedural Versus Declarative knowledge", "Forward versus Backward Reasoning"] },
+      { "title": "Reasoning", "topics": ["Proportional Case, Handling Variables and Qualifies", "Reasoning with Horn Clauses", "Description Logic, Vivid Knowledge, Closed World Reasoning", "Vagueness, Uncertainty and Degrees of Belief", "Objective and Subjective Probability"] },
+      { "title": "Learning", "topics": ["Rote learning, Learning by Taking Advice", "Learning in Problem-solving", "Learning from example: induction", "Explanation-based learning"] },
+      { "title": "Connectionist Models", "topics": ["Hopfield Networks", "Learning in Neural Networks, Applications of Neural Networks", "Connectionist AI and Symbolic AI, Fuzzy Logic"] },
+      { "title": "Expert System", "topics": ["Representing and using Domain Knowledge", "Reasoning with knowledge", "Expert System Shells"] }
+    ]
+  }
+]

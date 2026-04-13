@@ -54,7 +54,7 @@ class ModuleCard(QFrame):
             checkbox.setChecked(is_completed)
             checkbox.setStyleSheet("color: white; padding: 2px;")
             
-            # Emit the ID and state!
+            # Emit id and state
             checkbox.toggled.connect(lambda checked, t_id=topic_id: self.progressUpdated.emit(t_id, checked))
             
             self.edit_layout.addWidget(checkbox)

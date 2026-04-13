@@ -3,6 +3,7 @@ from PySide6.QtCore import Qt, Signal
 
 class ProfileTabWrap(QWidget):
     logoutRelay = Signal()
+    selectSyllabusBtnSignal = Signal()
     def __init__(self, api_client, user_id):
         super().__init__()
         self.client = api_client
@@ -37,9 +38,9 @@ class ProfileTabWrap(QWidget):
         
         main_layout.addLayout(form_layout)
 
-        # 1. Create the Logout Button
-        self.logout_btn = QPushButton("🚪 Logout")
-        self.logout_btn.setFixedSize(200, 40)
+        # Create Logout Button
+        self.logout_btn = QPushButton("Logout")
+        self.logout_btn.setFixedSize(200, 60)
         self.logout_btn.setCursor(Qt.CursorShape.PointingHandCursor)
         self.logout_btn.setStyleSheet("""
             QPushButton {
@@ -51,10 +52,24 @@ class ProfileTabWrap(QWidget):
             }
             QPushButton:hover { background-color: #D32F2F; }
         """)
+        self.selectSyllabusBtn = QPushButton("Change Syllabus")
+        self.selectSyllabusBtn.setFixedSize(200, 60)
+        self.selectSyllabusBtn.setCursor(Qt.CursorShape.PointingHandCursor)
+        self.selectSyllabusBtn.setStyleSheet("""
+            QPushButton {
+                background-color: #444444; 
+                color: white; 
+                font-weight: bold; 
+                border-radius: 4px; 
+                margin-top: 30px;
+            }
+            QPushButton:hover { background-color: #333333; }
+        """)
         
-        # 2. Add it to the layout and connect it
+        # Add it to the layout and connect it
         main_layout.addWidget(self.logout_btn, alignment=Qt.AlignmentFlag.AlignCenter)
         self.logout_btn.clicked.connect(self.handle_logout)
+        self.selectSyllabusBtn.clicked.connect(self.selectSyllabusBtnSignal.emit)
 
         main_layout.setAlignment(Qt.AlignmentFlag.AlignTop) # Pushes everything to the top
         
@@ -64,14 +79,12 @@ class ProfileTabWrap(QWidget):
     def load_profile_data(self):
         success, data = self.client.get_me()
         if success:
-            # Change these strings ('username', 'email', etc.) to match 
-            # the exact keys your teammate's JSON dictionary sends back!
             self.name_lbl.setText(data.get('username', 'N/A'))
             self.email_lbl.setText(data.get('email', 'N/A'))
             self.uni_lbl.setText(data.get('university', 'N/A'))
             self.dept_lbl.setText(data.get('department', 'N/A'))
-            # self.year_lbl.setText(data.get('year', 'N/A'))
-            # self.sem_lbl.setText(data.get('semester', 'N/A'))
+            self.year_lbl.setText(str(data.get('year', 'N/A')))
+            self.sem_lbl.setText(str(data.get('semester', 'N/A')))
         else:
             self.name_lbl.setText("Error loading profile.")
             print(f"DEBUG: Failed to load profile: {data}")
@@ -79,4 +92,4 @@ class ProfileTabWrap(QWidget):
     def handle_logout(self):
         self.logout_btn.setText("Logging out...")
         self.client.logout()       # Destroy the cookies
-        self.logoutRelay.emit()    # Tell the Home Page to close! 
+        self.logoutRelay.emit()    # Tell the Home Page to close

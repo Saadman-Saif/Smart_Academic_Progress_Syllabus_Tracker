@@ -1,5 +1,5 @@
-from PySide6.QtWidgets import (QWidget, QSizePolicy, QFrame, QVBoxLayout, QLabel, QScrollArea)
-from PySide6.QtCore import (QSize, Qt, Signal)
+from PySide6.QtWidgets import (QWidget, QSizePolicy, QFrame, QVBoxLayout, QHBoxLayout, QLabel, QScrollArea)
+from PySide6.QtCore import (QSize, Qt, Signal, QRect)
 from PySide6.QtGui import QFont
 
 from uipy.inst_dept_year_semesterWidget import Ui_instDeptYearSemSelection
@@ -50,6 +50,13 @@ class SyllabusPreviewPageWrap(QWidget):
     def handle_backBtn_click(self):
         self.goBack.emit()
 
+    def reset_syllabus_cards(self):
+        self.ui.horizontalLayout.removeWidget(self.ui.scrollAreaWidgetContents)
+        self.ui.scrollAreaWidgetContents = QWidget()
+        self.ui.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 1407, 388))
+        self.ui.horizontalLayout = QHBoxLayout(self.ui.scrollAreaWidgetContents)
+        
+
     # A sort of setter function for the syllabus data
     def build_and_place_cards(self, data):
         # Backend GET /syllabus returns a JSON array of courses (not {"syllabus": [...]})
@@ -59,6 +66,7 @@ class SyllabusPreviewPageWrap(QWidget):
 
             for col_idx, course in enumerate(syllabus_list):
                 self._create_course_card(course, col_idx)
+            self.ui.scrollArea.setWidget(self.ui.scrollAreaWidgetContents)
             return True
         else:
             print(data)
@@ -66,8 +74,8 @@ class SyllabusPreviewPageWrap(QWidget):
 
     def _create_course_card(self, course, col_idx):
         # Main Card Frame
-        card_frame = QFrame(self.ui.gridFrame)
-        card_frame.setMinimumSize(QSize(188, 359))
+        card_frame = QFrame(self.ui.scrollAreaWidgetContents)
+        card_frame.setMinimumSize(QSize(270, 359))
         card_frame.setStyleSheet("background-color: rgb(50, 50, 50);")
         card_frame.setFrameShape(QFrame.Shape.StyledPanel)
         card_frame.setFrameShadow(QFrame.Shadow.Raised)
@@ -127,4 +135,4 @@ class SyllabusPreviewPageWrap(QWidget):
 
         card_layout.addWidget(body_scroll)
 
-        self.ui.gridLayout.addWidget(card_frame, 1, col_idx, 1, 1)
+        self.ui.horizontalLayout.addWidget(card_frame)

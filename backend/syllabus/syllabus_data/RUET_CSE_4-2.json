@@ -1,0 +1,153 @@
+[
+  {
+    "course_code": "CSE 4201",
+    "course_name": "Computer Graphics",
+    "contact_hours_per_week": "3 Hours",
+    "credit_hour": 3.00,
+    "modules": [
+      { "title": "Introduction", "topics": ["Applications of Computer Graphics", "Graphical User Interface, Graphics Hardware Display Devices", "Vector Graphics and Raster Graphics System", "Graphics Pipeline, Computer Animation"] },
+      { "title": "Scan Conversion Algorithms", "topics": ["Midpoint Line, Circle and Ellipse Creation Algorithms", "Slope Independent Line Drawing using Midpoint Line Algorithm"] },
+      { "title": "Polygons", "topics": ["Standard Graphics Primitives", "Difference Type of Polygons", "Polygon Filling, Triangulation"] },
+      { "title": "Transformation", "topics": ["Homogeneous Coordination", "Transformation in 3D, Translation, Rotation, Scaling"] },
+      { "title": "Windowing and Clipping", "topics": ["Window Viewpoint, Zooming, Panning", "Line, Text and Polygon Clipping Algorithms"] },
+      { "title": "Projection", "topics": ["Parallel and Perspective, Standard Projection Matrices"] },
+      { "title": "Hidden Surface Removal", "topics": ["Z-Buffering, Ray Casting Methods", "BSP Trees Method, Back-Face Detection"] },
+      { "title": "Curves and Surfaces", "topics": ["Polygonal surfaces", "Parametric Cubic Curves- Hermite, Bezier and B-spline curves", "Parametric Bicubic Surfaces"] },
+      { "title": "Illumination and Shading", "topics": ["Light Models, Ambient light, Diffuse and Specular Reflection", "Light Attenuations, Goraud and Phong Shading", "Recursive Ray Tracing"] },
+      { "title": "Monochrome and Colored Light", "topics": ["Monochrome Light, Additive and Subtractive Light", "Colored Light- RGB, CMY, YIQ, HSV and HLS Color Model", "Image File Format: PPM file, BMP file"] },
+      { "title": "API Specifies", "topics": ["Introduction to Graphics Programming using Modern OpenGL (3.3+)", "Drawing Shapes with Modern OpenGL, Graphics Pipeline"] }
+    ]
+  },
+  {
+    "course_code": "CSE 4203",
+    "course_name": "Machine Learning",
+    "contact_hours_per_week": "3 Hours",
+    "credit_hour": 3.00,
+    "modules": [
+      { "title": "Introduction", "topics": ["Concepts of Supervised learning, Unsupervised Learning, Reinforcement Learning", "Feature, Hypothesis, Prediction Model, Loss Function", "Evaluation Metrics, Optimization"] },
+      { "title": "Classification and regression", "topics": ["Nearest Neighbor algorithm", "Linear Discriminant Analysis (LDA)", "Linear Regression, Logistic Regression"] },
+      { "title": "Artificial Neural Networks", "topics": ["Perceptron Learning Rule, Multilayer Perceptron, Backpropagation", "Activation Functions, Loss Functions", "Gradient Descent Optimization, Adam, Rmsprop", "Bias Variance and Error analysis, Regularization", "Kohenen Self-organizing Maps"] },
+      { "title": "Decision Tree Learning", "topics": ["ID3, CART, Overfitting Issue", "Incorporating Continuous-Valued Attributes", "Handling Training Examples with Missing Attribute Values"] },
+      { "title": "Bayesian Learning", "topics": ["Naïve Bayes classifier", "Bayesian Networks"] },
+      { "title": "Support Vector Machine", "topics": ["Maximum Margin Classification", "Soft Margin Optimization, Gradient Ascent", "Support Vector Machine for Binary and Multiclass Classification", "Hyperparameter Tuning"] },
+      { "title": "Clustering", "topics": ["K-means, K-medoids", "Density-based Hierarchical Clustering", "Mixture of Gaussians, Expectation Maximization"] },
+      { "title": "Ensemble Methods", "topics": ["Bagging", "Boosting: Adaboost", "Random Forests"] },
+      { "title": "Application", "topics": ["Predictive modeling application on imaging, natural language or IoT data"] }
+    ]
+  },
+  {
+    "course_code": "CSE 4205",
+    "course_name": "Security and Privacy",
+    "contact_hours_per_week": "3 Hours",
+    "credit_hour": 3.00,
+    "modules": [
+      { "title": "Security Fundamentals", "topics": ["Confidentiality, Integrity and Availability", "Assurance, Authenticity and Anonymity", "Threats and Attacks, Security Principles"] },
+      { "title": "Privacy", "topics": ["Defining Privacy, Protecting Privacy", "Privacy Threats, Privacy in Media, Surveillance and Data, Privacy Laws"] },
+      { "title": "Cryptography", "topics": ["Encryption and Decryption, Substitution Cipher, Transposition Cipher", "Symmetric Cryptography, Public Key Cryptography", "Cryptographic Hash Functions, Digital Signature", "Security Standards: DES, RSA, Digital Signature Algorithm (DSA), SHA, AES"] },
+      { "title": "Malicious Software", "topics": ["Types of Malware, Infected Content, Vulnerability Exploits", "Social Engineering, System Corruption, Bots, Zombie, Key Loggers", "Viruses, Spyware, Backdoors", "Software Security Issues, Forensics Analysis"] },
+      { "title": "Network Security", "topics": ["Secure Socket Layer (SSL), Transport Layer Security (TLS), IPSec", "E-Mail Securities, PGP, S/MIME", "Denial of Service (DOS) Attack, Eavesdropping, IP Spoofing", "Firewall, Intrusion Detection and Prevention"] },
+      { "title": "Other Security", "topics": ["Operating System Security, Database Security", "Software Security, Web Security, Physical Security", "Penetration Testing"] }
+    ]
+  },
+  {
+    "course_code": "CSE 4209",
+    "course_name": "VLSI Design",
+    "contact_hours_per_week": "3 Hours",
+    "credit_hour": 3.00,
+    "modules": [
+      { "title": "VLSI Design Methodology", "topics": ["Top-down Design Approach", "Technology Trends"] },
+      { "title": "MOS Technology", "topics": ["Introduction to Microelectronics and MOS Technology", "Basic Electrical Properties and Circuit Design Processes of MOS and Bi CMOS Circuits", "MOS, NMOS, CMOS Inverters", "Pass Transistor and Pass Gates, DC and Transient Characteristics"] },
+      { "title": "Overview of Fabrication Process", "topics": ["NMOS, PMOS, CMOS, Bi-CMOS process"] },
+      { "title": "NMOS and CMOS Layout", "topics": ["Color Plate Stick Diagram and Design Rules"] },
+      { "title": "CMOS Circuit Characteristics", "topics": ["Resistance and Capacitance, Rise and Fall time, Power Estimation"] },
+      { "title": "Introduction to Bi-CMOS circuits", "topics": ["Shifter, an ALU Subsystem, Adder, Counter, Multipliers", "Data Path and Memory Structures", "Buffer Circuit Design, DCVS Logic"] },
+      { "title": "Design and Test-Ability", "topics": ["Circuit Partitioning, Floor Planning and Placement, Routing", "Practical Aspects of Design Tools and Test-Ability MOS Design", "Behavioral, Structural, and Physical Description", "Design Verification"] }
+    ]
+  },
+  {
+    "course_code": "CSE 4211",
+    "course_name": "Parallel and Distributed Processing",
+    "contact_hours_per_week": "3 Hours",
+    "credit_hour": 3.00,
+    "modules": [
+      { "title": "Parallel Processing", "topics": ["Multiple Processor Organizations, Symmetric Multiprocessors", "Cache Coherence, Multithreading and Chip Multiprocessors", "Clusters, Hybrid, Grid, NUMA, Cloud Computing", "Multicore Computers, General-Purpose GPU", "Performance Measures: Amdahl's law"] },
+      { "title": "Parallel Programming", "topics": ["Motivation for Parallelism, Concurrency and Synchronization", "Data and Work Partitioning, Common Parallelization Strategies", "Shared-Memory Programming: pthreads, OpenMP", "Distributed-Memory Programming: MPI", "GPU Programming: CUDA, OpenCL"] },
+      { "title": "Examples", "topics": ["Parallel Search", "Parallel Sorting, etc.", "MapReduce"] },
+      { "title": "Distributed Processing", "topics": ["System Architecture, Communication", "Replication & Consistency", "Distributed Transactions, Distributed Shared Memory", "Synchronization & Coordination, Concurrency issues", "Middleware, Fault Tolerance, Security, Naming", "Distributed File Systems"] }
+    ]
+  },
+  {
+    "course_code": "CSE 4213",
+    "course_name": "Impact of Computer on Society",
+    "contact_hours_per_week": "3 Hours",
+    "credit_hour": 3.00,
+    "modules": [
+      { "title": "Introduction", "topics": ["History of Computer Hardware, Software, Networking", "Overview of Technological Change", "Impact of Information Technology on Some Sectors"] },
+      { "title": "Privacy and Personal Information", "topics": ["Personal Privacy, Computer Technology Effect Privacy", "Moral Problems from Privacy Violation", "Privacy Protection: Ethical and Legal Basis", "Implications of Database Systems"] },
+      { "title": "Freedom of Expression in Cyberspace", "topics": ["Offensive Speech and Censorship in Cyberspace", "Pornography, Anonymity, Spam"] },
+      { "title": "Computer & Software Reliability", "topics": ["Liability in Hardware and Software Failure", "Responsibility vs. Liability vs. Accountability", "Historical Software Risks (such as the Therac-25 Case)"] },
+      { "title": "Intellectual Property", "topics": ["Intellectual Property, Copyrights, Patents, and Trade Secrets", "Software Piracy, Software Patents", "Pirated Software, Use of Licensed Software"] },
+      { "title": "Computer Crime", "topics": ["History and Examples of Computer Crime", "Cracking (Hacking) and its Effects", "Viruses, Worms, and Trojan Horses", "Online Scams, Identity Theft", "Moral Issues Related to These Crimes"] },
+      { "title": "Computer and Work", "topics": ["Impact of Employment", "Work Environment, Employee Monitoring, Health Issues"] },
+      { "title": "Professional Ethics and Responsibilities", "topics": ["Ethics, Computer Ethics", "Ethical Guidelines for Computer Professionals", "Examine and Discuss Professional Codes of Ethics, Conduct, and Practice"] }
+    ]
+  },
+  {
+    "course_code": "CSE 4215",
+    "course_name": "Decision Support System",
+    "contact_hours_per_week": "3 Hours",
+    "credit_hour": 3.00,
+    "modules": [
+      { "title": "Introduction to Decision Support System", "topics": ["DSS Characteristics", "Applications of Decision Support Systems", "Capabilities and Components of Decision Support Systems", "Benefits of using DSS Systems"] },
+      { "title": "Making Decisions in the Decision Support Systems Environment", "topics": ["Activities in the Decision Support Systems Environment", "The Decision-Making Process", "Information Use for Strategic Management", "Types of Problems in the Decision-Making Process"] },
+      { "title": "Developing Decision Support System", "topics": ["Approaches to DSS Development", "DSS Software Tools", "DSS Hardware and Operating System Platforms", "Building and Implementing Decision Support Systems"] },
+      { "title": "Decision Support Systems in Detail", "topics": ["Types of Decision Support Systems, DSS Models", "Data Mining, Group Decision, Support Systems", "Executive Information Systems (EIS)", "Artificial Intelligence and Expert Systems"] }
+    ]
+  },
+  {
+    "course_code": "CSE 4217",
+    "course_name": "Network Planning",
+    "contact_hours_per_week": "3 Hours",
+    "credit_hour": 3.00,
+    "modules": [
+      { "title": "Introduction", "topics": ["Network components, Theoretical Network, Real World Networks", "Network Architectural Design: Designing the LAN", "Configuring the Network Server and Client", "Network Administration, Remote Access, Expanding the Network", "Wide Area Network Troubleshooting", "Major Protocol Suites"] },
+      { "title": "Network Simulation", "topics": ["Network Simulation and Optimization", "Network Operations, Control and Maintenance", "Network Administration, Network Management Database and Tools", "Capacity Planning"] },
+      { "title": "Network Optimization", "topics": ["Network Security and Integrity", "Linear Programming and Network Algorithms for Planning", "Reliability Theory and Network Planning"] }
+    ]
+  },
+  {
+    "course_code": "CSE 4219",
+    "course_name": "Human Computer Interaction",
+    "contact_hours_per_week": "3 Hours",
+    "credit_hour": 3.00,
+    "modules": [
+      { "title": "Process and Model", "topics": ["Introduction to Human-Computer Interaction (HCI)", "Human Information Processing Systems", "Models of Interaction, Approaches to HCI", "User Interface, HCI in Software Process", "Cognitive Models"] },
+      { "title": "Issues and Requirements", "topics": ["Socio-organizational Issues and Stakeholders Requirements", "Communication and Collaboration Models", "Task Analysis, Dialog Notation and Design", "Groupware, CSCW and Social Issues"] },
+      { "title": "User System Interaction", "topics": ["Analysis and Design", "User Interface Design", "Interface Technique and Technology", "Case Studies"] }
+    ]
+  },
+  {
+    "course_code": "CSE 4221",
+    "course_name": "Switching Systems",
+    "contact_hours_per_week": "3 Hours",
+    "credit_hour": 3.00,
+    "modules": [
+      { "title": "Evolution of Switching Systems", "topics": ["The Role of Switching Systems in Telecommunication Networks", "Step by Step and Crossbar, Stored Program Control (SPC)", "Digital Switching, ATM Switching"] },
+      { "title": "Switching System Architecture", "topics": ["Subscriber and Line Interface", "Switching Network: Matrix and Channel Graph Representations", "Blocking, Non-Blocking, and Rearrangeable Networks", "Control Unit, Operation and Maintenance", "Switching Process: Call Detecting, Number Analysis, Call Routing, Supervision, and Metering", "Signaling Equipment"] },
+      { "title": "Hardware and Software Structure of the Digital Switch", "topics": ["Time Switches and Space Switches", "Path Searching", "Processor Systems Architecture and Functions", "Reliability and Fault Recovery", "Man Machine Interface (MMI)", "Examples of the Present Digital Switching Systems"] },
+      { "title": "ATM Switching Architectures and Performance", "topics": ["ATM Switch Architectures", "Full-, and Partial-Connection Multistage Networks, Self-Routing Networks", "Structures: Minimum-Depth Blocking Networks, Non-Blocking Single-, and Multiple-Queuing Networks", "Arbitrary-Depth Blocking Networks, Fault-Tolerant ATM Switching Architectures"] },
+      { "title": "New Trends in Switching", "topics": ["Photonic Switching, IP Switching"] }
+    ]
+  },
+  {
+    "course_code": "CSE 4223",
+    "course_name": "Control System Engineering",
+    "contact_hours_per_week": "3 Hours",
+    "credit_hour": 3.00,
+    "modules": [
+      { "title": "Introduction to Control System", "topics": ["Conventional Control System", "Steady State Response to Step, Ramp, and Parabolic Inputs, Transient Response", "Poles and Zeros, Frequency Response from Pole-Zero Diagram", "Routh’s Stability Criterion", "Block Diagrams, Canonical Forms, Transfer Functions and Signal Flow Graph", "Root Locus, Frequency Response, Nyquist’s Stability Criterion"] },
+      { "title": "Modern Control System", "topics": ["Introduction, State Variable Analysis", "Controllability and Observability, Application of Eigen Value", "Linear Control System Design by State Feedback"] },
+      { "title": "Controller Design", "topics": ["On-Off, Fuzzy, P, PI, PD and PID Types", "Introduction to Programmable Logic Controllers (PLC)", "Temperature Control System, Position Control System"] }
+    ]
+  }
+]

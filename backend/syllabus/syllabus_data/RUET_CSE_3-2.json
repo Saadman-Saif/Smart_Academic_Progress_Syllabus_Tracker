@@ -1,0 +1,83 @@
+[
+  {
+    "course_code": "CSE 3201",
+    "course_name": "Operating Systems",
+    "contact_hours_per_week": "3 Hours",
+    "credit_hour": 3.00,
+    "modules": [
+      { "title": "Introduction to Operating System", "topics": ["Operating System Concepts", "Role in Computer Systems", "Operating System Structure and Operation", "Kernel, System Call, Protection and Security"] },
+      { "title": "Process Management", "topics": ["Process concept, Model and Implementation", "Process Scheduling, Process State", "Co-operating Processes"] },
+      { "title": "Threads", "topics": ["Basics Concept", "Multithreading Models", "Threading Issues"] },
+      { "title": "CPU Scheduling", "topics": ["Basic Concepts", "Scheduling Criteria", "Scheduling Algorithm (SJF, FIFO, round robin, etc.)"] },
+      { "title": "Concurrency and Synchronization", "topics": ["Inter-Process Communication and Inter-Thread Communication", "Critical Region", "Critical Section Problems and Solutions"] },
+      { "title": "Memory Management", "topics": ["Memory Portioning", "Virtual Memory – Paging and Segmentation", "Demand Paging", "Page Replacement Algorithms"] },
+      { "title": "File Systems", "topics": ["Files, Directories", "Security, Protection"] },
+      { "title": "Deadlocks", "topics": ["Modeling, Detection and Recovery, Prevention and Avoidance"] },
+      { "title": "Others", "topics": ["Case Study of Some Operating Systems", "Smart Device Operating System"] }
+    ]
+  },
+  {
+    "course_code": "CSE 3203",
+    "course_name": "Data Communication",
+    "contact_hours_per_week": "3 Hours",
+    "credit_hour": 3.00,
+    "modules": [
+      { "title": "Fundamental", "topics": ["Representation of signals in time and frequency domain", "Properties of Fourier transform", "Auto-correlation, Cross-correlation"] },
+      { "title": "Data Communication and Network Model", "topics": ["Data communication, Fundamentals of networks", "History of the internet, Protocols and standards"] },
+      { "title": "Signal and System, Transmission Media, Interfaces", "topics": ["Analog and digital data", "Transmission impairment", "Data rate limits and performance"] },
+      { "title": "Analog Transmission", "topics": ["Digital-to-Analog conversion: ASK, FSK, PSK, QAM", "Analog-to-Analog conversion: Amplitude, Frequency, Phase modulation"] },
+      { "title": "Digital Transmission", "topics": ["Digital-to-Digital conversion: Line coding, block coding", "Analog-to-Digital conversion: Pulse code modulation", "Transmission modes"] },
+      { "title": "Multiplexing, Spreading and Switching", "topics": ["Bandwidth Utilization, Multiplexing", "Spread spectrum", "Packet-switched and Circuit-switched networks"] },
+      { "title": "Transmission Medium", "topics": ["Guided and unguided media"] },
+      { "title": "Error Detection and Correction", "topics": ["Data word, Codeword, Redundancy", "Forward Error Detection, Retransmission", "CRC, Checksum, Hamming Code"] },
+      { "title": "Telephone Networks", "topics": ["Telephone Networks", "Dial-up Modems, and Digital Subscriber Line"] }
+    ]
+  },
+  {
+    "course_code": "CSE 3205",
+    "course_name": "Software Engineering",
+    "contact_hours_per_week": "3 Hours",
+    "credit_hour": 3.00,
+    "modules": [
+      { "title": "Introduction", "topics": ["Introduction to Software and its Nature", "Professional and Ethical Responsibility"] },
+      { "title": "Software Process Model", "topics": ["Different Types of Software Process Model", "Agile Software Process", "Costs of Software Engineering"] },
+      { "title": "Software Requirement Analysis", "topics": ["Software Requirements Analysis", "Software Prototyping", "Formal Software Specification"] },
+      { "title": "Design of Software", "topics": ["Software Design Techniques", "Version Control, Configuration Managements", "System Structuring, Control Models, Modular Decomposition"] },
+      { "title": "Design Patterns", "topics": ["Creational Design Patterns: Factory, Singleton", "Structural Design Patterns: Adapter, Composite, Façade", "Behavioral Design Patterns: Strategy, Observer"] },
+      { "title": "Software Testing", "topics": ["Software Validation and Verification", "Testing Strategies and Techniques", "Art of Debugging"] },
+      { "title": "Software Quality Assurance", "topics": ["SQA Activities and Plan", "Software Reengineering and Web Engineering"] },
+      { "title": "Advanced Topics", "topics": ["Software Reliability Metrics", "Use of CASE Tools", "Unified Modeling Language–UML"] }
+    ]
+  },
+  {
+    "course_code": "CSE 3207",
+    "course_name": "Artificial Intelligence",
+    "contact_hours_per_week": "3 Hours",
+    "credit_hour": 3.00,
+    "modules": [
+      { "title": "Fundamental", "topics": ["Definition of AI, historical development", "Application of AI"] },
+      { "title": "Production systems", "topics": ["Introduction of product system", "Production rules, types of production systems", "Knowledge base optimization"] },
+      { "title": "General Problem-Solving Approaches", "topics": ["Breadth first search, depth first search, iterative deepening search", "A* algorithm, adversary search, minimax algorithm", "Genetic Algorithm: crossover, mutation, fitness"] },
+      { "title": "Logic and Structural Knowledge Representation", "topics": ["Propositional logic, first-order logic", "Resolution principle, frames, semantic-nets, petri nets"] },
+      { "title": "Reasoning under Uncertainty", "topics": ["Bayesian reasoning, fuzzy knowledge", "Probability theory, expert systems"] },
+      { "title": "Natural language processing", "topics": ["Naive Bayes algorithm", "Syntactic semantics and pragmatic", "Lexicon"] },
+      { "title": "Programming Languages for AI Research", "topics": ["Historical overview", "Implementation of AI algorithms through Python"] }
+    ]
+  },
+  {
+    "course_code": "CSE 3209",
+    "course_name": "Digital Signal Processing",
+    "contact_hours_per_week": "3 Hours",
+    "credit_hour": 3.00,
+    "modules": [
+      { "title": "Introduction", "topics": ["Signals, Systems and Signal Processing", "Analog to Digital and Digital to Analog Conversion", "Sampling and Quantization"] },
+      { "title": "Discrete Time Signals and Systems", "topics": ["Analysis of Discrete Time LTI Systems", "Correlation and Convolution of Discrete Time Signals"] },
+      { "title": "The Z-Transform", "topics": ["Definition and Properties of Z-Transform", "Inversion of the Z-Transform"] },
+      { "title": "Frequency Analysis of Signals and Systems", "topics": ["Frequency Analysis of Continuous and Discrete Time Signals", "LTI Systems as Frequency Selective Filters", "Inverse Systems and De-convolution"] },
+      { "title": "Discrete Fourier Transform (DFT)", "topics": ["Discrete Fourier Series (DFS)", "Discrete Fourier Transformation (DFT) and its Application"] },
+      { "title": "Fast Fourier Transform (FFT)", "topics": ["FFT Algorithms", "Applications of FFT Algorithm"] },
+      { "title": "Digital Filter Design", "topics": ["Differential and Difference Equations", "Finite Impulse Response (FIR) and Infinite Impulse Response (IIR) Filter Design"] },
+      { "title": "Application of DSP", "topics": ["Speech, Image and Video Processing"] }
+    ]
+  }
+]

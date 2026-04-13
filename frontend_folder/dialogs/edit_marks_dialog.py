@@ -11,9 +11,13 @@ class EditMarksDialog(QDialog):
         
         self.instruction = QLabel("Enter new CT marks:")
         self.marks_input_ct1 = QLineEdit()
+        self.marks_input_ct1.setPlaceholderText("CT1")
         self.marks_input_ct2 = QLineEdit()
+        self.marks_input_ct2.setPlaceholderText("CT2")
         self.marks_input_ct3 = QLineEdit()
+        self.marks_input_ct3.setPlaceholderText("CT3")
         self.marks_input_ct4 = QLineEdit()
+        self.marks_input_ct4.setPlaceholderText("CT4")
         
         btn_layout = QHBoxLayout()
         self.save_btn = QPushButton("Save")

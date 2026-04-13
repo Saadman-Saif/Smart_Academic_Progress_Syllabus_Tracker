@@ -1,8 +1,13 @@
 toBeIgnored/
 frontend_folder/uipy/dist/
 frontend_folder/uipy/build/
-frontend_folder/uipy/__pycache__/
+frontend_folder/uipy/__pycache__
 backend/__pycache__/
-backend/auth/__pycache__/
-backend/ct_average/__pycache__/
-
+backend/auth/__pycache__
+backend/ct_average/__pycache__
+frontend_folder/build
+frontend_folder/dist
+*.pyc
+*.spec
+backend/uploads/
+frontend_folder/.vscode/

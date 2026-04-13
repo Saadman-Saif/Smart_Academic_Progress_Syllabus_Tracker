@@ -1,311 +1,80 @@
 [
   {
-    "course_code": "CSE 2100",
-    "course_name": "Software Development Project I",
-    "contact_hours_per_week": "3/2 Hours",
-    "credit_hour": 0.75,
-    "modules": [
-      {
-        "title": "Software Development Project",
-        "topics": [
-          "Develop one or more programs/projects on practical problems",
-          "Apply sound Software Engineering practices",
-          "Project assigned by the teacher"
-        ]
-      }
-    ]
-  },
-  {
     "course_code": "CSE 2101",
     "course_name": "Discrete Mathematics",
     "contact_hours_per_week": "3 Hours",
-    "credit_hour": 3.0,
+    "credit_hour": 3.00,
     "modules": [
-      {
-        "title": "Logic and Proof",
-        "topics": [
-          "Propositional Logic",
-          "Applications of Propositional Logic",
-          "Propositional Equivalences",
-          "Predicates and Quantifiers",
-          "Nested Quantifiers",
-          "Rules of Inference",
-          "Introduction to Proofs",
-          "Proof Methods and Strategy"
-        ]
-      },
-      {
-        "title": "Set Theory",
-        "topics": [
-          "Using Set Notation with Quantifiers",
-          "Truth Sets and Quantifiers",
-          "Generalized Unions and Intersections",
-          "Computer Representation of Set"
-        ]
-      },
-      {
-        "title": "Functions",
-        "topics": [
-          "One-to-One and Onto Functions",
-          "Inverse Functions",
-          "Composition of Functions",
-          "Graphs of Functions",
-          "Floor and Ceiling Functions",
-          "Partial Functions"
-        ]
-      },
-      {
-        "title": "Sequences and Summations",
-        "topics": [
-          "Sequences",
-          "Recurrence Relations",
-          "Summations"
-        ]
-      },
-      {
-        "title": "Cardinality of Sets",
-        "topics": [
-          "Countable Sets",
-          "Uncountable Sets",
-          "Uncomputable Functions"
-        ]
-      },
-      {
-        "title": "Number Theory",
-        "topics": [
-          "Divisibility and Modular Arithmetic",
-          "Primes and Greatest Common Divisors",
-          "Solving Congruences",
-          "Applications of Congruences"
-        ]
-      },
-      {
-        "title": "Induction and Recursion",
-        "topics": [
-          "Mathematical Induction",
-          "Strong Induction and Well-Ordering",
-          "Recursive Definitions",
-          "Structural Induction"
-        ]
-      },
-      {
-        "title": "Counting",
-        "topics": [
-          "Pigeonhole Principle",
-          "Binomial Coefficients and Identities",
-          "Permutations and Combinations",
-          "Generating Functions",
-          "Inclusion-Exclusion"
-        ]
-      },
-      {
-        "title": "Relations",
-        "topics": [
-          "Properties of Relations",
-          "Representing Relations",
-          "Closures of Relations",
-          "Equivalence Relations",
-          "Partial Orderings"
-        ]
-      },
-      {
-        "title": "Graphs",
-        "topics": [
-          "Graph Models",
-          "Graph Terminology",
-          "Special Types of Graphs",
-          "Representing Graphs",
-          "Graph Traversal",
-          "Graph Isomorphism",
-          "Connectivity",
-          "Euler and Hamilton Paths",
-          "Planar Graphs",
-          "Graph Coloring"
-        ]
-      }
-    ]
-  },
-  {
-    "course_code": "CSE 2102",
-    "course_name": "Discrete Mathematics Sessional",
-    "contact_hours_per_week": "3 Hours",
-    "credit_hour": 1.5,
-    "modules": [
-      {
-        "title": "Sessional Topics",
-        "topics": [
-          "Logic and Proof",
-          "Set",
-          "Function",
-          "Sequences and Summations",
-          "Cardinality of Sets",
-          "Relation",
-          "Number Theory",
-          "Induction and Recursion",
-          "Counting",
-          "Graphs"
-        ]
-      }
+      { "title": "Logic and Proof", "topics": ["Propositional Logic", "Applications of Propositional Logic", "Propositional Equivalences", "Predicates and Quantifiers", "Nested Quantifiers", "Rules of Inference", "Introduction to Proofs", "Proof Methods and Strategy"] },
+      { "title": "Set", "topics": ["Using Set Notation with Quantifiers", "Truth Sets and Quantifiers", "Generalized Unions and Intersections", "Computer Representation of set"] },
+      { "title": "Function", "topics": ["One-to-One and Onto Functions", "Inverse Functions and Compositions of Functions", "The Graphs of Functions", "floor and ceiling function", "Partial Functions"] },
+      { "title": "Sequences and Summations", "topics": ["Sequences", "recurrence relations and Summations"] },
+      { "title": "Cardinality of Sets", "topics": ["Countable Sets", "Uncountable Set", "Uncomputable Functions"] },
+      { "title": "Number Theory", "topics": ["Divisibility and Modular Arithmetic", "Primes and Greatest Common Divisors", "Solving Congruences", "Applications of Congruences"] },
+      { "title": "Induction and Recursion", "topics": ["Mathematical Induction", "Strong Induction and Well-Ordering", "Recursive Definitions", "Structural Induction"] },
+      { "title": "Counting", "topics": ["The Pigeonhole Principle", "Binomial Coefficients and Identities", "Generalized Permutations and Combinations", "Generating Functions", "Inclusion–Exclusion"] },
+      { "title": "Relation", "topics": ["Property of relation", "Representing Relations", "Closures of Relations", "Equivalence Relations", "Partial Orderings"] },
+      { "title": "Graphs", "topics": ["Graphs and Graph Models", "Graph Terminology", "Representing Graphs, Graph Traversing", "Graph Isomorphism, Connectivity", "Euler and Hamilton Paths", "Planar Graphs, Graph Coloring"] }
     ]
   },
   {
     "course_code": "CSE 2103",
     "course_name": "Digital Logic Design",
     "contact_hours_per_week": "3 Hours",
-    "credit_hour": 3.0,
+    "credit_hour": 3.00,
     "modules": [
-      {
-        "title": "Information and Digital Systems",
-        "topics": [
-          "Introduction to Digital Systems",
-          "Number Systems",
-          "Weighted and Non-Weighted Codes",
-          "Error Detection Code",
-          "Binary Addition and Subtraction",
-          "2’s Complement Methods"
-        ]
-      },
-      {
-        "title": "Boolean Algebra and Combinational Logic Circuits",
-        "topics": [
-          "Boolean Algebra",
-          "Boolean Functions",
-          "Canonical Forms",
-          "Karnaugh Maps",
-          "Logic Gates and Truth Tables",
-          "Combinational Logic Circuit Design",
-          "Arithmetic and Data Handling Circuits",
-          "Decoders",
-          "Encoders",
-          "Multiplexers",
-          "Demultiplexers"
-        ]
-      },
-      {
-        "title": "Sequential Logic Circuits",
-        "topics": [
-          "Latch and Flip-Flops",
-          "Clock Signals",
-          "SR, JK and D Flip-Flops",
-          "Master/Slave JK Flip-Flop",
-          "Timing Diagrams",
-          "Counters",
-          "Registers",
-          "Memory Devices"
-        ]
-      },
-      {
-        "title": "Hardware Description Language",
-        "topics": [
-          "Digital Circuit Synthesis",
-          "Verilog HDL"
-        ]
-      },
-      {
-        "title": "Technology Parameters",
-        "topics": [
-          "Fan In",
-          "Fan Out",
-          "Propagation Delay",
-          "Power Dissipation",
-          "Noise Immunity"
-        ]
-      },
-      {
-        "title": "Logic Families",
-        "topics": [
-          "Diode Logic Gates",
-          "Transistor Gates",
-          "MOS Gates",
-          "TTL Logic",
-          "CMOS Logic"
-        ]
-      }
-    ]
-  },
-  {
-    "course_code": "CSE 2104",
-    "course_name": "Digital Logic Design Sessional",
-    "contact_hours_per_week": "3 Hours",
-    "credit_hour": 1.5,
-    "modules": [
-      {
-        "title": "Sessional Topics",
-        "topics": [
-          "Designing Combinational Circuits",
-          "Designing Sequential Circuits",
-          "Hardware Description Language",
-          "TTL and CMOS Logic Devices",
-          "Verilog HDL"
-        ]
-      }
+      { "title": "Information and Digital Systems", "topics": ["Introduction to Digital Systems", "Number Systems, Weighted and Non-Weighted Codes", "Error Detection Code", "Binary Addition and Subtraction, 2’s Complement"] },
+      { "title": "Boolean Algebra and Combinational Logic Circuits", "topics": ["Digital Logic, Boolean Algebra, Boolean Function", "Canonical Forms, Karnaugh Maps", "Logic Gates and Truth Tables", "Combinational Logic Circuit Design", "Decoders, Encoders, Multiplexer, Demultiplexer"] },
+      { "title": "Flip Flop and Sequential Logic Circuits", "topics": ["Transistor Latch, Latch variants", "Clock Signals and Clocked FFs", "Timing Diagram of Different FFs", "Counters, Registers, Memory Devices"] },
+      { "title": "Hardware Description Language (HDL)", "topics": ["Synthesis of digital circuits using HDL", "Reference Language: Verilog"] },
+      { "title": "Technology Parameters", "topics": ["Fan In, Fan Out, Propagation Delay, Power Dissipation, Noise Immunity"] },
+      { "title": "Others", "topics": ["Diode Logic Gates, Transistor Gates, MOS Gates", "Logic Families: TTL and CMOS Logic"] }
     ]
   },
   {
     "course_code": "EEE 2151",
     "course_name": "Electrical Drives and Instrumentations",
     "contact_hours_per_week": "3 Hours",
-    "credit_hour": 3.0,
+    "credit_hour": 3.00,
     "modules": [
-      {
-        "title": "DC Machines",
-        "topics": [
-          "Generators and Motors",
-          "Starting, Speed Control and Braking",
-          "Applications of DC Motors"
-        ]
-      },
-      {
-        "title": "AC Machines",
-        "topics": [
-          "Transformer Operation",
-          "Single Phase Induction Motors",
-          "Alternator Introduction"
-        ]
-      },
-      {
-        "title": "Special Machines",
-        "topics": [
-          "Stepper Motor",
-          "Servomotor",
-          "Brushless Motors"
-        ]
-      },
-      {
-        "title": "Measuring Instruments",
-        "topics": [
-          "Electromechanical Meters",
-          "Electronic Meters",
-          "Extension of Instrument Range"
-        ]
-      },
-      {
-        "title": "Instrumentation Amplifiers",
-        "topics": [
-          "Differential Amplifiers",
-          "Logarithmic Amplifiers",
-          "Chopper Amplifiers",
-          "Frequency and Voltage Measurements",
-          "Recorders and Display Devices",
-          "Spectrum Analyzers",
-          "Logic Analyzers"
-        ]
-      },
-      {
-        "title": "Transducers",
-        "topics": [
-          "Photovoltaic Transducer",
-          "Piezoelectric Transducer",
-          "Thermoelectric Transducer",
-          "LVDT",
-          "Optical Pressure Transducer",
-          "Ultrasonic Transducer",
-          "Humidity Transducer",
-          "Hall Effect Transducer",
-          "Speed Transducer",
-          "Noise Reduction in Instrumentation"
-        ]
-      }
+      { "title": "DC Machines", "topics": ["Operation and Performance Characteristics of Generators and Motors", "Starting, Speed Control and Braking", "Application of DC Motors"] },
+      { "title": "AC Machines", "topics": ["Principle of Operation of Transformer", "Single Phase Induction Motors", "Introduction to alternator"] },
+      { "title": "Special Machines", "topics": ["Stepper Motor", "Servomotor", "Brush less Motors"] },
+      { "title": "Measuring Instruments", "topics": ["Electromechanical and Electronic Meters", "Extension of Instrument Range"] },
+      { "title": "Instrumentation Amplifiers", "topics": ["Differential, Logarithmic and Chopper Amplifiers", "Frequency and Voltage Measurements", "Recorders and Display Devices", "Spectrum Analyzers and Logic Analyzers"] },
+      { "title": "Transducers", "topics": ["Photovoltaic, Piezoelectric, Thermoelectric, Position and Displacement Transducers", "Potentiometer, LVDT, Pressure, Temperature, Optical, Ultrasonic, Humidity, Hall Effect, Speed Transducers"] }
+    ]
+  },
+  {
+    "course_code": "Math 2113",
+    "course_name": "Vector Analysis and Linear Algebra",
+    "contact_hours_per_week": "3 Hours",
+    "credit_hour": 3.00,
+    "modules": [
+      { "title": "Vector Analysis", "topics": ["Vector Differentiation and Integration", "Gradient, Divergence and Curl", "Green’s Theorem, Stokes’ Theorem, Gauss’s Divergence Theorem"] },
+      { "title": "Matrix", "topics": ["Equality, Addition, Subtraction and Multiplication of Matrices", "Adjoint, Transpose and Inverse of Matrices", "Rank and Normal Form", "System of Linear Equations", "Eigen Values and Eigen Vectors"] },
+      { "title": "Linear Algebra", "topics": ["Vector Space, Subspace, Sum and Direct Sum", "Hilbert Space, Normed Linear Space, Branch Space", "Basis and Dimension", "Linear Transformation", "Linear Operations"] }
+    ]
+  },
+  {
+    "course_code": "Hum 2113",
+    "course_name": "Economics, Government and Sociology",
+    "contact_hours_per_week": "3 Hours",
+    "credit_hour": 3.00,
+    "modules": [
+      { "title": "Economics - Introduction", "topics": ["Definition, Goals, Scope of Economics", "Economic Problems, Scarcity & Efficiency"] },
+      { "title": "Demand, Supply and Their Elasticity", "topics": ["Law of Demand, Demand Curve", "Elasticity of Demand", "Supply and Stock, Law of Supply", "Consumer Surplus & Producer Surplus, Equilibrium"] },
+      { "title": "Theory of Production", "topics": ["Factors of Production, Producer’s Equilibrium", "Production Possibility Curve", "Internal & External Economies & Diseconomies", "Laws of Return"] },
+      { "title": "Theory of Cost", "topics": ["Cost of Production, Cost Function, Total Cost", "AC, MC, Envelope Curve", "Explicit & Implicit Cost"] },
+      { "title": "Economic Development and Economic Planning", "topics": ["Economic Growth", "Difference Between Economic Growth and Development", "Sustainable Development & its Goals", "Economic Planning"] },
+      { "title": "Concept of National Income", "topics": ["Define National Income", "GDP, GNP, NNP, NDP", "Methods of Calculating NI"] },
+      { "title": "Economic Policies", "topics": ["Fiscal Policy", "Monetary Policy", "Trade Policy"] },
+      { "title": "Government Institutions", "topics": ["State - Forms & Functions", "Government - Forms & Functions", "Local & Central Government, Judiciary & Legislative System"] },
+      { "title": "Sociology - Introduction", "topics": ["Define Society", "Culture, Define Sociology, Scope of Sociology"] },
+      { "title": "Social System", "topics": ["Family, Marriage, Role of Engineers in Society", "Effects of Change in Technology"] },
+      { "title": "Culture", "topics": ["Elements of Culture", "Cultural Lag"] },
+      { "title": "Social Problems", "topics": ["Unemployed Delinquency and Crime", "Cyber Crime, Deviant Behavior, Globalization"] },
+      { "title": "Others", "topics": ["Geographical Location of Bangladesh", "Urban Community, Rural & Urban Power Structure"] }
     ]
   }
 ]

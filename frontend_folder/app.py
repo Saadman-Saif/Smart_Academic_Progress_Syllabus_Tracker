@@ -1,6 +1,6 @@
 import sys
-from PySide6.QtWidgets import (QApplication, QMainWindow, QWidget, QMessageBox, QVBoxLayout, QStackedWidget)
-from PySide6.QtCore import Signal
+from PySide6.QtWidgets import (QApplication, QMainWindow, QWidget, QMessageBox, QVBoxLayout, QHBoxLayout, QStackedWidget)
+from PySide6.QtCore import (Signal, QRect)
 
 #------ Imports ------
 # Wrappers
@@ -97,9 +97,9 @@ class MySoftware(QMainWindow):
         self.go_to_home()
 
     def go_to_login(self):
-        # 1. Tell the Master Stack to show the Onboarding Phase
+        # master stack shows onboarding page (selection)
         self.master_stack.setCurrentWidget(self.onboarding_widget)
-        # 2. Tell the Inner Stack to show the actual Login Screen
+        # inner stack shows loging screen
         self.uiOnboardingStackPage.stackedWidget.setCurrentIndex(self.LOGIN_PAGE_IND)
     
     def go_to_email(self):
@@ -118,10 +118,19 @@ class MySoftware(QMainWindow):
 
     def go_to_selection_from_preview(self):
         self.uiOnboardingStackPage.stackedWidget.setCurrentIndex(self.SELECTION_PAGE_IND)
+        # self.page_syllabus.ui.scrollAreaWidgetContents.removeWidget()
+        self.page_syllabus.reset_syllabus_cards()
+
+    def go_to_selection_from_home(self):
+        print("Switching back to Selection Page...")
+        self.master_stack.setCurrentWidget(self.onboarding_widget)
+        self.uiOnboardingStackPage.stackedWidget.setCurrentIndex(self.SELECTION_PAGE_IND)
+        self.page_selection.ui.backBtn.clicked.connect(self.back_from_selection)
 
     def load_syllabus(self):
         print("Fetching syllabus for current session...")
         success, self.current_user_syllabus = self.client.get_syllabus()
+        # print(self.current_user_syllabus)
         return success
 
     def go_to_preview(self):
@@ -148,21 +157,25 @@ class MySoftware(QMainWindow):
         welcome = self.current_username or "User"
         self.main_app.ui.welcomeUserLabel.setText(f"Welcome, {welcome}!")
 
+    def back_from_selection(self):
+        self.master_stack.addWidget(self.main_app)
+        self.master_stack.setCurrentWidget(self.main_app)
+        self.page_selection.ui.backBtn.clicked.connect(self.go_to_home)
+
     def go_to_home(self):
         self.main_app = HomePageWrap(self.client, self.current_user_id)
         
-        # Use a safe .get() in case get_me() fails
+        # use .get() in case get_me() fails
         me_success, me_data = self.client.get_me()
         if me_success:
             self.current_username = me_data.get('username', self.current_username)
             
         self.set_welcome_text()
-        
-        # Relay Signal connections
         self.main_app.sendUpdatedMarks.connect(self.update_ct_marks_and_cardsFrame)
         self.main_app.loadCTMarks.connect(self.load_ct_marks)
         self.main_app.progressUpdatedRelay.connect(self.update_topic_progress)
         self.main_app.logoutRelay.connect(self.process_logout)
+        self.main_app.selectSyllabusBtnRelay.connect(self.go_to_selection_from_home)
 
         # Request course code value from backend
         success = self.load_syllabus()
@@ -171,9 +184,9 @@ class MySoftware(QMainWindow):
             self.main_app.populate_course_tabs(self.current_user_syllabus)
             self.main_app.update_syllabus_progress_bars(self.current_user_syllabus)
         
-        # 1. Add the main app to the master stack
+        #Add the main app to the master stack
         self.master_stack.addWidget(self.main_app)
-        # 2. Switch the screen to show it!
+        # Switch the screen to show it
         self.master_stack.setCurrentWidget(self.main_app)
 
     def update_topic_progress(self, topic_id, is_checked):
@@ -211,21 +224,20 @@ class MySoftware(QMainWindow):
     def process_logout(self):
         print("User logged out. Locking the app.")
         
-        # 1. Scrub the user data from memory
+        # delete the user data from memory
         self.current_user_id = None
         self.current_username = None
         self.current_user_syllabus = None
         
-        # 2. Switch the Master Stack back to the Onboarding Widget!
         self.master_stack.setCurrentWidget(self.onboarding_widget)
         
-        # 3. Safely destroy the Home Page to free up memory
+        # Safely destroy the Home Page to free up memory
         if getattr(self, 'main_app', None):
             self.master_stack.removeWidget(self.main_app)
             self.main_app.deleteLater()
             self.main_app = None
             
-        # 4. Reset the inner stack to the login page
+        # inner stack goes to login page
         self.go_to_login()
 
 if __name__ == "__main__":

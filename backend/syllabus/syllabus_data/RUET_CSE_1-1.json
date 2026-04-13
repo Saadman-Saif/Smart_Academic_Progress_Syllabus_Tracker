@@ -1,0 +1,68 @@
+[
+  {
+    "course_code": "CSE 1101",
+    "course_name": "Structured Programming",
+    "contact_hours_per_week": "3 Hours",
+    "credit_hour": 3.00,
+    "modules": [
+      { "title": "Introduction to Structured Programming", "topics": ["Algorithm", "Writing, Debugging and Running Programs using Compiler / Interpreter"] },
+      { "title": "Basic Concepts", "topics": ["Basic I/O", "Formatted I/O", "Different Data Types and their Range", "Operators and their Precedence", "Operands and Expression", "Expression Evaluation", "Conditional Logic", "Switch-Case", "Character, ASCII Value", "Reading and Writing Character", "Integer to Character Conversion"] },
+      { "title": "Loop", "topics": ["Basic of Loop", "while Loop", "for Loops", "do-while Loop", "Entry Controlled and Exit Controlled Loops", "Nested Loop", "Formulating Problems using Loops"] },
+      { "title": "Array", "topics": ["Basics of Array, Necessity, Declaration, Initialization", "Array Manipulation", "One-Dimensional and Multi-Dimensional Arrays"] },
+      { "title": "String", "topics": ["Basic String Operations", "Difference between String and Character-Array", "String I/O", "Array of Strings"] },
+      { "title": "Pointer", "topics": ["Introduction to Pointer", "Pointer Operations", "Pointers and Array", "Array of Pointers"] },
+      { "title": "Functions", "topics": ["Defining & Calling of User–defined Functions", "Void Functions with No Parameters", "Functions with Return Type and Parameters", "Call by Value, Local and Global Variables", "Scope of Variables", "Built-in Functions", "Recursive Functions", "Passing Arrays in a Function as Parameter", "Call by Reference"] },
+      { "title": "Custom data types", "topics": ["Structures", "Unions", "Enumerations"] },
+      { "title": "File", "topics": ["Basic Files Operations", "Opening, Closing and Updating Binary and Sequential Files", "File I/O"] },
+      { "title": "Advanced Topics", "topics": ["Operations on Bits", "Preprocessors and Macros"] }
+    ]
+  },
+  {
+    "course_code": "EEE 1151",
+    "course_name": "Basic Electrical Engineering",
+    "contact_hours_per_week": "3 Hours",
+    "credit_hour": 3.00,
+    "modules": [
+      { "title": "Direct Current", "topics": ["Voltage, Current, Resistance and Power", "Laws of Electrical Circuits", "Methods of Network Analysis", "Capacitance, Types of Capacitors, Capacitors in Series and Parallel", "Inductance, Types of Inductors, Faraday’s Law and Lenz’s Law, Inductors in Series and Parallel"] },
+      { "title": "Alternating current", "topics": ["Signal and Waveforms", "Instantaneous and RMS Values of Current, Voltage and Power", "Average Power", "AC Analysis for Various Combination of R, L and C Circuits", "Phasor Representation of Sinusoidal Quantities", "Resonance, Frequency Response", "Passive Filters"] }
+    ]
+  },
+  {
+    "course_code": "Math 1113",
+    "course_name": "Differential and Integral Calculus",
+    "contact_hours_per_week": "3 Hours",
+    "credit_hour": 3.00,
+    "modules": [
+      { "title": "Differential Calculus", "topics": ["Limit, Continuity and Differentiability", "Differentiation of Explicit and Implicit Function and Parametric Equations", "Significance of Derivatives, Differentials, Successive Differentiation", "Leibnitz’s Theorem, Rolle’s Theorem, Mean Value Theorem, Taylor's Theorem, Maclaurin’s Theorem", "Partial Differentiation, Euler's Theorem", "Tangent and Normal", "Maxima and Minima", "Evaluation of Indeterminate Forms by L’Hospital Rule", "Curvature, Evaluate and Inviolate, Asymptotes, Envelopes, Curve Tracing"] },
+      { "title": "Integral Calculus", "topics": ["Definitions of Integration", "Integration by Substitutions and Successive Reduction", "Definite Integrals", "Beta Function and Gamma Function", "Area under a Plane Curve", "Area of the Region Enclosed by Two Curves", "Parametric and Pedal Equations, Intrinsic Equation", "Volumes of Solids of Revolution", "Area of Surface of Revolution", "Multiple Integration"] }
+    ]
+  },
+  {
+    "course_code": "Hum 1113",
+    "course_name": "Functional English",
+    "contact_hours_per_week": "3 Hours",
+    "credit_hour": 3.00,
+    "modules": [
+      { "title": "Grammar", "topics": ["Construction and Transformation of Sentences", "Analysis of Sentence Structure", "Use of Preposition, Question Words", "Phrases & Idioms, Correction, Conditional Sentences", "Punctuation, Pronunciation, Phonetic Transcription", "Spoken English, Vocabulary"] },
+      { "title": "Reading", "topics": ["Techniques and Strategies for Improving Comprehension Skills", "Prose Pieces by Renowned Authors"] },
+      { "title": "Writing", "topics": ["Paragraph and Essay Writing", "Amplification", "Précis Writing"] },
+      { "title": "Commercial/Professional Correspondence", "topics": ["Business Letters, CV", "Notices for and Minutes of Meetings", "Tenders & Schedules, Memos & Press Release", "Research Paper/Technical Report Writing"] }
+    ]
+  },
+  {
+    "course_code": "Chem 1113",
+    "course_name": "Inorganic and Physical Chemistry",
+    "contact_hours_per_week": "3 Hours",
+    "credit_hour": 3.00,
+    "modules": [
+      { "title": "Chemical Bond", "topics": ["Ionic Bond, Covalent Bond, Coordination Bond, Metallic Bond, Hydrogen Bond, Dipole Bond, Vander Waal's Forces", "Hybridization, Resonance", "Valence Bond Theory (VBT)", "Molecular Orbital Theory (MOT)", "Linear Combination of Atomic Orbital (LCAO) Method"] },
+      { "title": "Thermo-chemistry", "topics": ["Types of Energy, Enthalpy of Reaction, Heat of Combustion, Heat of Formation and Heat of Neutralization", "Experimental Determination of Thermal Changes"] },
+      { "title": "Solution", "topics": ["Types of Solution, Factors Influencing Solubility, Mechanism of Dissolution", "Different Units of Concentration", "Distribution Law and its Application", "Properties of Dilute Solution, Raoult's Law", "Elevation of Boiling Point, Depression of Freezing Point and Osmotic Pressure"] },
+      { "title": "Conductivity of Electrolytic Solution", "topics": ["Type of Conductors, Conductance, Specific Conductance, Equivalent Conductance", "Arrhenius Theory, Law of Independent Migration of Ions", "Determination of Transport Number, Abnormal Conductance"] },
+      { "title": "Electromotive Forces", "topics": ["Electrochemical Cell, Cell Reaction, Cell Potential", "Relation Between EMF and Free Energy", "Electrode Potential, Electrochemical Series, Nernest's Equation", "Reference Electrodes and pH Measurement, Over Potential", "Lithium Ion Battery, Fuel Cell"] },
+      { "title": "Photochemistry", "topics": ["Photochemical Reactions, Laws of Photochemistry", "Quantum Yield", "Photosensitized Reaction, Photo-Physical Processes"] },
+      { "title": "Spectroscopy", "topics": ["Quantization of Energy", "Basic Elements of Spectroscopy"] },
+      { "title": "Chemistry of Polymerization", "topics": ["Classification, Bonding in Polymer", "Thermosetting and Thermoplastic Polymer", "Synthesis, Properties and Uses of Some Polymers"] }
+    ]
+  }
+]
